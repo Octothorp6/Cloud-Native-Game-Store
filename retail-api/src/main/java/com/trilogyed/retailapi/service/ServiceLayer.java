@@ -26,11 +26,10 @@ public class ServiceLayer {
     }
 
 
-
-
+    // HELPER METHOD FOR VIEWMODEL
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
-
+        invoiceViewModel.setId(invoice.getInvoiceId());
         return invoiceViewModel;
     }
 }
