@@ -2,6 +2,6 @@ package com.trilogyed.retailapi.util.feign;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 
-@FeignClient(name = "customer-service")
-public interface CustomerService {
+@FeignClient(name = "inventory-service")
+public interface InventoryClient {
 }
