@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,6 +44,7 @@ public class ProductDaoJdbcTempImpl implements ProductDao {
     public ProductDaoJdbcTempImpl(JdbcTemplate jdbcTemplate){this.jdbcTemplate = jdbcTemplate;}
 
     @Override
+    @Transactional
     public Product createProduct(Product product) {
         jdbcTemplate.update(
                 INSERT_PRODUCT_SQL,
@@ -72,6 +74,7 @@ public class ProductDaoJdbcTempImpl implements ProductDao {
     }
 
     @Override
+    @Transactional
     public void updateProduct(Product product) {
         jdbcTemplate.update(UPDATE_PRODUCT_SQL,
                 product.getName(),
@@ -106,10 +109,5 @@ product_id int(11) not null auto_increment primary key,
 
         return product;
     }
-
-
-
-
-
 
 }
