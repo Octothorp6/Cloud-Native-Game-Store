@@ -5,9 +5,10 @@ Your company has decided to move forward with a Game Store API project. This set
 This project will be completed by two partners working together to implement the entirety of the system. Each partner (designated `Partner A` and `Partner B`) has specific requirements that they alone will be graded on. Use your own discretion to choose which member of the team will be Partner A and which will be Partner B. These specifications can be found in the appropriate file for each partner. Both partners will be graded on any requirements listed in this document, as well as the final, integrated project.
 
 
-# Collaborators . 
-[@Scohly](https://github.com/scohly)  
+# Collaborators  
+[@Scohly](https://github.com/scohly)    
 [@Octothorp](https://github.com/Octothorp6)  
+
 ---
 
 ## Structure
