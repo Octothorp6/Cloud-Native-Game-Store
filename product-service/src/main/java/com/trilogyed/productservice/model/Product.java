@@ -34,7 +34,7 @@ public class Product {
     private BigDecimal listPrice;
 
     @NotNull
-    private BigDecimal unitPrice;
+    private BigDecimal unitCost;
 
 
     public int getProductId() {
@@ -69,12 +69,12 @@ public class Product {
         this.listPrice = listPrice;
     }
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
+    public BigDecimal getUnitCost() {
+        return unitCost;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setUnitCost(BigDecimal unitCost) {
+        this.unitCost = unitCost;
     }
 
     @Override
@@ -86,11 +86,11 @@ public class Product {
                 Objects.equals(name, product.name) &&
                 Objects.equals(description, product.description) &&
                 Objects.equals(listPrice, product.listPrice) &&
-                Objects.equals(unitPrice, product.unitPrice);
+                Objects.equals(unitCost, product.unitCost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, name, description, listPrice, unitPrice);
+        return Objects.hash(productId, name, description, listPrice, unitCost);
     }
 }

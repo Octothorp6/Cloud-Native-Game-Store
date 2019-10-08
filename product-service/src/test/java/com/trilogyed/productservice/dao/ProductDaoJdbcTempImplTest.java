@@ -43,7 +43,7 @@ public class ProductDaoJdbcTempImplTest {
         product.setName("Xbox 1");
         product.setDescription("Microsoft's latest console");
         product.setListPrice(new BigDecimal("299.99"));
-        product.setUnitPrice(new BigDecimal("250.99"));
+        product.setUnitCost(new BigDecimal("250.99"));
 
         product = dao.createProduct(product);
 
@@ -70,12 +70,12 @@ public class ProductDaoJdbcTempImplTest {
         sony.setName("PS5");
         sony.setDescription("Sony's latest console");
         sony.setListPrice(new BigDecimal("499.99"));
-        sony.setUnitPrice(new BigDecimal("470.99"));
+        sony.setUnitCost(new BigDecimal("470.99"));
 
         sony = dao.createProduct(sony);
 
         sony.setListPrice(new BigDecimal("469.99"));
-        sony.setUnitPrice(new BigDecimal("459.99"));
+        sony.setUnitCost(new BigDecimal("459.99"));
         dao.updateProduct(sony);
 
         Product productUpdate = dao.getProduct(sony.getProductId());
