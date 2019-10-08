@@ -1,4 +1,4 @@
 package com.trilogyed.productservice.service;
 
-public class ServiceLayer {
-}
+//public class ServiceLayer {
+//}
