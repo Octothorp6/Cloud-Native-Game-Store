@@ -1,4 +1,4 @@
-# Cloud Native Game Store Projec
+# Cloud Native Game Store Project
 
 Your company has decided to move forward with a Game Store API project. This set of REST APIs will support both web and mobile clients for customers. The original project was designed and implementation was started before the company began moving toward a cloud-native architecture. The original design is a traditional monolithic application with a single database. You have been asked to move the current design and partial implementation to a design that follows the company's new cloud-native architectural standards.
 
