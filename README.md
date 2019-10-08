@@ -1,4 +1,4 @@
-# Cloud Native Game Store Project
+# Cloud Native Game Store Projec
 
 Your company has decided to move forward with a Game Store API project. This set of REST APIs will support both web and mobile clients for customers. The original project was designed and implementation was started before the company began moving toward a cloud-native architecture. The original design is a traditional monolithic application with a single database. You have been asked to move the current design and partial implementation to a design that follows the company's new cloud-native architectural standards.
 
@@ -42,6 +42,7 @@ The design incorporates many elements of a modern cloud-native architecture incl
 
 Partner A will be responsible for the following facets of the application:
 
+[@Octothorp] (https://github.com/Octothorp6)  
 * Retail API
 * Level Up Service
 * Invoice Service
@@ -51,6 +52,7 @@ Partner A will be responsible for the following facets of the application:
 
 Partner B will be responsible for the following facets of the application:
 
+[@Scohly] (https://github.com/scohly)
 * Admin API
 * Product Service
 * Customer Service
