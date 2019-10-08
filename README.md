@@ -42,7 +42,7 @@ The design incorporates many elements of a modern cloud-native architecture incl
 
 Partner A will be responsible for the following facets of the application:
 
-[@Octothorp] (https://github.com/Octothorp6)  
+[@Octothorp](https://github.com/Octothorp6)  
 * Retail API
 * Level Up Service
 * Invoice Service
@@ -52,7 +52,7 @@ Partner A will be responsible for the following facets of the application:
 
 Partner B will be responsible for the following facets of the application:
 
-[@Scohly] (https://github.com/scohly)
+[@Scohly](https://github.com/scohly)
 * Admin API
 * Product Service
 * Customer Service
