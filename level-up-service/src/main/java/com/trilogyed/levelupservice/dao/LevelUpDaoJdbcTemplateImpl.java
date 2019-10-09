@@ -75,7 +75,7 @@ public class LevelUpDaoJdbcTemplateImpl implements LevelUpDao {
     @Override
     @Transactional
     public void updateLevelUp(LevelUp levelUp) {
-        jdbcTemplate.update(INSERT_LEVEL_UP_SQL,
+        jdbcTemplate.update(UPDATE_LEVEL_UP_SQL,
                 levelUp.getCustomerId(),
                 levelUp.getPoints(),
                 levelUp.getMemberDate(),
