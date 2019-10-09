@@ -36,5 +36,4 @@ public class MessageListener {
             System.out.println("There is an exception: " + e.getMessage());
         }
     }
-
 }
