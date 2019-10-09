@@ -106,7 +106,7 @@ product_id int(11) not null auto_increment primary key,
         product.setDescription(rs.getString("product_description"));
         product.setListPrice(rs.getBigDecimal("list_price"));
         product.setUnitCost(rs.getBigDecimal("unit_cost"));
-        
+
         return product;
     }
 
