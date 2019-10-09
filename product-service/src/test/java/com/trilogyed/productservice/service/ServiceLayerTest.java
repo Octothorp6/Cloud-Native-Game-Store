@@ -178,7 +178,7 @@ public class ServiceLayerTest {
         productDelete.setUnitCost(new BigDecimal("1999.99"));
 
         service.deleteProduct(productDelete.getProductId());
-        
+
         Product productGone = service.getProduct(productDelete.getProductId());
 
         assertNull(productGone);
