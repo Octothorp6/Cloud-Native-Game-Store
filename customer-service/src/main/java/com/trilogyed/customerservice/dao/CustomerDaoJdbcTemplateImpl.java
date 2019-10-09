@@ -107,3 +107,5 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
         return customer;
     }
 }
+
+//WE IN GREEN FOR TDD
