@@ -14,28 +14,32 @@ import java.util.List;
 
 @RestController
 //@RefreshScope
-//@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
     ServiceLayer service;
 
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Product createProduct(@RequestBody @Valid Product product){
         return service.createProduct(product);
     }
 
-    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public Product getProduct(@PathVariable("id") int id){
+
+ */
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Product getProduct(@PathVariable int id){
         Product productFromService = service.getProduct(id);
         if(productFromService==null)
             throw new NotFoundException("No product exists in the DB with given id: "+id);
         return productFromService;
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Product> getAllProducts(){return service.getAllProducts();}
 
@@ -46,9 +50,9 @@ public class ProductController {
         return "Product Updated.";
     }
 
-    @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteProduct(@PathVariable("id") int id){
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteProduct(@PathVariable int id){
         service.deleteProduct(id);
         return "Product deleted";
     }
