@@ -27,27 +27,54 @@ public class InventoryDaoTest {
     }
 
     @Test
-    public void createInventory() {
+    public void addGetDeleteInventory() {
+        Inventory inventory = new Inventory();
+        inventory.setProductId(1);
+        inventory.setQuantity(10);
+        inventory =  inventoryDao.addInventory(inventory);
 
-    }
+        Inventory inventory1 = inventoryDao.getInventory(inventory.getInventoryId());
+        assertEquals(inventory1, inventory);
 
-    @Test
-    public void getInventory() {
+        inventoryDao.deleteInventoryItem(inventory.getInventoryId());
+        inventory1 = inventoryDao.getInventory(inventory.getInventoryId());
+        assertNull(inventory1);
     }
 
     @Test
     public void getInventoryByProductId() {
+        Inventory inventory = new Inventory();
+        inventory.setProductId(1);
+        inventory.setQuantity(10);
+        inventory =  inventoryDao.addInventory(inventory);
+
+        Inventory inventory1 = inventoryDao.getInventoryByProductId(inventory.getProductId());
+        assertEquals(inventory1, inventory);
     }
 
     @Test
     public void getAllInventory() {
+        Inventory inventory = new Inventory();
+        inventory.setProductId(1);
+        inventory.setQuantity(10);
+        inventory =  inventoryDao.addInventory(inventory);
+
+        List<Inventory> inventories = inventoryDao.getAllInventory();
+        assertEquals(1, inventories.size());
     }
 
     @Test
     public void updateInventoryItem() {
+        Inventory inventory = new Inventory();
+        inventory.setProductId(1);
+        inventory.setQuantity(10);
+        inventory =  inventoryDao.addInventory(inventory);
+
+        inventory.setQuantity(14);
+        inventoryDao.updateInventoryItem(inventory);
+
+        Inventory inventory1 = inventoryDao.getInventory(inventory.getInventoryId());
+        assertEquals(inventory1, inventory);
     }
 
-    @Test
-    public void deleteInventoryItem() {
-    }
 }
