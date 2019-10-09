@@ -41,13 +41,40 @@ public class LevelUpDaoTest {
 
     @Test
     public void getLevelUpByCustomer() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(1);
+        levelUp.setPoints(200);
+        levelUp.setMemberDate(LocalDate.of(2019,11,11));
+        levelUp = levelUpDao.addLevelUp(levelUp);
+
+        LevelUp levelUp1 = levelUpDao.getLevelUpByCustomer(levelUp.getCustomerId());
+        assertEquals(levelUp1, levelUp);
     }
 
     @Test
     public void getAllLevelUps() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(1);
+        levelUp.setPoints(200);
+        levelUp.setMemberDate(LocalDate.of(2019,11,11));
+        levelUp = levelUpDao.addLevelUp(levelUp);
+
+        List<LevelUp> levelUps = levelUpDao.getAllLevelUps();
+        assertEquals(1, levelUps.size());
     }
 
     @Test
     public void updateLevelUp() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(1);
+        levelUp.setPoints(200);
+        levelUp.setMemberDate(LocalDate.of(2019,11,11));
+        levelUp = levelUpDao.addLevelUp(levelUp);
+
+        levelUp.setPoints(400);
+        levelUpDao.updateLevelUp(levelUp);
+
+        LevelUp levelUp1 = levelUpDao.getLevelUp(levelUp.getLevelUpId());
+        assertEquals(levelUp1, levelUp);
     }
 }
