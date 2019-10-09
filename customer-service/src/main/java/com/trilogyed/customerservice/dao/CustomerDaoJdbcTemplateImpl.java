@@ -1,10 +1,19 @@
 package com.trilogyed.customerservice.dao;
 
 import com.trilogyed.customerservice.model.Customer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
+
+    
+
+
+
+
+
     @Override
     public Customer createCustomer(Customer customer) {
         return null;

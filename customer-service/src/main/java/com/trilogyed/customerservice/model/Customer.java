@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Customer {
     /*
-    	customer_id int(11) not null auto_increment primary key,
+    customer_id int(11) not null auto_increment primary key,
     first_name varchar(50) not null,
     last_name varchar(50) not null,
     street varchar(50) not null,
