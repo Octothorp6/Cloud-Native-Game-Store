@@ -36,5 +36,5 @@ public class ServiceLayer {
     public void deleteProduct(int productId){
         dao.deleteProduct(productId);
     }
-    
+
 }
