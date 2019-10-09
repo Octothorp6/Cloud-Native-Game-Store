@@ -1,5 +1,6 @@
 package com.trilogyed.customerservice.controller;
 
+import com.trilogyed.customerservice.exception.NotFoundException;
 import com.trilogyed.customerservice.model.Customer;
 import com.trilogyed.customerservice.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,16 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public Customer createCustomer(@RequestBody @Valid Customer customer){return service.createCustomer(customer);}
 
+    @GetMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Customer getCustomer(@PathVariable int id){
+        Customer customerFromService = service.getCustomer(id);
+        if(customerFromService==null)
+            throw new NotFoundException("No customer exists in the DB with given id: "+id);
+        return customerFromService;
+    }
+
     
+
+
 }
