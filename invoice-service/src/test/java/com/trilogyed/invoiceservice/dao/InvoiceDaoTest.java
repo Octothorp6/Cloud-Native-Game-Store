@@ -1,6 +1,7 @@
 package com.trilogyed.invoiceservice.dao;
 
 import com.trilogyed.invoiceservice.model.Invoice;
+import com.trilogyed.invoiceservice.model.InvoiceItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +19,23 @@ import static org.junit.Assert.*;
 public class InvoiceDaoTest {
     @Autowired
     InvoiceDao invoiceDao;
+    @Autowired
+    InvoiceItemDao invoiceItemDao;
+
 
     @Before
     public void setUp() throws Exception {
+        // CLEAR INVOICE ITEM DB
+        List<InvoiceItem> invoiceItems = invoiceItemDao.getAllInvoiceItems();
+        for (InvoiceItem i : invoiceItems) {
+            invoiceItemDao.deleteInvoiceItem(i.getInvoiceItemId());
+        }
+        // CLEAR INVOICE DB
         List<Invoice> invoices = invoiceDao.getAllInvoices();
         for (Invoice i : invoices) {
             invoiceDao.deleteInvoice(i.getInvoiceId());
         }
+
     }
 
     @Test
@@ -37,6 +48,9 @@ public class InvoiceDaoTest {
         Invoice invoice1 = invoiceDao.getInvoice(invoice.getInvoiceId());
         assertEquals(invoice1, invoice);
 
+        invoiceDao.deleteInvoice(invoice.getInvoiceId());
+        invoice1 = invoiceDao.getInvoice(invoice1.getInvoiceId());
+        assertNull(invoice1);
     }
 
     @Test
@@ -54,7 +68,7 @@ public class InvoiceDaoTest {
     public void updateInvoice() {
         Invoice invoice = new Invoice();
         invoice.setCustomerId(1);
-        invoice.setPurchaseDate(LocalDate.parse("2019-12-11"));
+        invoice.setPurchaseDate(LocalDate.of(2019, 12,11));
         invoice = invoiceDao.addInvoice(invoice);
 
         invoice.setCustomerId(2);

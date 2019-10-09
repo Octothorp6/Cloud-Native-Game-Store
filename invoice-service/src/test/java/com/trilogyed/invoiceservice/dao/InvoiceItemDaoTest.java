@@ -25,9 +25,15 @@ public class InvoiceItemDaoTest {
 
     @Before
     public void setUp() throws Exception {
+        // CLEAR INVOICE ITEM DB
         List<InvoiceItem> invoiceItems = invoiceItemDao.getAllInvoiceItems();
         for (InvoiceItem i : invoiceItems) {
             invoiceItemDao.deleteInvoiceItem(i.getInvoiceItemId());
+        }
+        // CLEAR INVOICE DB
+        List<Invoice> invoices = invoiceDao.getAllInvoices();
+        for (Invoice i : invoices) {
+            invoiceDao.deleteInvoice(i.getInvoiceId());
         }
     }
 
