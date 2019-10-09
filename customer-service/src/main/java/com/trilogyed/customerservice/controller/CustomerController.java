@@ -42,6 +42,13 @@ public class CustomerController {
         return "Customer Updated.";
     }
 
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteCustomer(@PathVariable int id){
+        service.deleteCustomer(id);
+        return "Customer deleted";
+    }
+
 
 
 
