@@ -61,7 +61,7 @@ public class ProductDaoJdbcTempImpl implements ProductDao {
     @Override
     public Product getProduct(int productId) {
         try{
-            return jdbcTemplate.queryForObject(SELECT_PRODUCT_SQL, this::mapRowToProdut,productId);
+            return jdbcTemplate.queryForObject(SELECT_PRODUCT_SQL, this::mapRowToProduct,productId);
         }catch (EmptyResultDataAccessException e){
 
             return null;
@@ -70,7 +70,7 @@ public class ProductDaoJdbcTempImpl implements ProductDao {
 
     @Override
     public List<Product> getAllProducts() {
-        return jdbcTemplate.query(SELECT_ALL_PRODUCTS_SQL,this::mapRowToProdut);
+        return jdbcTemplate.query(SELECT_ALL_PRODUCTS_SQL,this::mapRowToProduct);
     }
 
     @Override
@@ -97,7 +97,7 @@ product_id int(11) not null auto_increment primary key,
 
  */
 
-    private Product mapRowToProdut(ResultSet rs, int rowNum) throws SQLException{
+    private Product mapRowToProduct(ResultSet rs, int rowNum) throws SQLException{
 
         Product product = new Product();
 
@@ -106,7 +106,7 @@ product_id int(11) not null auto_increment primary key,
         product.setDescription(rs.getString("product_description"));
         product.setListPrice(rs.getBigDecimal("list_price"));
         product.setUnitCost(rs.getBigDecimal("unit_cost"));
-
+        
         return product;
     }
 
