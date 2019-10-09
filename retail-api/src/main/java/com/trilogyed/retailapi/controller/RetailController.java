@@ -3,6 +3,7 @@ package com.trilogyed.retailapi.controller;
 import com.trilogyed.retailapi.model.Invoice;
 import com.trilogyed.retailapi.model.Product;
 import com.trilogyed.retailapi.service.ServiceLayer;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +13,17 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/gamestore")
 public class RetailController {
+    private ServiceLayer serviceLayer;
+    private RabbitTemplate rabbitTemplate;
+
+    public static final String EXCHANGE = "level-up-exchange";
+    public static final String ROUTING_KEY = "level.up.create.level#";
+
     @Autowired
-    ServiceLayer serviceLayer;
+    public RetailController(ServiceLayer serviceLayer, RabbitTemplate rabbitTemplate) {
+        this.serviceLayer = serviceLayer;
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     // RETAIL ENDPOINTS
     @GetMapping(value = "/invoices")
