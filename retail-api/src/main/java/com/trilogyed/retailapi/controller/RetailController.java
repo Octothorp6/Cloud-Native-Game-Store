@@ -2,6 +2,8 @@ package com.trilogyed.retailapi.controller;
 
 import com.trilogyed.retailapi.model.Invoice;
 import com.trilogyed.retailapi.model.Product;
+import com.trilogyed.retailapi.service.ServiceLayer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -10,8 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/gamestore")
 public class RetailController {
-    // Retail Endpoints
+    @Autowired
+    ServiceLayer serviceLayer;
 
+    // RETAIL ENPOINTS
     @GetMapping(value = "/invoices")
     public List<Invoice> getAllInvoices() {
         return null;
