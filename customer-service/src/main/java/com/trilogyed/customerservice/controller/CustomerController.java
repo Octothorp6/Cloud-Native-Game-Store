@@ -48,17 +48,17 @@ public class CustomerController {
     @CacheEvict(key = "#result.getCustomerId()")
     @RequestMapping(value = "/customer", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String updateCustomer(@RequestBody @Valid Customer customer){
+    public void updateCustomer(@RequestBody @Valid Customer customer){
         service.updateCustomer(customer);
-        return "Customer Updated.";
+//        return "Customer Updated.";
     }
 
     @CacheEvict
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteCustomer(@PathVariable int id){
+    public void deleteCustomer(@PathVariable int id){
         service.deleteCustomer(id);
-        return "Customer deleted";
+//        return "Customer deleted";
     }
 
 }

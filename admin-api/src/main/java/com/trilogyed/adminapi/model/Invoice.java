@@ -1,4 +1,4 @@
 package com.trilogyed.adminapi.model;
 
-public class Order {
+public class Invoice {
 }
