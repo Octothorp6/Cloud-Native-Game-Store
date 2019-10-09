@@ -15,7 +15,7 @@ public class RetailController {
     @Autowired
     ServiceLayer serviceLayer;
 
-    // RETAIL ENPOINTS
+    // RETAIL ENDPOINTS
     @GetMapping(value = "/invoices")
     public List<Invoice> getAllInvoices() {
         return null;
