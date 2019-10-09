@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 public class ServiceLayerTest {
@@ -120,17 +121,6 @@ public class ServiceLayerTest {
         doNothing().when(dao).deleteProduct(productDelete.getProductId());
         doReturn(null).when(dao).getProduct(productDelete.getProductId());
     }
-    /*
-        public Product createProduct(Product product)
-
-    public void updateProduct(Product product)
-
-    public Product getProduct(int productId)
-
-    public List<Product> getAllProducts()
-
-    public void deleteProduct(int productId)
-     */
 
     @Test
     public void createGetGetAllProduct(){
@@ -175,7 +165,23 @@ public class ServiceLayerTest {
         Product productUpdated = service.getProduct(productToUpdate.getProductId());
 
         assertEquals(productUpdated,productToUpdate);
-       
+
+    }
+
+    @Test
+    public void deleteProduct(){
+        Product productDelete = new Product();
+        productDelete.setProductId(99);
+        productDelete.setName("Macbook Pro 15' ");
+        productDelete.setDescription("15 inch macbook pro");
+        productDelete.setListPrice(new BigDecimal("2100.99"));
+        productDelete.setUnitCost(new BigDecimal("1999.99"));
+
+        service.deleteProduct(productDelete.getProductId());
+        
+        Product productGone = service.getProduct(productDelete.getProductId());
+
+        assertNull(productGone);
     }
 
 
