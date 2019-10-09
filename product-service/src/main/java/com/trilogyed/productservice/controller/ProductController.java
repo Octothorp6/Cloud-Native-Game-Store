@@ -45,7 +45,7 @@ public class ProductController {
 
     @RequestMapping(value = "/product", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String updateConsole(@RequestBody @Valid Product product){
+    public String updateProduct(@RequestBody @Valid Product product){
         service.updateProduct(product);
         return "Product Updated.";
     }

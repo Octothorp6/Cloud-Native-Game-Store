@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 //@RefreshScope
@@ -30,7 +31,18 @@ public class CustomerController {
         return customerFromService;
     }
 
-    
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Customer> getAllCustomers(){return service.getAllCustomers();}
+
+    @RequestMapping(value = "/customer", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String updateCustomer(@RequestBody @Valid Customer customer){
+        service.updateCustomer(customer);
+        return "Customer Updated.";
+    }
+
+
 
 
 }
