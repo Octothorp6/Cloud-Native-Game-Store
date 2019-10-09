@@ -9,6 +9,13 @@ import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * RETAIL SERVICE LAYER
+ * PURPOSE: Perform all necessary business logic for all retail purposes.
+ * Private methods: buildInvoiceViewModel()
+ */
+
+
 @Component
 public class ServiceLayer {
     CustomerClient customerClient;
@@ -24,6 +31,9 @@ public class ServiceLayer {
         this.invoiceClient = invoiceClient;
         this.productClient = productClient;
     }
+
+
+    // CALCULATION METHODS
 
 
     // HELPER METHOD FOR VIEWMODEL

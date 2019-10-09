@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/inventory")
+@RequestMapping(value = "/inventory")
 public class InventoryController {
     @Autowired
     ServiceLayer serviceLayer;
@@ -24,6 +24,11 @@ public class InventoryController {
         return serviceLayer.saveInventory(inventory);
     }
 
+    @PutMapping
+    public void updateInventory(@RequestBody Inventory inventory) {
+        serviceLayer.updateInventory(inventory);
+    }
+
     @GetMapping("/{id}")
     public Inventory getInventory(@PathVariable int id) {
         Inventory inventory = serviceLayer.findInventory(id);
@@ -34,13 +39,8 @@ public class InventoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteInventory(int id) {
+    public void deleteInventory(@PathVariable int id) {
         serviceLayer.deleteInventory(id);
-    }
-
-    @PutMapping("/{id}")
-    public void updateInventory(int id) {
-
     }
 
     @GetMapping("/product/{id}")
