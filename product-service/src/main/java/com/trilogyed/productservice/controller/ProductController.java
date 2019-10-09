@@ -6,6 +6,7 @@ import com.trilogyed.productservice.service.ServiceLayer;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-//@RefreshScope
+@RefreshScope
 @RequestMapping("/products")
 public class ProductController {
 
