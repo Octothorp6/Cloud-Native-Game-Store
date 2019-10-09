@@ -155,8 +155,27 @@ public class ServiceLayerTest {
 
         List<Product> productList = service.getAllProducts();
         assertEquals(2,productList.size());
+    }
 
+    @Test
+    public void updateProduct(){
+        Product productToUpdate = new Product();
+        productToUpdate.setName("Razer Blade Laptop 14' ");
+        productToUpdate.setDescription("Razer's 14 inch gaming laptop");
+        productToUpdate.setListPrice(new BigDecimal("2499.99"));
+        productToUpdate.setUnitCost(new BigDecimal("2399.99"));
 
+        productToUpdate = service.createProduct(productToUpdate);
+
+        productToUpdate.setListPrice(new BigDecimal("2299.99")); //Sale of $200
+        productToUpdate.setUnitCost(new BigDecimal("2099.99"));
+
+        service.updateProduct(productToUpdate);
+
+        Product productUpdated = service.getProduct(productToUpdate.getProductId());
+
+        assertEquals(productUpdated,productToUpdate);
+       
     }
 
 
