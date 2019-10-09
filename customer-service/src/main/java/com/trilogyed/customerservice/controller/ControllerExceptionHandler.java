@@ -1,7 +1,7 @@
 package com.trilogyed.customerservice.controller;
 
 
-import com.trilogyed.productservice.exception.NotFoundException;
+import com.trilogyed.customerservice.exception.NotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.hateoas.VndErrors;
 import org.springframework.http.HttpStatus;
