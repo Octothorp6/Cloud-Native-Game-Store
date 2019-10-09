@@ -30,6 +30,10 @@ public class ServiceLayer {
         return inventoryDao.getInventoryByProductId(id);
     }
 
+    public void updateInventory(Inventory inventory) {
+         inventoryDao.updateInventoryItem(inventory);
+    }
+
     public void deleteInventory(int id) {
         inventoryDao.deleteInventoryItem(id);
     }
