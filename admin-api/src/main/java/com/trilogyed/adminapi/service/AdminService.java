@@ -100,8 +100,4 @@ public class AdminService {
     public void deleteProduct(int productId){productClient.deleteProduct(productId);}
 
 
-
-
-
-
 }
