@@ -89,6 +89,15 @@ public class AdminService {
 
 
     //CRUD Product
+    public Product createProduct(Product product){return productClient.createProduct(product);}
+
+    public Product getProduct(int productId){return productClient.getProduct(productId);}
+
+    public List<Product> getAllProducts(){return productClient.getAllProducts();}
+
+    public void updateProduct(Product product){productClient.updateProduct(product);}
+
+    public void deleteProduct(int productId){productClient.deleteProduct(productId);}
 
 
 
