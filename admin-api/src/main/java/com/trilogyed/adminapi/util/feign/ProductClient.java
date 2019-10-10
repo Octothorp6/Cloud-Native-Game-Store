@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @FeignClient(name = "product-service")
-@RequestMapping("/products")
+@RequestMapping("/product")
 public interface ProductClient {
 
     @PostMapping

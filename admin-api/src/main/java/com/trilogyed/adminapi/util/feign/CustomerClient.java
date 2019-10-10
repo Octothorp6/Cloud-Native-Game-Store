@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @FeignClient(name = "customer-service")
-@RequestMapping("/customers")
+@RequestMapping("/customer")
 public interface CustomerClient {
 
     //Admin API responsible for full CRUD

@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-@RequestMapping("/customers")
+@RequestMapping("/customer")
 @CacheConfig(cacheNames = {"customers"})
 public class CustomerController {
 
@@ -40,7 +40,7 @@ public class CustomerController {
         return customerFromService;
     }
 
-    @GetMapping
+    @GetMapping //do we add value = "/customers" ??
     @ResponseStatus(HttpStatus.OK)
     public List<Customer> getAllCustomers(){return service.getAllCustomers();}
 
