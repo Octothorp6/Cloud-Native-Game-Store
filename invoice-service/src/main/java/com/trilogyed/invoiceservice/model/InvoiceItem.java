@@ -1,14 +1,26 @@
 package com.trilogyed.invoiceservice.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 
 public class InvoiceItem {
+    @NotNull
     private int invoiceItemId;
+
+    @NotNull
     private int invoiceId;
+
+    @NotNull
     private int inventoryId;
+
+    @NotNull
+    @PositiveOrZero
     private int quantity;
+
+    @NotNull
     private BigDecimal unitPrice;
 
     public int getInvoiceItemId() {
