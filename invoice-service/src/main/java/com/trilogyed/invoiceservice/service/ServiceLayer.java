@@ -22,6 +22,6 @@ public class ServiceLayer {
         return invoiceItemDao.addInvoiceItem(invoiceItem);
     }
 
-    
+
 
 }
