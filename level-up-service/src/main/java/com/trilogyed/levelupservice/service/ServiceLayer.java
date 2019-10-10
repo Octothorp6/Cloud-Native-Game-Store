@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/*Task:
- *
- */
+
 @Component
 public class ServiceLayer {
     private LevelUpDao levelUpDao;
