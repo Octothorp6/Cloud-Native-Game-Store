@@ -1,6 +1,7 @@
 package com.trilogyed.retailapi.service;
 
 import com.trilogyed.retailapi.model.Invoice;
+import com.trilogyed.retailapi.model.LevelUp;
 import com.trilogyed.retailapi.util.feign.CustomerClient;
 import com.trilogyed.retailapi.util.feign.InventoryClient;
 import com.trilogyed.retailapi.util.feign.InvoiceClient;
@@ -31,7 +32,11 @@ public class ServiceLayer {
         this.invoiceClient = invoiceClient;
         this.productClient = productClient;
     }
-
+    // FALL-BACK METHOD
+    public LevelUp reliable() {
+        LevelUp levelUp = new LevelUp();
+        return levelUp;
+    }
 
     // CALCULATION METHODS
 
