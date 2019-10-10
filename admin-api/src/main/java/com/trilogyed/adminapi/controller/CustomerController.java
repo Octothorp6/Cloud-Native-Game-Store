@@ -1,5 +1,6 @@
 package com.trilogyed.adminapi.controller;
 
+import com.trilogyed.adminapi.exception.NotFoundException;
 import com.trilogyed.adminapi.model.Customer;
 import com.trilogyed.adminapi.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,10 @@ public class CustomerController {
 
     @GetMapping(value = "/{id}")
     public Customer getCustomer( @PathVariable int id){
-        return adminService.getCustomer(id);
+        Customer customerFromService = adminService.getCustomer(id);
+        if(customerFromService==null)
+            throw new NotFoundException("No customer exists in the DB with given id: "+id);
+        return customerFromService;
     }
 
     @GetMapping
