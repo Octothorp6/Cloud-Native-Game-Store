@@ -1,6 +1,7 @@
 package com.trilogyed.adminapi.service;
 
 import com.trilogyed.adminapi.model.Customer;
+import com.trilogyed.adminapi.model.Inventory;
 import com.trilogyed.adminapi.model.Product;
 import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,24 @@ public class AdminService {
     public void updateCustomer(Customer customer){customerClient.updateCustomer(customer);}
 
     public void deleteCustomer(int customerId){customerClient.deleteCustomer(customerId);}
+
+    //CRUD for Inventory
+    public Inventory createInventory(Inventory inventory){return  inventoryClient.createInventory(inventory);}
+
+    public Inventory getInventory(int inventoryId){return inventoryClient.getInventory(inventoryId);}
+
+    public List<Inventory> getAllInventory(){return inventoryClient.getAllInventory();}
+
+    public void updateInventory(Inventory inventory){inventoryClient.updateInventory(inventory);}
+
+    public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
+
+    //Crud for Invoice
+
+
+
+
+
+
 
 }
