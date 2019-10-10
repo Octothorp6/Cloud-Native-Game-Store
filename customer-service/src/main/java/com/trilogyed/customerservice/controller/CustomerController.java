@@ -35,8 +35,6 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public Customer getCustomer(@PathVariable int id){
         Customer customerFromService = service.getCustomer(id);
-        if(customerFromService==null)
-            throw new NotFoundException("No customer exists in the DB with given id: "+id);
         return customerFromService;
     }
 

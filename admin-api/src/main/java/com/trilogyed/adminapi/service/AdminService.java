@@ -1,6 +1,8 @@
 package com.trilogyed.adminapi.service;
 
 import com.trilogyed.adminapi.model.Customer;
+import com.trilogyed.adminapi.model.Inventory;
+import com.trilogyed.adminapi.model.LevelUp;
 import com.trilogyed.adminapi.model.Product;
 import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +50,54 @@ public class AdminService {
     public void updateCustomer(Customer customer){customerClient.updateCustomer(customer);}
 
     public void deleteCustomer(int customerId){customerClient.deleteCustomer(customerId);}
+
+
+    //CRUD for Inventory
+    public Inventory createInventory(Inventory inventory){return  inventoryClient.createInventory(inventory);}
+
+    public Inventory getInventory(int inventoryId){return inventoryClient.getInventory(inventoryId);}
+
+    public List<Inventory> getAllInventory(){return inventoryClient.getAllInventory();}
+
+    public void updateInventory(Inventory inventory){inventoryClient.updateInventory(inventory);}
+
+    public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
+
+
+    //CRUD for Invoice
+
+
+
+
+
+
+
+
+
+
+
+    //CRUD LevelUp
+    public LevelUp createLevelUp(LevelUp levelUp){return levelUpClient.createLevelUp(levelUp);}
+
+    public LevelUp getLevelUp(int levelUpId){return levelUpClient.getLevelUp(levelUpId);}
+
+    public List<LevelUp> getLevelUps(){return levelUpClient.getLevelUps();}
+
+    public void updateLevelUp(LevelUp levelUp){levelUpClient.updateLevelUp(levelUp);}
+
+    public void deleteLevelUp(int levelUpId){levelUpClient.deleteLevelUp(levelUpId);}
+
+
+    //CRUD Product
+    public Product createProduct(Product product){return productClient.createProduct(product);}
+
+    public Product getProduct(int productId){return productClient.getProduct(productId);}
+
+    public List<Product> getAllProducts(){return productClient.getAllProducts();}
+
+    public void updateProduct(Product product){productClient.updateProduct(product);}
+
+    public void deleteProduct(int productId){productClient.deleteProduct(productId);}
+
 
 }
