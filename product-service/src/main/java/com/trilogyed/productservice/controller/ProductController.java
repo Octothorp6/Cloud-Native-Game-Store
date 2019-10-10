@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-@RequestMapping("/products")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class ProductController {
         return productFromService;
     }
 
-    @GetMapping
+    @GetMapping //do we add value = "/products"??
     @ResponseStatus(HttpStatus.OK)
     public List<Product> getAllProducts(){return service.getAllProducts();}
 
