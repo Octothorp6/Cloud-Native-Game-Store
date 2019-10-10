@@ -2,6 +2,7 @@ package com.trilogyed.adminapi.service;
 
 import com.trilogyed.adminapi.model.Customer;
 import com.trilogyed.adminapi.model.Inventory;
+import com.trilogyed.adminapi.model.LevelUp;
 import com.trilogyed.adminapi.model.Product;
 import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class AdminService {
 
     public void deleteCustomer(int customerId){customerClient.deleteCustomer(customerId);}
 
+
     //CRUD for Inventory
     public Inventory createInventory(Inventory inventory){return  inventoryClient.createInventory(inventory);}
 
@@ -61,8 +63,32 @@ public class AdminService {
 
     public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
 
-    //Crud for Invoice
 
+    //CRUD for Invoice
+
+
+
+
+
+
+
+
+
+
+
+    //CRUD LevelUp
+    public LevelUp createLevelUp(LevelUp levelUp){return levelUpClient.createLevelUp(levelUp);}
+
+    public LevelUp getLevelUp(int levelUpId){return levelUpClient.getLevelUp(levelUpId);}
+
+    public List<LevelUp> getLevelUps(){return levelUpClient.getLevelUps();}
+
+    public void updateLevelUp(LevelUp levelUp){levelUpClient.updateLevelUp(levelUp);}
+
+    public void deleteLevelUp(int levelUpId){levelUpClient.deleteLevelUp(levelUpId);}
+
+
+    //CRUD Product
 
 
 
