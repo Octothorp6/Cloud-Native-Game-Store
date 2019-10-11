@@ -69,6 +69,12 @@ public class ServiceLayer {
     }
 
     public void removeInvoice(int id) {
+        List<InvoiceItem> invoiceItems = findInvoiceItemsByInvoice(id);
+        if (invoiceItems.size() != 0) {
+            for (InvoiceItem i : invoiceItems) {
+                invoiceItemDao.deleteInvoiceItem(i.getInvoiceItemId());
+            }
+        }
         invoiceDao.deleteInvoice(id);
     }
 

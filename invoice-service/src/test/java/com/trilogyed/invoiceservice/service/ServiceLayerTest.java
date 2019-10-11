@@ -62,6 +62,7 @@ public class ServiceLayerTest {
 
     @Test
     public void updateInvoice() {
+
     }
 
     @Test
@@ -133,7 +134,7 @@ public class ServiceLayerTest {
         invoiceItem1.setUnitPrice(new BigDecimal("29.99"));
 
         InvoiceItem invoiceItem2 = new InvoiceItem();
-        invoiceItem.setInvoiceItemId(5);
+        invoiceItem2.setInvoiceItemId(5);
         invoiceItem2.setInvoiceId(3);
         invoiceItem2.setInventoryId(1);
         invoiceItem2.setQuantity(10);

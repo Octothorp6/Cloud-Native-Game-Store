@@ -33,6 +33,11 @@ public class InvoiceController {
         serviceLayer.updateInvoice(invoice);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteInvoice(@PathVariable int id) {
+        serviceLayer.removeInvoice(id);
+    }
+
     @GetMapping("/{id}")
     public InvoiceViewModel getInvoiceById(@PathVariable int id) {
         return serviceLayer.findInvoice(id);
@@ -55,6 +60,11 @@ public class InvoiceController {
     @GetMapping(value = "/invoice-items")
     public List<InvoiceItem> getAllInvoiceItems() {
         return serviceLayer.findAllInvoiceItems();
+    }
+
+    @GetMapping(value = "/invoice-items/{invoiceId}")
+    public List<InvoiceItem> getInvoiceItemsById(@PathVariable int invoiceId) {
+        return serviceLayer.findInvoiceItemsByInvoice(invoiceId);
     }
 
     @PutMapping(value = "/invoice-items")
