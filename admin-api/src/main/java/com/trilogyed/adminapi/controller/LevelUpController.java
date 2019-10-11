@@ -21,8 +21,36 @@ public class LevelUpController {
 
 
     //CRUD w/ Authorization for LevelUp
+//    @PostMapping
+//    public LevelUp createLevelUp(Principal principal, @RequestBody @Valid LevelUp levelUp){
+//        return adminService.createLevelUp(levelUp);
+//    }
+//
+//    @GetMapping(value = "/{id}")
+//    public LevelUp getLevelUp(@PathVariable int id){
+//        LevelUp levelUpFromService = adminService.getLevelUp(id);
+//        if(levelUpFromService==null)
+//            throw new NotFoundException("No customer exists in the DB with given id: "+id);
+//        return levelUpFromService;
+//    }
+//
+//    @GetMapping
+//    public List<LevelUp> getLevelUps(){
+//        return adminService.getLevelUps();
+//    }
+//
+//    @PutMapping
+//    public void updateLevelUp(Principal principal, @RequestBody @Valid LevelUp levelUp){
+//        adminService.updateLevelUp(levelUp);
+//    }
+//
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteLevelUp(Principal principal, @PathVariable int id){
+//        adminService.deleteLevelUp(id);
+//    }
+
     @PostMapping
-    public LevelUp createLevelUp(Principal principal, @RequestBody @Valid LevelUp levelUp){
+    public LevelUp createLevelUp(@RequestBody @Valid LevelUp levelUp){
         return adminService.createLevelUp(levelUp);
     }
 
@@ -40,15 +68,13 @@ public class LevelUpController {
     }
 
     @PutMapping
-    public void updateLevelUp(Principal principal, @RequestBody @Valid LevelUp levelUp){
+    public void updateLevelUp( @RequestBody @Valid LevelUp levelUp){
         adminService.updateLevelUp(levelUp);
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteLevelUp(Principal principal, @PathVariable int id){
+    public void deleteLevelUp(@PathVariable int id){
         adminService.deleteLevelUp(id);
     }
-
-
 
 }

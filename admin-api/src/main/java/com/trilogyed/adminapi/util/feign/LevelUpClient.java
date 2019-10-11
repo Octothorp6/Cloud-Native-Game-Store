@@ -17,6 +17,10 @@ public interface LevelUpClient {
     @GetMapping(value = "/{id}")
     public LevelUp getLevelUp(@PathVariable int id);
 
+    @GetMapping("/customer/{customerId}")
+    public LevelUp getLevelUpByCustomer(@PathVariable(name = "customerId") int customerId);
+
+
     @GetMapping
     public List<LevelUp> getLevelUps();
 
