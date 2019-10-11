@@ -6,12 +6,8 @@ import java.util.Objects;
 
 
 public class Invoice {
-
-    @NotNull
     private int invoiceId;
-    @NotNull
     private int customerId;
-    @NotNull
     private LocalDate purchaseDate;
 
     public int getInvoiceId() {

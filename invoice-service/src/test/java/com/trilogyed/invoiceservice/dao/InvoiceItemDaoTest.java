@@ -74,7 +74,7 @@ public class InvoiceItemDaoTest {
     }
 
     @Test
-    public void getAllInvoiceItemsByInvoice() {
+    public void getInvoiceItemsByInvoice() {
         Invoice invoice = new Invoice();
         invoice.setCustomerId(1);
         invoice.setPurchaseDate(LocalDate.of(2019, 12,11));
