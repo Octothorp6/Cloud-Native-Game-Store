@@ -20,7 +20,7 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
             "insert into invoice (customer_id, purchase_date) values (?,?)";
     private static final String SELECT_INVOICE_SQL =
             "select * from invoice where invoice_id = ?";
-    private static final String SELECT_INVOICE_BY_CUSTOMER_SQL =
+    private static final String SELECT_INVOICES_BY_CUSTOMER_SQL =
             "select * from invoice where customer_id = ?";
     private static final String SELECT_ALL_INVOICES_SQL =
             "select * from invoice";
@@ -56,9 +56,9 @@ public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
     }
 
     @Override
-    public Invoice getInvoiceByCustomer(int customerId) {
+    public List<Invoice> getInvoicesByCustomer(int customerId) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_INVOICE_BY_CUSTOMER_SQL,this::mapRowToInvoice, customerId);
+            return jdbcTemplate.query(SELECT_INVOICES_BY_CUSTOMER_SQL,this::mapRowToInvoice, customerId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

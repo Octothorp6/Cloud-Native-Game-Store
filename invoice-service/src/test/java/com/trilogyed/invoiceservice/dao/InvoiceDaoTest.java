@@ -65,6 +65,18 @@ public class InvoiceDaoTest {
     }
 
     @Test
+    public void getInvoicesByCustomer() {
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(1);
+        invoice.setPurchaseDate(LocalDate.of(2019, 12,11));
+        invoice = invoiceDao.addInvoice(invoice);
+
+        List<Invoice> invoicesByCustomer = invoiceDao.getInvoicesByCustomer(invoice.getCustomerId());
+        assertEquals(1, invoicesByCustomer.size());
+    }
+
+
+    @Test
     public void updateInvoice() {
         Invoice invoice = new Invoice();
         invoice.setCustomerId(1);

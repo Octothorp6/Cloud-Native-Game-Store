@@ -8,6 +8,7 @@ import com.trilogyed.invoiceservice.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -24,11 +25,12 @@ public class ServiceLayer {
 
 
     // INVOICE METHODS
-    public Invoice saveInvoice(Invoice invoice){
-        return invoiceDao.addInvoice(invoice);
+    public InvoiceViewModel saveInvoice(Invoice invoice){
+        invoice = invoiceDao.addInvoice(invoice);
+        return buildInvoiceViewModel(invoice);
     }
 
-    public InvoiceViewModel getInvoice(int id) {
+    public InvoiceViewModel findInvoice(int id) {
         Invoice invoice = invoiceDao.getInvoice(id);
         if (invoice == null) {
             return null;
@@ -36,12 +38,30 @@ public class ServiceLayer {
         return buildInvoiceViewModel(invoice);
     }
 
-    public InvoiceViewModel getInvoiceByCustomer(int customerId) {
-        Invoice invoice = invoiceDao.getInvoiceByCustomer(customerId);
-        if (invoice == null) {
+    public List<InvoiceViewModel> findInvoicesByCustomer(int customerId) {
+        List<Invoice> invoices = invoiceDao.getInvoicesByCustomer(customerId);
+        if (invoices == null) {
             return null;
+        } else {
+            List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
+
+            for (Invoice i : invoices) {
+                InvoiceViewModel invoiceViewModel = buildInvoiceViewModel(i);
+                invoiceViewModels.add(invoiceViewModel);
+            }
+            return invoiceViewModels;
         }
-        return buildInvoiceViewModel(invoice);
+    }
+
+    public List<InvoiceViewModel> findAllInvoices() {
+        List<Invoice> invoices = invoiceDao.getAllInvoices();
+        List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
+
+        for (Invoice i : invoices) {
+            InvoiceViewModel invoiceViewModel = buildInvoiceViewModel(i);
+            invoiceViewModels.add(invoiceViewModel);
+        }
+        return invoiceViewModels;
     }
 
     public void updateInvoice(Invoice invoice) {
@@ -60,6 +80,10 @@ public class ServiceLayer {
         return invoiceItemDao.addInvoiceItem(invoiceItem);
     }
 
+    public List<InvoiceItem> findAllInvoiceItems() {
+        return invoiceItemDao.getAllInvoiceItems();
+    }
+
     public void updateInvoiceItem(InvoiceItem invoiceItem) {
         invoiceItemDao.updateInvoiceItem(invoiceItem);
     }
@@ -70,7 +94,11 @@ public class ServiceLayer {
 
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
+        invoiceViewModel.setId(invoice.getInvoiceId());
+        invoiceViewModel.setCustomerId(invoice.getCustomerId());
+        invoiceViewModel.setPurchaseDate(invoice.getPurchaseDate());
         List<InvoiceItem> invoiceItems = invoiceItemDao.getAllInvoiceItemsByInvoice(invoice.getInvoiceId());
+        invoiceViewModel.setInvoiceItems(invoiceItems);
 
         return invoiceViewModel;
     }
