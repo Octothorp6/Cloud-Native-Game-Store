@@ -46,7 +46,17 @@ public class AdminService {
 
     public void updateCustomer(Customer customer){customerClient.updateCustomer(customer);}
 
-    public void deleteCustomer(int customerId){customerClient.deleteCustomer(customerId);}
+    //Business Logic Check level up...we need to delete it
+    //Check Invoice and then delete....if delete we then checkInvoiceItem then Inventory then product WOW
+    public void deleteCustomer(int customerId){
+        LevelUp levelUpCheck = levelUpClient.getLevelUpByCustomer(customerId);
+        if(levelUpCheck!= null){
+            levelUpClient.deleteLevelUp(levelUpCheck.getLevelUpId());
+        }
+
+
+        customerClient.deleteCustomer(customerId);
+    }
 
 
     //CRUD for Inventory

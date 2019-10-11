@@ -23,6 +23,13 @@ public interface InvoiceClient {
     @GetMapping
     public List<Invoice> getAllInvoices();
 
+    /*
+        @GetMapping("/customer/{customerId}")
+    public List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int customerId) {
+        return serviceLayer.findInvoicesByCustomer(customerId);
+    }
+     */
+
     @PutMapping
     public void updateInvoice(@RequestBody @Valid Invoice invoice);
 
