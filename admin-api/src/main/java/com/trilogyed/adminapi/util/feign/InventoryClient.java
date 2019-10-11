@@ -17,6 +17,9 @@ public interface InventoryClient {
     @GetMapping(value = "/{id}")
     public Inventory getInventory(@PathVariable int id);
 
+    @GetMapping(value = "/product/{id}")
+    public Inventory getInventoryByProduct(@PathVariable int id);
+
     @GetMapping
     public List<Inventory> getAllInventory();
 
