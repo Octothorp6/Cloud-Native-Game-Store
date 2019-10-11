@@ -11,7 +11,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/admin/customer")
+@RequestMapping(name = "/admin/customers")
 public class CustomerController {
 
     @Autowired
