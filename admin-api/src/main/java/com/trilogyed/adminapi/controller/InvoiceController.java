@@ -1,6 +1,7 @@
 package com.trilogyed.adminapi.controller;
 
 import com.trilogyed.adminapi.exception.NotFoundException;
+import com.trilogyed.adminapi.invoiceViewmodel.InvoiceViewModel;
 import com.trilogyed.adminapi.model.Invoice;
 import com.trilogyed.adminapi.model.InvoiceItem;
 import com.trilogyed.adminapi.service.AdminService;
@@ -23,18 +24,23 @@ public class InvoiceController {
     //==========================================    Invoice    ========================================================
 
     @PostMapping
-    public Invoice createInvoice(@RequestBody @Valid Invoice invoice){return adminService.createInvoice(invoice);}
+    public InvoiceViewModel createInvoice(@RequestBody @Valid Invoice invoice){return adminService.createInvoice(invoice);}
 
     @GetMapping(value = "/{id}")
-    public Invoice getInvoice(@PathVariable int id){
-        Invoice invoiceFromService = adminService.getInvoice(id);
+    public InvoiceViewModel getInvoice(@PathVariable int id){
+        InvoiceViewModel invoiceFromService = adminService.getInvoice(id);
         if(invoiceFromService == null)
             throw new NotFoundException("No Invoice exists in the DB with given id: "+id);
         return invoiceFromService;
     }
 
     @GetMapping
-    public List<Invoice> getAllInvoices(){return adminService.getAllInvoices();}
+    public List<InvoiceViewModel> getAllInvoices(){return adminService.getAllInvoices();}
+
+    @GetMapping("/customer/{customerId}")
+    public List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int id){
+        return adminService.getAllInvoicesByCustomer(id);
+    }
 
     @PutMapping
     public void updateInvoice(@RequestBody @Valid Invoice invoice){adminService.updateInvoice(invoice);}

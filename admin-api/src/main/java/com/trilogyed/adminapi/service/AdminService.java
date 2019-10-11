@@ -80,7 +80,7 @@ public class AdminService {
 
     public List<InvoiceViewModel> getAllInvoices(){return invoiceClient.getAllInvoices();}
 
-    public List<InvoiceViewModel> getALLInvoicesByCustomer(int customerId){return invoiceClient.getAllInvoicesByCustomer(customerId);}
+    public List<InvoiceViewModel> getAllInvoicesByCustomer(int customerId){return invoiceClient.getAllInvoicesByCustomer(customerId);}
 
     public void updateInvoice(Invoice invoice){invoiceClient.updateInvoice(invoice);}
 
