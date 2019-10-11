@@ -66,10 +66,21 @@ public class ServiceLayerTest {
 
     @Test
     public void saveFindInvoiceItem() {
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setInventoryId(1);
+        invoiceItem.setQuantity(10);
+        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem = serviceLayer.saveInvoiceItem(invoiceItem);
+
+        InvoiceItem invoiceItem1 = serviceLayer.findInvoiceItem(invoiceItem.getInvoiceItemId());
+        assertEquals(invoiceItem1, invoiceItem);
     }
 
     @Test
     public void findAllInvoiceItems() {
+        List<InvoiceItem> invoiceItems = serviceLayer.findAllInvoiceItems();
+        assertEquals(1,invoiceItems.size());
     }
 
     @Test
@@ -132,7 +143,7 @@ public class ServiceLayerTest {
         invoiceItems.add(invoiceItem);
 
         doReturn(invoiceItem).when(invoiceItemDao).addInvoiceItem(invoiceItem1);
-        doReturn(invoiceItem).when(invoiceItemDao).getInvoiceItem(1);
+        doReturn(invoiceItem).when(invoiceItemDao).getInvoiceItem(2);
         doReturn(invoiceItem2).when(invoiceItemDao).getInvoiceItem(5);
         doReturn(invoiceItems).when(invoiceItemDao).getAllInvoiceItemsByInvoice(1);
         doReturn(invoiceItems).when(invoiceItemDao).getAllInvoiceItems();

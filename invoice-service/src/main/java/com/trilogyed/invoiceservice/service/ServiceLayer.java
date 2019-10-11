@@ -80,6 +80,14 @@ public class ServiceLayer {
         return invoiceItemDao.addInvoiceItem(invoiceItem);
     }
 
+    public InvoiceItem findInvoiceItem(int id) {
+        return invoiceItemDao.getInvoiceItem(id);
+    }
+
+    public List<InvoiceItem> findInvoiceItemsByInvoice(int invoiceId) {
+        return invoiceItemDao.getAllInvoiceItemsByInvoice(invoiceId);
+    }
+
     public List<InvoiceItem> findAllInvoiceItems() {
         return invoiceItemDao.getAllInvoiceItems();
     }
