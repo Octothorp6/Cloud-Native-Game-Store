@@ -50,12 +50,13 @@ public class AdminService {
     //Check Invoice and then delete....if delete we then checkInvoiceItem then Inventory then product WOW
     public void deleteCustomer(int customerId){
         LevelUp levelUpCheck = levelUpClient.getLevelUpByCustomer(customerId);
-        if(levelUpCheck!= null){
-            levelUpClient.deleteLevelUp(levelUpCheck.getLevelUpId());
+      //  Invoice invoiceCheck = invoiceClient.g
+        if(levelUpCheck== null){
+//            levelUpClient.deleteLevelUp(levelUpCheck.getLevelUpId());
+            customerClient.deleteCustomer(customerId);
         }
 
-
-        customerClient.deleteCustomer(customerId);
+        //logic for invoice check
     }
 
 
@@ -119,6 +120,15 @@ public class AdminService {
     public void updateProduct(Product product){productClient.updateProduct(product);}
 
     public void deleteProduct(int productId){productClient.deleteProduct(productId);}
+    //When we are deleting a product, first check inventory with feign call, ensure that it is null then delete
+    //if it is not null, check quantity , and make sure each inventory quantity is 0 for that productId
+    //if the inventory quantity is 0, then check none of them have invoice-items with invoice-item
+
+    //WE DO NOT HAVE A METHOD to get all Inventory by product id so we have to pull all inventory and then
+    //filter by a productId and genearate a new list
+
+    //then we stream through to check that the quantity is zero
+
 
 
 }
