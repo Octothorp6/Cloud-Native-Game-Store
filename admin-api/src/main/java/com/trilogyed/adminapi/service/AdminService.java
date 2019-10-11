@@ -1,5 +1,9 @@
 package com.trilogyed.adminapi.service;
 
+import com.trilogyed.adminapi.exception.ImpossibleDeleteException;
+import com.trilogyed.adminapi.exception.NullListReturnException;
+import com.trilogyed.adminapi.exception.NullObjectReturnException;
+import com.trilogyed.adminapi.invoiceViewmodel.InvoiceViewModel;
 import com.trilogyed.adminapi.model.*;
 import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +44,22 @@ public class AdminService {
     //CRUD for Customer
     public Customer createCustomer(Customer customer){return customerClient.createCustomer(customer);}
 
-    public Customer getCustomer(int customerId){return  customerClient.getCustomer(customerId);}
+    public Customer getCustomer(int customerId){
+        Customer custFromService = customerClient.getCustomer(customerId);
+        if(custFromService==null)
+            throw new NullObjectReturnException("There is no customer given the id: "+customerId);
+        return custFromService;
+    }
 
-    public List<Customer> getAllCustomers(){return customerClient.getAllCustomers();}
+    public List<Customer> getAllCustomers(){
+        List<Customer>customersFromService = customerClient.getAllCustomers();
+
+        if(customersFromService.size()==0)
+            throw new NullListReturnException("There are no customers in our database");
+
+
+        return customersFromService;
+    }
 
     public void updateCustomer(Customer customer){customerClient.updateCustomer(customer);}
 
@@ -50,11 +67,23 @@ public class AdminService {
     //Check Invoice and then delete....if delete we then checkInvoiceItem then Inventory then product WOW
     public void deleteCustomer(int customerId){
         LevelUp levelUpCheck = levelUpClient.getLevelUpByCustomer(customerId);
-      //  Invoice invoiceCheck = invoiceClient.g
-        if(levelUpCheck== null){
-//            levelUpClient.deleteLevelUp(levelUpCheck.getLevelUpId());
+        List<InvoiceViewModel> invoiceCheckList = invoiceClient.getAllInvoicesByCustomer(customerId);
+
+        if(invoiceCheckList.size()==0) {
             customerClient.deleteCustomer(customerId);
+            //  Invoice invoiceCheck = invoiceClient.g
+            if (levelUpCheck == null) {
+//            levelUpClient.deleteLevelUp(levelUpCheck.getLevelUpId());
+                customerClient.deleteCustomer(customerId);
+            }
+            else{
+                throw new ImpossibleDeleteException("We cannot perform this delete as the customer has levelUp pounts, which we are keeping track of");
+            }
         }
+        else{
+            throw new ImpossibleDeleteException("We cannot delete this customer as there is an existing InvoiceViewModel associated with this customer");
+        }
+
 
         //logic for invoice check
     }
@@ -73,11 +102,13 @@ public class AdminService {
 
 
     //CRUD for Invoice
-    public Invoice createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoice);}
+    public InvoiceViewModel createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoice);}
 
-    public Invoice getInvoice(int invoiceId){return invoiceClient.getInvoice(invoiceId);}
+    public InvoiceViewModel getInvoice(int invoiceId){return invoiceClient.getInvoice(invoiceId);}
 
-    public List<Invoice> getAllInvoices(){return invoiceClient.getAllInvoices();}
+    public List<InvoiceViewModel> getAllInvoices(){return invoiceClient.getAllInvoices();}
+
+    public List<InvoiceViewModel> getAllInvoicesByCustomer(int customerId){return invoiceClient.getAllInvoicesByCustomer(customerId);}
 
     public void updateInvoice(Invoice invoice){invoiceClient.updateInvoice(invoice);}
 
