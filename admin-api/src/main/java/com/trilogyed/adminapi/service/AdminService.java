@@ -1,9 +1,6 @@
 package com.trilogyed.adminapi.service;
 
-import com.trilogyed.adminapi.model.Customer;
-import com.trilogyed.adminapi.model.Inventory;
-import com.trilogyed.adminapi.model.LevelUp;
-import com.trilogyed.adminapi.model.Product;
+import com.trilogyed.adminapi.model.*;
 import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -65,6 +62,8 @@ public class AdminService {
 
 
     //CRUD for Invoice
+
+    //public Invoice createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoic)}
 
 
 

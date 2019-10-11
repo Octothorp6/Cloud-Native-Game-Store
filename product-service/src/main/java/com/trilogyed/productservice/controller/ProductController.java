@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
@@ -46,16 +46,16 @@ public class ProductController {
 
     @RequestMapping(value = "/product", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String updateProduct(@RequestBody @Valid Product product){
+    public void updateProduct(@RequestBody @Valid Product product){
         service.updateProduct(product);
-        return "Product Updated.";
+//        return "Product Updated.";
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteProduct(@PathVariable int id){
+    public void deleteProduct(@PathVariable int id){
         service.deleteProduct(id);
-        return "Product deleted";
+//        return "Product deleted";
     }
 
 }
