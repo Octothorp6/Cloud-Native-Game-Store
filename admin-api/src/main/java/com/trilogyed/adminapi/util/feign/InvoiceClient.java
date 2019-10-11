@@ -16,12 +16,15 @@ public interface InvoiceClient {
 
     @PostMapping
     public Invoice createInvoice(@RequestBody @Valid Invoice invoice);
+    //Return a view Model
 
     @GetMapping(value = "/{id}")
     public Invoice getInvoice(@PathVariable int id);
+    //ViewModel
 
     @GetMapping
     public List<Invoice> getAllInvoices();
+    //LIST OF ViewModels
 
     /*
         @GetMapping("/customer/{customerId}")
