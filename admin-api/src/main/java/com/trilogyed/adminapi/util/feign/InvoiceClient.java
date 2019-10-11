@@ -1,6 +1,7 @@
 package com.trilogyed.adminapi.util.feign;
 
 import com.sun.corba.se.pept.transport.InboundConnectionCache;
+import com.trilogyed.adminapi.invoiceViewmodel.InvoiceViewModel;
 import com.trilogyed.adminapi.model.Invoice;
 import com.trilogyed.adminapi.model.InvoiceItem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +16,19 @@ import java.util.List;
 public interface InvoiceClient {
 
     @PostMapping
-    public Invoice createInvoice(@RequestBody @Valid Invoice invoice);
+    public InvoiceViewModel createInvoice(@RequestBody @Valid Invoice invoice);
     //Return a view Model
 
     @GetMapping(value = "/{id}")
-    public Invoice getInvoice(@PathVariable int id);
+    public InvoiceViewModel getInvoice(@PathVariable int id);
     //ViewModel
 
     @GetMapping
-    public List<Invoice> getAllInvoices();
+    public List<InvoiceViewModel> getAllInvoices();
     //LIST OF ViewModels
 
-    /*
-        @GetMapping("/customer/{customerId}")
-    public List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int customerId) {
-        return serviceLayer.findInvoicesByCustomer(customerId);
-    }
-     */
+    @GetMapping("/customer/{customerId}")
+    public List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int customerId);
 
     @PutMapping
     public void updateInvoice(@RequestBody @Valid Invoice invoice);

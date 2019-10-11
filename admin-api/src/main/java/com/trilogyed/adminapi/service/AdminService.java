@@ -1,5 +1,6 @@
 package com.trilogyed.adminapi.service;
 
+import com.trilogyed.adminapi.invoiceViewmodel.InvoiceViewModel;
 import com.trilogyed.adminapi.model.*;
 import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,11 +74,13 @@ public class AdminService {
 
 
     //CRUD for Invoice
-    public Invoice createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoice);}
+    public InvoiceViewModel createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoice);}
 
-    public Invoice getInvoice(int invoiceId){return invoiceClient.getInvoice(invoiceId);}
+    public InvoiceViewModel getInvoice(int invoiceId){return invoiceClient.getInvoice(invoiceId);}
 
-    public List<Invoice> getAllInvoices(){return invoiceClient.getAllInvoices();}
+    public List<InvoiceViewModel> getAllInvoices(){return invoiceClient.getAllInvoices();}
+
+    public List<InvoiceViewModel> getALLInvoicesByCustomer(int customerId){return invoiceClient.getAllInvoicesByCustomer(customerId);}
 
     public void updateInvoice(Invoice invoice){invoiceClient.updateInvoice(invoice);}
 
