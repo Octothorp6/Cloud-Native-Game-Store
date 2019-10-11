@@ -80,14 +80,5 @@ public class RetailController {
         return null;
     }
 
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
-    public void updateProduct(@PathVariable int id, @RequestBody Product product) {
-
-    }
-
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
-    public void deleteProduct(@PathVariable int id) {
-
-    }
 
 }
