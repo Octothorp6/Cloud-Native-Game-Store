@@ -62,17 +62,29 @@ public class AdminService {
 
 
     //CRUD for Invoice
+    public Invoice createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoice);}
 
-    //public Invoice createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoic)}
+    public Invoice getInvoice(int invoiceId){return invoiceClient.getInvoice(invoiceId);}
 
+    public List<Invoice> getAllInvoices(){return invoiceClient.getAllInvoices();}
 
+    public void updateInvoice(Invoice invoice){invoiceClient.updateInvoice(invoice);}
 
+    public void deleteInvoice (int invoiceId){invoiceClient.deleteInvoice(invoiceId);}
 
+    //----------------------------------------------------------\
+    //Crud for InvoiceItem from same feign invoiceClient
+    public InvoiceItem createInvoiceItem(InvoiceItem invoiceItem){
+        return invoiceClient.createInvoiceItem(invoiceItem);
+    }
 
+    public InvoiceItem getInvoiceItem(int invoiceItemId){return invoiceClient.getInvoiceItem(invoiceItemId);}
 
+    public List<InvoiceItem> getAllInvoiceItems(){return invoiceClient.getAllInvoiceItems();}
 
+    public void updateInvoiceItem(InvoiceItem invoiceItem){invoiceClient.updateInvoiceItem(invoiceItem);}
 
-
+    public void deleteInvoiceItem(int invoiceItemId){invoiceClient.deleteInvoiceItem(invoiceItemId);}
 
 
     //CRUD LevelUp

@@ -31,19 +31,19 @@ public interface InvoiceClient {
 
     //==============================    InvocieItem Crud ================================
 
-    @PostMapping(value = "/invoiceItems")
+    @PostMapping(value = "/invoice-items")
     public InvoiceItem createInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem);
 
-    @GetMapping(value = "/invoiceItems/{id}")
+    @GetMapping(value = "/invoice-items/{id}")
     public InvoiceItem getInvoiceItem(@PathVariable int id);
 
-    @GetMapping(value = "/invoiceItems")
+    @GetMapping(value = "/invoice-items")
     public List<InvoiceItem> getAllInvoiceItems();
 
-    @PutMapping(value = "/invoiceItem")
+    @PutMapping(value = "/invoice-items")
     public void updateInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem);
 
-    @DeleteMapping(value = "/invoiceItem/{id}")
+    @DeleteMapping(value = "/invoice-items/{id}")
     public void deleteInvoiceItem(@PathVariable int id);
 
 }
