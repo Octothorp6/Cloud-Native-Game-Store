@@ -4,6 +4,7 @@ package com.trilogyed.retailapi.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+
 public class InvoiceItem {
     private int invoiceItemId;
     private int invoiceId;

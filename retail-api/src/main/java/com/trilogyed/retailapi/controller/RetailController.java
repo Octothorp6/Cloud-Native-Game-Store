@@ -57,7 +57,7 @@ public class RetailController {
     }
 
     @GetMapping(value = "/products/invoice/{id}")
-    public List<Product> getProductByInvoiceId(@PathVariable int id) {
+    public List<Product> getProductsByInvoiceId(@PathVariable int id) {
         return null;
     }
 
