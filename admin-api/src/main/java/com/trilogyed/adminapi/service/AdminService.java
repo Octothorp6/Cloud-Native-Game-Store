@@ -10,6 +10,7 @@ import com.trilogyed.adminapi.util.feign.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @Component
@@ -112,6 +113,13 @@ public class AdminService {
 
     }
 
+    public Inventory getInventoryByProduct(int productId){
+        if(inventoryClient.getInventoryByProduct(productId)== null)
+            throw new NullObjectReturnException("There is no inventory with the given productId "+ productId);
+
+        return inventoryClient.getInventoryByProduct(productId);
+    }
+
     public List<Inventory> getAllInventory(){
         List<Inventory> inventoryList = inventoryClient.getAllInventory();
         if(inventoryList.size()==0)
@@ -202,14 +210,33 @@ public class AdminService {
     public void deleteInvoiceItem(int invoiceItemId){invoiceClient.deleteInvoiceItem(invoiceItemId);}
 
 
-    //CRUD LevelUp
+    //CRUD LevelUp------------------------------------------------------------------------------------------------------
     public LevelUp createLevelUp(LevelUp levelUp){return levelUpClient.createLevelUp(levelUp);}
 
-    public LevelUp getLevelUp(int levelUpId){return levelUpClient.getLevelUp(levelUpId);}
+    public LevelUp getLevelUp(int levelUpId){
 
-    public List<LevelUp> getLevelUps(){return levelUpClient.getLevelUps();}
+        LevelUp fromService = levelUpClient.getLevelUp(levelUpId);
+        if(fromService == null )
+            throw new NullObjectReturnException("THere is no levelUp with given id: "+levelUpId+" in our DB");
 
-    public void updateLevelUp(LevelUp levelUp){levelUpClient.updateLevelUp(levelUp);}
+        return fromService;
+    }
+
+    public List<LevelUp> getLevelUps(){
+        List<LevelUp> fromService = levelUpClient.getLevelUps();
+        if(fromService.size() == 0)
+            throw new NullListReturnException("There are no levelUps in the DB");
+
+        return fromService;
+    }
+
+    public void updateLevelUp(LevelUp levelUp){
+        //Got Lazy hence the shortform code below sorry
+        if( getLevelUp(levelUp.getLevelUpId())== null)
+            throw new NullObjectReturnException("There is no levelUp in the database with the associated ID to update");
+
+        levelUpClient.updateLevelUp(levelUp);
+    }
 
     public void deleteLevelUp(int levelUpId){levelUpClient.deleteLevelUp(levelUpId);}
 
@@ -217,21 +244,38 @@ public class AdminService {
     //CRUD Product
     public Product createProduct(Product product){return productClient.createProduct(product);}
 
-    public Product getProduct(int productId){return productClient.getProduct(productId);}
+    public Product getProduct(int productId){
+        if(productClient.getProduct(productId) == null)
+            throw new NullObjectReturnException("There is no product in the database with id: "+productId);
 
-    public List<Product> getAllProducts(){return productClient.getAllProducts();}
+        return productClient.getProduct(productId);
+    }
 
-    public void updateProduct(Product product){productClient.updateProduct(product);}
+    public List<Product> getAllProducts(){
+        if(productClient.getAllProducts().size() == 0)
+            throw new NullListReturnException("There are no products in the DB and as a result no LIST");
 
-    public void deleteProduct(int productId){productClient.deleteProduct(productId);}
+        return productClient.getAllProducts();}
+
+    public void updateProduct(Product product){
+        if(getProduct(product.getProductId())== null)
+            throw new NullObjectReturnException("There is no product with given id: /n"+product.getProductId()+ "to uppdate in the DB");
+
+        productClient.updateProduct(product);}
+
+    public void deleteProduct(int productId){
+        if(inventoryClient.getInventoryByProduct(productId)== null)
+
+        productClient.deleteProduct(productId);
+
+    }
     //When we are deleting a product, first check inventory with feign call, ensure that it is null then delete
     //if it is not null, check quantity , and make sure each inventory quantity is 0 for that productId
     //if the inventory quantity is 0, then check none of them have invoice-items with invoice-item
 
-    //WE DO NOT HAVE A METHOD to get all Inventory by product id so we have to pull all inventory and then
-    //filter by a productId and genearate a new list
 
-    //then we stream through to check that the quantity is zero
+
+
 
 
 
