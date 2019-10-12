@@ -264,19 +264,31 @@ public class AdminService {
         productClient.updateProduct(product);}
 
     public void deleteProduct(int productId){
-        if(inventoryClient.getInventoryByProduct(productId)== null)
+            if(inventoryClient.getInventoryByProduct(productId)== null){
 
-        productClient.deleteProduct(productId);
+                productClient.deleteProduct(productId);
+            }
+            else{
+                Inventory check = inventoryClient.getInventoryByProduct(productId);
+                if(check.getQuantity()== 0){
+
+                    productClient.deleteProduct(productId);
+                }
+                else{
+                    throw new ImpossibleDeleteException("We cannot delete the given product as it exists in inventory!");
+
+//                int invIdCheck = check.getInventoryId();
+//
+//                List<InvoiceItem> invoiceItems = getAllInvoiceItems();
+//                invoiceItems.stream().
+//
+//                if()
+                }
+            }
 
     }
     //When we are deleting a product, first check inventory with feign call, ensure that it is null then delete
     //if it is not null, check quantity , and make sure each inventory quantity is 0 for that productId
     //if the inventory quantity is 0, then check none of them have invoice-items with invoice-item
-
-
-
-
-
-
 
 }
