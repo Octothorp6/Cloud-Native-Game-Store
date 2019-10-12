@@ -1,5 +1,6 @@
 package com.trilogyed.adminapi.service;
 
+import com.trilogyed.adminapi.exception.CantUpdateObjectException;
 import com.trilogyed.adminapi.exception.ImpossibleDeleteException;
 import com.trilogyed.adminapi.exception.NullListReturnException;
 import com.trilogyed.adminapi.exception.NullObjectReturnException;
@@ -61,10 +62,17 @@ public class AdminService {
         return customersFromService;
     }
 
-    public void updateCustomer(Customer customer){customerClient.updateCustomer(customer);}
+    public void updateCustomer(Customer customer){
+        Customer custObjInDb = customerClient.getCustomer(customer.getCustomerId());
+        if(custObjInDb == null)
+            throw new CantUpdateObjectException("We can't update this object as it is NOT in our DB! Create it with Post Uri");
 
-    //Business Logic Check level up...we need to delete it
-    //Check Invoice and then delete....if delete we then checkInvoiceItem then Inventory then product WOW
+        customerClient.updateCustomer(customer);
+    }
+
+
+    //NOTE WE ARENT GOING TO DELETE CUSTOMER...BECAUSE WE wwouldnt ever do that
+
     public void deleteCustomer(int customerId){
         LevelUp levelUpCheck = levelUpClient.getLevelUpByCustomer(customerId);
         List<InvoiceViewModel> invoiceCheckList = invoiceClient.getAllInvoicesByCustomer(customerId);
@@ -83,18 +91,28 @@ public class AdminService {
         else{
             throw new ImpossibleDeleteException("We cannot delete this customer as there is an existing InvoiceViewModel associated with this customer");
         }
-
-
-        //logic for invoice check
     }
 
 
     //CRUD for Inventory
     public Inventory createInventory(Inventory inventory){return  inventoryClient.createInventory(inventory);}
 
-    public Inventory getInventory(int inventoryId){return inventoryClient.getInventory(inventoryId);}
+    public Inventory getInventory(int inventoryId){
+        Inventory inventoryFromService = inventoryClient.getInventory(inventoryId);
+        if(inventoryFromService==null)
+            throw new NullObjectReturnException("There is no Inventory in our database");
 
-    public List<Inventory> getAllInventory(){return inventoryClient.getAllInventory();}
+        return inventoryFromService;
+
+    }
+
+    public List<Inventory> getAllInventory(){
+        List<Inventory> inventoryList = inventoryClient.getAllInventory();
+        if(inventoryList.size()==0)
+            throw new NullListReturnException("There is no inventories to return in our database");
+        return inventoryList;
+    }
+
 
     public void updateInventory(Inventory inventory){inventoryClient.updateInventory(inventory);}
 
