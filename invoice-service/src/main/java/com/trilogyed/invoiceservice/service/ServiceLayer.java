@@ -8,6 +8,7 @@ import com.trilogyed.invoiceservice.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,9 @@ public class ServiceLayer {
         this.invoiceItemDao = invoiceItemDao;
     }
 
-
+    //========================================================================================================
     // INVOICE METHODS
+
     public InvoiceViewModel saveInvoice(Invoice invoice){
         invoice = invoiceDao.addInvoice(invoice);
         return buildInvoiceViewModel(invoice);
@@ -79,9 +81,8 @@ public class ServiceLayer {
     }
 
     //========================================================================================================
-    //========================================================================================================
-
     // INVOICE ITEM METHODS
+
     public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem){
         return invoiceItemDao.addInvoiceItem(invoiceItem);
     }
@@ -106,6 +107,22 @@ public class ServiceLayer {
         invoiceDao.deleteInvoice(id);
     }
 
+    //=======================================================================================================
+    // CALCULATE TOTAL
+
+    private BigDecimal calculateTotal(List<InvoiceItem> invoiceItems) {
+        BigDecimal total = BigDecimal.ZERO;
+
+        for (InvoiceItem invoiceItem : invoiceItems) {
+            BigDecimal itemTotal;
+            itemTotal = invoiceItem.getUnitPrice().multiply(new BigDecimal(invoiceItem.getQuantity()));
+            total = total.add(itemTotal);
+        }
+        return total;
+    }
+
+
+    // HELPER METHOD FOR INVOICEVIEWMODEL
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
         invoiceViewModel.setId(invoice.getInvoiceId());
@@ -113,6 +130,7 @@ public class ServiceLayer {
         invoiceViewModel.setPurchaseDate(invoice.getPurchaseDate());
         List<InvoiceItem> invoiceItems = invoiceItemDao.getAllInvoiceItemsByInvoice(invoice.getInvoiceId());
         invoiceViewModel.setInvoiceItems(invoiceItems);
+        invoiceViewModel.setTotal(calculateTotal(invoiceItems));
 
         return invoiceViewModel;
     }

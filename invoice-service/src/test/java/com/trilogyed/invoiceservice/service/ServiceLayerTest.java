@@ -71,7 +71,7 @@ public class ServiceLayerTest {
         invoiceItem.setInvoiceId(1);
         invoiceItem.setInventoryId(1);
         invoiceItem.setQuantity(10);
-        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
         invoiceItem = serviceLayer.saveInvoiceItem(invoiceItem);
 
         InvoiceItem invoiceItem1 = serviceLayer.findInvoiceItem(invoiceItem.getInvoiceItemId());
@@ -125,20 +125,20 @@ public class ServiceLayerTest {
         invoiceItem.setInvoiceId(1);
         invoiceItem.setInventoryId(1);
         invoiceItem.setQuantity(10);
-        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
 
         InvoiceItem invoiceItem1 = new InvoiceItem();
         invoiceItem1.setInvoiceId(1);
         invoiceItem1.setInventoryId(1);
         invoiceItem1.setQuantity(10);
-        invoiceItem1.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem1.setUnitPrice(new BigDecimal("20.00"));
 
         InvoiceItem invoiceItem2 = new InvoiceItem();
         invoiceItem2.setInvoiceItemId(5);
         invoiceItem2.setInvoiceId(3);
         invoiceItem2.setInventoryId(1);
         invoiceItem2.setQuantity(10);
-        invoiceItem2.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem2.setUnitPrice(new BigDecimal("20.00"));
 
         List<InvoiceItem> invoiceItems = new ArrayList<>();
         invoiceItems.add(invoiceItem);

@@ -13,7 +13,7 @@ public class MessageListener {
     LevelUpClient levelUpClient;
 
     @RabbitListener(queues = LevelUpQueueConsumerApplication.QUEUE_NAME)
-    public void receiveComment(LevelUpEntry levelUpEntry) {
+    public void receiveLevelUp(LevelUpEntry levelUpEntry) {
         System.out.println("Incoming message: " + levelUpEntry.toString());
         try {
             if (levelUpEntry.getLevelUpId() == 0) {

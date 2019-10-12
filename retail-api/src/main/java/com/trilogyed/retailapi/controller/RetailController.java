@@ -57,7 +57,7 @@ public class RetailController {
     }
 
     @GetMapping(value = "/products/invoice/{id}")
-    public List<Product> getProductByInvoiceId(@PathVariable int id) {
+    public List<Product> getProductsByInvoiceId(@PathVariable int id) {
         return null;
     }
 
@@ -80,14 +80,5 @@ public class RetailController {
         return null;
     }
 
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
-    public void updateProduct(@PathVariable int id, @RequestBody Product product) {
-
-    }
-
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
-    public void deleteProduct(@PathVariable int id) {
-
-    }
 
 }

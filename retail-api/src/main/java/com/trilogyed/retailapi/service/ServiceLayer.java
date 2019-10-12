@@ -1,11 +1,7 @@
 package com.trilogyed.retailapi.service;
 
-import com.trilogyed.retailapi.model.Invoice;
 import com.trilogyed.retailapi.model.LevelUp;
-import com.trilogyed.retailapi.util.feign.CustomerClient;
-import com.trilogyed.retailapi.util.feign.InventoryClient;
-import com.trilogyed.retailapi.util.feign.InvoiceClient;
-import com.trilogyed.retailapi.util.feign.ProductClient;
+import com.trilogyed.retailapi.util.feign.*;
 import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,25 +18,53 @@ public class ServiceLayer {
     CustomerClient customerClient;
     InventoryClient inventoryClient;
     InvoiceClient invoiceClient;
+    LevelUpClient levelUpClient;
     ProductClient productClient;
 
     @Autowired
     public ServiceLayer(CustomerClient customerClient, InventoryClient inventoryClient, InvoiceClient invoiceClient,
-                        ProductClient productClient) {
+                        LevelUpClient levelUpClient, ProductClient productClient) {
         this.customerClient = customerClient;
         this.inventoryClient = inventoryClient;
         this.invoiceClient = invoiceClient;
+        this.levelUpClient = levelUpClient;
         this.productClient = productClient;
     }
+
+
+    //==============================================================================================================
+    // CUSTOMER METHODS
+
+
+
+
+    //==============================================================================================================
+    // INVENTORY METHODS
+
+
+
+
+    //==============================================================================================================
+    // INVOICE METHODS
+
+
+
+
+    //==============================================================================================================
+    // LEVEL-UP METHODS
+
+
+
+
+    //==============================================================================================================
+    // PRODUCT METHODS
+
+
+
     // FALL-BACK METHOD
     public LevelUp reliable() {
         LevelUp levelUp = new LevelUp();
         return levelUp;
     }
-
-    // CALCULATION METHODS
-
-
-    // HELPER METHOD FOR VIEWMODEL
 
 }

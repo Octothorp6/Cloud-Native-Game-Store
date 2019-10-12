@@ -1,9 +1,8 @@
 package com.trilogyed.invoiceservice.viewmodel;
 
-
-import com.trilogyed.invoiceservice.model.Invoice;
 import com.trilogyed.invoiceservice.model.InvoiceItem;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +12,15 @@ public class InvoiceViewModel {
     private int customerId;
     private LocalDate purchaseDate;
     private List<InvoiceItem> invoiceItems;
+    private BigDecimal total;
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
 
     public int getId() {
         return id;
@@ -54,11 +62,12 @@ public class InvoiceViewModel {
         return id == that.id &&
                 customerId == that.customerId &&
                 Objects.equals(purchaseDate, that.purchaseDate) &&
-                Objects.equals(invoiceItems, that.invoiceItems);
+                Objects.equals(invoiceItems, that.invoiceItems) &&
+                Objects.equals(total, that.total);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, customerId, purchaseDate, invoiceItems);
+        return Objects.hash(id, customerId, purchaseDate, invoiceItems, total);
     }
 }

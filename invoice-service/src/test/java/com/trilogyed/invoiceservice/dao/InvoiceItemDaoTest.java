@@ -48,7 +48,7 @@ public class InvoiceItemDaoTest {
         invoiceItem.setInvoiceId(invoice.getInvoiceId());
         invoiceItem.setInventoryId(1);
         invoiceItem.setQuantity(10);
-        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
         invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
 
         InvoiceItem invoiceItem1 = invoiceItemDao.getInvoiceItem(invoiceItem.getInvoiceItemId());
@@ -66,7 +66,7 @@ public class InvoiceItemDaoTest {
         invoiceItem.setInvoiceId(invoice.getInvoiceId());
         invoiceItem.setInventoryId(1);
         invoiceItem.setQuantity(10);
-        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
         invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
 
         List<InvoiceItem> invoiceItems = invoiceItemDao.getAllInvoiceItems();
@@ -84,7 +84,7 @@ public class InvoiceItemDaoTest {
         invoiceItem.setInvoiceId(invoice.getInvoiceId());
         invoiceItem.setInventoryId(1);
         invoiceItem.setQuantity(10);
-        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
         invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
 
         List<InvoiceItem> invoiceItems = invoiceItemDao.getAllInvoiceItemsByInvoice(invoiceItem.getInvoiceId());
@@ -103,7 +103,7 @@ public class InvoiceItemDaoTest {
         invoiceItem.setInvoiceId(invoice.getInvoiceId());
         invoiceItem.setInventoryId(1);
         invoiceItem.setQuantity(10);
-        invoiceItem.setUnitPrice(new BigDecimal("29.99"));
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
         invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
 
         invoiceItem.setQuantity(20);
