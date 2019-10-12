@@ -270,19 +270,14 @@ public class AdminService {
             }
             else{
                 Inventory check = inventoryClient.getInventoryByProduct(productId);
-                if(check.getQuantity()== 0){
 
-                    productClient.deleteProduct(productId);
-                }
-                else{
+                List<InvoiceItem> invoiceItems = getAllInvoiceItems();
+                if(invoiceItems.contains(check.getInventoryId()))
                     throw new ImpossibleDeleteException("We cannot delete the given product as it exists in inventory!");
-
-//                int invIdCheck = check.getInventoryId();
-//
-//                List<InvoiceItem> invoiceItems = getAllInvoiceItems();
-//                invoiceItems.stream().
-//
-//                if()
+                else{
+                    if(check.getQuantity()== 0) {
+                        productClient.deleteProduct(productId);
+                    }
                 }
             }
 
