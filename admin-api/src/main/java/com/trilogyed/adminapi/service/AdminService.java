@@ -63,7 +63,8 @@ public class AdminService {
     }
 
     public void updateCustomer(Customer customer){
-        Customer custObjInDb = customerClient.getCustomer(customer.getCustomerId());
+        Customer custObjInDb = getCustomer(customer.getCustomerId());
+        //Instead of calling the feign client call what we already have defined abocve vs custObj = customerClient.getCustomer...
         int id = customer.getCustomerId();
         if(custObjInDb == null)
             throw new CantUpdateObjectException("We can't update this customer object as customer with id: " +id+ "/n is not in our DB");
@@ -154,10 +155,10 @@ public class AdminService {
     }
 
     public void updateInvoice(Invoice invoice){
-        InvoiceViewModel checkObj = invoiceClient.getInvoice(invoice.getInvoiceId());
+        InvoiceViewModel checkObj = getInvoice(invoice.getInvoiceId());
         if(checkObj == null )
             throw new NullObjectReturnException("There is no invoice in the invoice db to update");
-        
+
         invoiceClient.updateInvoice(invoice);
     }
 
@@ -170,11 +171,29 @@ public class AdminService {
         return invoiceClient.createInvoiceItem(invoiceItem);
     }
 
-    public InvoiceItem getInvoiceItem(int invoiceItemId){return invoiceClient.getInvoiceItem(invoiceItemId);}
+    public InvoiceItem getInvoiceItem(int invoiceItemId){
+        InvoiceItem fromService = invoiceClient.getInvoiceItem(invoiceItemId);
+        if(fromService == null )
+            throw new NullObjectReturnException("There is no InvocieItem in the database with id: "+invoiceItemId);
 
-    public List<InvoiceItem> getAllInvoiceItems(){return invoiceClient.getAllInvoiceItems();}
+        return fromService;
+    }
 
-    public void updateInvoiceItem(InvoiceItem invoiceItem){invoiceClient.updateInvoiceItem(invoiceItem);}
+    public List<InvoiceItem> getAllInvoiceItems(){
+        List<InvoiceItem> fromService = invoiceClient.getAllInvoiceItems();
+        if(fromService.size() == 0 )
+            throw new NullListReturnException("There are no invoice items in the db hence no InvoiceItem List");
+
+        return fromService;
+    }
+
+    public void updateInvoiceItem(InvoiceItem invoiceItem){
+        InvoiceItem fromService = getInvoiceItem(invoiceItem.getInvoiceItemId());
+        if(fromService == null)
+            throw new NullObjectReturnException("There is no invoice in the database w/ associated id to populate");
+
+        invoiceClient.updateInvoiceItem(invoiceItem);
+    }
 
     public void deleteInvoiceItem(int invoiceItemId){invoiceClient.deleteInvoiceItem(invoiceItemId);}
 
