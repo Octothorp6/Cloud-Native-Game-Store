@@ -15,6 +15,8 @@ import java.util.List;
 @Component
 public class AdminService {
 
+    //DependencyInjection   -------------------------------------------------------------------------------------------
+
     @Autowired
     private CustomerClient customerClient;
 
@@ -29,7 +31,7 @@ public class AdminService {
 
     @Autowired
     private ProductClient productClient;
-
+//---------------------------------------------------------------------------------------------------------------------
     public AdminService(){}
 
     public AdminService(CustomerClient customerClient, InventoryClient inventoryClient,
@@ -42,6 +44,7 @@ public class AdminService {
         this.productClient = productClient;
     }
 
+//=====================================================================================================================
     //CRUD for Customer
     public Customer createCustomer(Customer customer){return customerClient.createCustomer(customer);}
 
@@ -118,7 +121,8 @@ public class AdminService {
 
 
     public void updateInventory(Inventory inventory){
-        Inventory invCheck = inventoryClient.getInventory(inventory.getInventoryId());
+//        Inventory invCheck = inventoryClient.getInventory(inventory.getInventoryId());
+        Inventory invCheck = getInventory(inventory.getInventoryId());
         int id = inventory.getInventoryId();
         if(invCheck == null)
             throw new CantUpdateObjectException("There is no inventory with given id: "+id+" in the database");
