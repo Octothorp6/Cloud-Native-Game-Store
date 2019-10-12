@@ -45,8 +45,8 @@ public class InvoiceController {
     @PutMapping
     public void updateInvoice(@RequestBody @Valid Invoice invoice){adminService.updateInvoice(invoice);}
 
-    @DeleteMapping(value = "/{id}")
-    public  void deleteInvoice(@PathVariable int id){adminService.deleteInvoice(id);}
+//    @DeleteMapping(value = "/{id}")
+//    public  void deleteInvoice(@PathVariable int id){adminService.deleteInvoice(id);}
 
     //==========================================    InvoiceItem    ====================================================
 
@@ -71,8 +71,8 @@ public class InvoiceController {
         adminService.updateInvoiceItem(invoiceItem);
     }
 
-    @DeleteMapping(value = "/invoice-items/{id}")
-    public void deleteInventory(@PathVariable int id){adminService.deleteInvoiceItem(id);}
+//    @DeleteMapping(value = "/invoice-items/{id}")
+//    public void deleteInventory(@PathVariable int id){adminService.deleteInvoiceItem(id);}
 
 
     //Security impl below
