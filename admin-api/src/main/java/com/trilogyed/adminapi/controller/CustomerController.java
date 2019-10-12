@@ -74,7 +74,7 @@ public CustomerController(AdminService adminService){this.adminService = adminSe
         adminService.updateCustomer(customer);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteCustomer( @PathVariable int id){adminService.deleteCustomer(id);}
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteCustomer( @PathVariable int id){adminService.deleteCustomer(id);}
 
 }

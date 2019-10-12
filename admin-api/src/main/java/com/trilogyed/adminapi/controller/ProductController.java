@@ -39,6 +39,6 @@ public class ProductController {
         adminService.updateProduct(product);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteProduct(@PathVariable int id){adminService.deleteProduct(id);}
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteProduct(@PathVariable int id){adminService.deleteProduct(id);}
 }

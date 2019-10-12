@@ -78,7 +78,7 @@ public class InventoryController {
         adminService.updateInventory(inventory);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteInventory( @PathVariable int id){adminService.deleteInventory(id);}
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteInventory( @PathVariable int id){adminService.deleteInventory(id);}
 
 }
