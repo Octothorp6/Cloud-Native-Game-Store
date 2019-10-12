@@ -64,15 +64,16 @@ public class AdminService {
 
     public void updateCustomer(Customer customer){
         Customer custObjInDb = customerClient.getCustomer(customer.getCustomerId());
+        int id = customer.getCustomerId();
         if(custObjInDb == null)
-            throw new CantUpdateObjectException("We can't update this object as it is NOT in our DB! Create it with Post Uri");
+            throw new CantUpdateObjectException("We can't update this customer object as customer with id: " +id+ "/n is not in our DB");
 
         customerClient.updateCustomer(customer);
     }
 
 
     //NOTE WE ARENT GOING TO DELETE CUSTOMER...BECAUSE WE wwouldnt ever do that
-
+//-------------------------------------------------------------------------------------------------------------------
     public void deleteCustomer(int customerId){
         LevelUp levelUpCheck = levelUpClient.getLevelUpByCustomer(customerId);
         List<InvoiceViewModel> invoiceCheckList = invoiceClient.getAllInvoicesByCustomer(customerId);
@@ -92,6 +93,7 @@ public class AdminService {
             throw new ImpossibleDeleteException("We cannot delete this customer as there is an existing InvoiceViewModel associated with this customer");
         }
     }
+    //----------------------------------------------------------------------------------------------------------------
 
 
     //CRUD for Inventory
@@ -114,7 +116,12 @@ public class AdminService {
     }
 
 
-    public void updateInventory(Inventory inventory){inventoryClient.updateInventory(inventory);}
+    public void updateInventory(Inventory inventory){
+        Inventory invCheck = inventoryClient.getInventory(inventory.getInventoryId());
+        int id = inventory.getInventoryId();
+        if(invCheck == null)
+            throw new CantUpdateObjectException("There is no inventory with given id: "+id+" in the database");
+        inventoryClient.updateInventory(inventory);}
 
     public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
 
@@ -122,14 +129,39 @@ public class AdminService {
     //CRUD for Invoice
     public InvoiceViewModel createInvoice(Invoice invoice){return invoiceClient.createInvoice(invoice);}
 
-    public InvoiceViewModel getInvoice(int invoiceId){return invoiceClient.getInvoice(invoiceId);}
+    public InvoiceViewModel getInvoice(int invoiceId){
+        InvoiceViewModel fromService = invoiceClient.getInvoice(invoiceId);
+        int id = fromService.getId();
+        if(fromService == null)
+            throw new NullObjectReturnException("There is no Invoice within the Database with given id: "+id);
 
-    public List<InvoiceViewModel> getAllInvoices(){return invoiceClient.getAllInvoices();}
+        return invoiceClient.getInvoice(invoiceId);
+    }
 
-    public List<InvoiceViewModel> getAllInvoicesByCustomer(int customerId){return invoiceClient.getAllInvoicesByCustomer(customerId);}
+    public List<InvoiceViewModel> getAllInvoices(){
+        List<InvoiceViewModel> fromService = invoiceClient.getAllInvoices();
+        if(fromService.size() == 0)
+            throw new NullListReturnException("There are no invoices in the DB, hence no list to display.");
 
-    public void updateInvoice(Invoice invoice){invoiceClient.updateInvoice(invoice);}
+        return invoiceClient.getAllInvoices();
+    }
 
+    public List<InvoiceViewModel> getAllInvoicesByCustomer(int customerId){
+        List<InvoiceViewModel> custListFromInvService = invoiceClient.getAllInvoicesByCustomer(customerId);
+        if(custListFromInvService.size() == 0)
+            throw new NullListReturnException("There are no invoices with given customerId: "+customerId);
+        return custListFromInvService;
+    }
+
+    public void updateInvoice(Invoice invoice){
+        InvoiceViewModel checkObj = invoiceClient.getInvoice(invoice.getInvoiceId());
+        if(checkObj == null )
+            throw new NullObjectReturnException("There is no invoice in the invoice db to update");
+        
+        invoiceClient.updateInvoice(invoice);
+    }
+
+    //We handle the deletion of Invoice and dependent InvoiceItems in the DAO so yeeeeee we good
     public void deleteInvoice (int invoiceId){invoiceClient.deleteInvoice(invoiceId);}
 
     //----------------------------------------------------------\
