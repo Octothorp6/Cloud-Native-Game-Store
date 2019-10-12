@@ -122,7 +122,8 @@ public class ServiceLayer {
     }
 
 
-    // HELPER METHOD FOR INVOICEVIEWMODEL
+    // HELPER METHOD FOR INVOICE-VIEW-MODEL
+
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
         invoiceViewModel.setId(invoice.getInvoiceId());
