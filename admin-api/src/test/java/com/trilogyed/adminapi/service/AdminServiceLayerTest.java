@@ -215,6 +215,17 @@ public class AdminServiceLayerTest {
         doReturn(inventoryList).when(inventoryClient).getAllInventory();
     }
 
+    @Test
+    public void saveFindInventory() {
+        Inventory inventory = new Inventory();
+        inventory.setProductId(5);
+        inventory.setQuantity(10);
+
+        inventory = adminService.createInventory(inventory);
+        Inventory inventory1 = adminService.getInventory(inventory.getInventoryId());
+        assertEquals(inventory1, inventory);
+    }
+
 
 
 
