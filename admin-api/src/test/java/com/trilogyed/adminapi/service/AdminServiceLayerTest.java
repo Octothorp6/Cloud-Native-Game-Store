@@ -243,9 +243,11 @@ public class AdminServiceLayerTest {
         assertEquals(inventory1, inventory);
     }
 
+    //WE NEED TO ADD UPDATE tests to the InventoryService aka homie needs to send me the file
 
 
 
+    //================================================================================================================
     private void invoiceMockSetUp(){
         invoiceClient = mock(InvoiceClient.class);
 
@@ -311,6 +313,8 @@ public class AdminServiceLayerTest {
         doNothing().when(invoiceClient).updateInvoiceItem(invoiceItem);
 
     }
+    //================================================================================================================
+
 
     private void levelUpMockSetUp(){
         levelUpClient = mock(LevelUpClient.class);
@@ -333,9 +337,40 @@ public class AdminServiceLayerTest {
         doReturn(levelUp).when(levelUpClient).getLevelUp(1);
         doReturn(levelUp).when(levelUpClient).getLevelUpByCustomer(5);
         doReturn(levelUps).when(levelUpClient).getLevelUps();
-
     }
 
+    @Test
+    public void saveFindLevelUp() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(5);
+        levelUp.setPoints(100);
+        levelUp.setMemberDate(LocalDate.of(2019,11,10));
+        levelUp = adminService.createLevelUp(levelUp);
+
+        LevelUp levelUp1 = adminService.getLevelUp(levelUp.getLevelUpId());
+        assertEquals(levelUp1, levelUp);
+    }
+
+    @Test
+    public void findAllLevelUps() {
+        List<LevelUp> levelUps = adminService.getLevelUps();
+        assertEquals(1, levelUps.size());
+    }
+
+
+    @Test
+    public void findLevelUpByCustomer() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(5);
+        levelUp.setPoints(100);
+        levelUp.setMemberDate(LocalDate.of(2019,11,10));
+        levelUp = adminService.createLevelUp(levelUp);
+
+        LevelUp levelUp1 = adminService.getLevelUpByCustomer(levelUp.getCustomerId());
+        assertEquals(levelUp1, levelUp);
+    }
+
+    //================================================================================================================
     private void productMockSetUp(){
         productClient = mock(ProductClient.class);
 
