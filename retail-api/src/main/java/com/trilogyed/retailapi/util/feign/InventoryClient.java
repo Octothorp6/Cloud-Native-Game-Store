@@ -21,9 +21,7 @@ public interface InventoryClient {
     @GetMapping("/{id}")
     Inventory getInventory(@PathVariable int id);
 
-    @DeleteMapping("/{id}")
-    void deleteInventory(@PathVariable int id);
-
     @GetMapping("/product/{id}")
     Inventory getInventoryByProduct(@PathVariable int id);
+
 }
