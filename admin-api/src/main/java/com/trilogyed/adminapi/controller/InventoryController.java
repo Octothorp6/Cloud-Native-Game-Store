@@ -67,6 +67,9 @@ public class InventoryController {
         return inventoryFromService;
     }
 
+    @GetMapping("/product/{id}")
+    public Inventory getInventoryByProduct(@PathVariable int id){return adminService.getInventoryByProduct(id);}
+
     @GetMapping
     public List<Inventory> getAllInventory(){return adminService.getAllInventory(); }
 
@@ -75,7 +78,7 @@ public class InventoryController {
         adminService.updateInventory(inventory);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteInventory( @PathVariable int id){adminService.deleteInventory(id);}
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteInventory( @PathVariable int id){adminService.deleteInventory(id);}
 
 }

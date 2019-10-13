@@ -72,9 +72,9 @@ public class LevelUpController {
         adminService.updateLevelUp(levelUp);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteLevelUp(@PathVariable int id){
-        adminService.deleteLevelUp(id);
-    }
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteLevelUp(@PathVariable int id){
+//        adminService.deleteLevelUp(id);
+//    }
 
 }
