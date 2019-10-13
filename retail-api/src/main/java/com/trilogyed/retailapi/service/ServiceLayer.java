@@ -1,10 +1,13 @@
 package com.trilogyed.retailapi.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.trilogyed.retailapi.model.*;
 import com.trilogyed.retailapi.util.feign.*;
 import com.trilogyed.retailapi.util.helper.Helper;
+import com.trilogyed.retailapi.util.messages.LevelUpEntry;
 import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import com.trilogyed.retailapi.viewmodel.OrderViewModel;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +21,6 @@ import java.util.List;
  * PUBLIC METHODS:
  */
 
-
 @Component
 public class ServiceLayer {
     CustomerClient customerClient;
@@ -26,6 +28,9 @@ public class ServiceLayer {
     InvoiceClient invoiceClient;
     LevelUpClient levelUpClient;
     ProductClient productClient;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Autowired
     public ServiceLayer(CustomerClient customerClient, InventoryClient inventoryClient, InvoiceClient invoiceClient,
@@ -88,6 +93,7 @@ public class ServiceLayer {
 
     //==============================================================================================================
     // LEVEL-UP METHODS
+    @HystrixCommand(fallbackMethod = "reliable")
     public LevelUp findLevelUp(int levelUpId) {
         return null;
     }
@@ -99,6 +105,7 @@ public class ServiceLayer {
     public List<LevelUp> findAllLevelUps() {
         return null;
     }
+
 
     //==============================================================================================================
     // PRODUCT METHODS
@@ -122,8 +129,9 @@ public class ServiceLayer {
     }
 
 
-    private OrderViewModel buildOrderViewModel() {
-        OrderViewModel orderViewModel = new OrderViewModel();
-        return orderViewModel;
-    }
+
+
+
+
+
 }

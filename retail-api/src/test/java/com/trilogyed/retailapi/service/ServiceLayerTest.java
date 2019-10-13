@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 
 public class ServiceLayerTest {
 
@@ -15,7 +17,6 @@ public class ServiceLayerTest {
     ProductClient productClient;
     ServiceLayer serviceLayer;
 
-
     @Before
     public void setUp() throws Exception {
         setUpCustomerMock();
@@ -23,10 +24,11 @@ public class ServiceLayerTest {
         setUpInvoiceMock();
         setUpLevelUpMock();
         setUpProductMock();
-
         serviceLayer = new ServiceLayer(customerClient, inventoryClient, invoiceClient,levelUpClient,productClient);
     }
 
+    // ========================================================================================
+    // CUSTOMER METHODS
     @Test
     public void findCustomerById() {
     }
@@ -39,6 +41,8 @@ public class ServiceLayerTest {
     public void findAllCustomers() {
     }
 
+    // ========================================================================================
+    // INVENTORY METHODS
     @Test
     public void findInventory() {
     }
@@ -55,6 +59,8 @@ public class ServiceLayerTest {
     public void saveInventory() {
     }
 
+    // ========================================================================================
+    // INVOICE METHODS
     @Test
     public void findInvoiceById() {
     }
@@ -71,6 +77,8 @@ public class ServiceLayerTest {
     public void saveInvoice() {
     }
 
+    // ========================================================================================
+    // LEVEL UP METHODS
     @Test
     public void findLevelUp() {
     }
@@ -82,6 +90,9 @@ public class ServiceLayerTest {
     @Test
     public void findAllLevelUps() {
     }
+
+    // ========================================================================================
+    // PRODUCT METHODS
 
     @Test
     public void findProduct() {
@@ -100,22 +111,23 @@ public class ServiceLayerTest {
     // SET UP MOCK INFORMATION
 
     private void setUpCustomerMock() {
+        customerClient = mock(CustomerClient.class);
 
     }
 
     private void setUpInventoryMock() {
-
+        inventoryClient = mock(InventoryClient.class);
     }
 
     private void setUpInvoiceMock() {
-
+        invoiceClient = mock(InvoiceClient.class);
     }
 
     private void setUpLevelUpMock() {
-
+        levelUpClient = mock(LevelUpClient.class);
     }
 
     private void setUpProductMock() {
-
+        productClient = mock(ProductClient.class);
     }
 }

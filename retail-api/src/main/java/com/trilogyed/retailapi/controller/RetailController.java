@@ -3,6 +3,7 @@ package com.trilogyed.retailapi.controller;
 import com.trilogyed.retailapi.model.Invoice;
 import com.trilogyed.retailapi.model.Product;
 import com.trilogyed.retailapi.service.ServiceLayer;
+import com.trilogyed.retailapi.util.messages.LevelUpEntry;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class RetailController {
     private RabbitTemplate rabbitTemplate;
 
     public static final String EXCHANGE = "level-up-exchange";
-    public static final String ROUTING_KEY = "level.up.create.level#";
+    public static final String ROUTING_KEY = "level.up.create.level";
 
     @Autowired
     public RetailController(ServiceLayer serviceLayer, RabbitTemplate rabbitTemplate) {
@@ -71,5 +72,9 @@ public class RetailController {
         return 0;
     }
 
+    @PostMapping(value="/level-up/")
+    public void createLevelUp (LevelUpEntry levelUpEntry) {
+        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, levelUpEntry);
+    }
 
 }
