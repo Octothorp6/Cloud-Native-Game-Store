@@ -226,6 +226,23 @@ public class AdminServiceLayerTest {
         assertEquals(inventory1, inventory);
     }
 
+    @Test
+    public void findAllInventory() {
+        List<Inventory> inventories = adminService.getAllInventory();
+        assertEquals(1, inventories.size());
+    }
+
+    @Test
+    public void findInventoryByProduct() {
+        Inventory inventory = new Inventory();
+        inventory.setInventoryId(1);
+        inventory.setProductId(5);
+        inventory.setQuantity(10);
+
+        Inventory inventory1 = adminService.getInventoryByProduct(inventory.getProductId());
+        assertEquals(inventory1, inventory);
+    }
+
 
 
 
