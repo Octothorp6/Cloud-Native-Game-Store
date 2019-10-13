@@ -53,6 +53,7 @@ public class ServiceLayerTest {
         productB.setUnitCost(new BigDecimal("550.99"));
 
         doReturn(productA).when(dao).createProduct(productB);
+        doReturn(productA).when(dao).getProductByName("Xbox Scorpion");
         doReturn(productA).when(dao).getProduct(productA.getProductId());
         //====================================================
 
@@ -166,6 +167,19 @@ public class ServiceLayerTest {
 
         assertEquals(productUpdated,productToUpdate);
 
+    }
+
+    @Test
+    public void getProductByName() {
+        Product productA = new Product();
+        productA.setProductId(1);
+        productA.setName("Xbox Scorpion");
+        productA.setDescription("Microsoft's latest console");
+        productA.setListPrice(new BigDecimal("599.99"));
+        productA.setUnitCost(new BigDecimal("550.99"));
+
+        Product product = service.getProductByName("Xbox Scorpion");
+        assertEquals(product, productA);
     }
 
     @Test

@@ -31,6 +31,9 @@ public class ProductDaoJdbcTempImpl implements ProductDao {
     private static final String SELECT_PRODUCT_SQL =
             "SELECT * FROM product WHERE product_id = ?";
 
+    private static final String SELECT_PRODUCT_BY_NAME_SQL =
+            "SELECT * FROM product WHERE product_name = ?";
+
     private static final String SELECT_ALL_PRODUCTS_SQL =
             "SELECT * FROM product";
 
@@ -69,9 +72,19 @@ public class ProductDaoJdbcTempImpl implements ProductDao {
     }
 
     @Override
+    public Product getProductByName(String productName) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_PRODUCT_BY_NAME_SQL, this::mapRowToProduct, productName);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return jdbcTemplate.query(SELECT_ALL_PRODUCTS_SQL,this::mapRowToProduct);
     }
+
 
     @Override
     @Transactional

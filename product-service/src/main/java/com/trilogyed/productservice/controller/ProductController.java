@@ -40,6 +40,16 @@ public class ProductController {
         return productFromService;
     }
 
+    @GetMapping(value = "/name/{productName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Product getProductByName(@PathVariable String productName){
+        Product productFromService = service.getProductByName(productName);
+        if(productFromService==null)
+            throw new NotFoundException("No product exists in the DB with given name: "+ productName);
+        return productFromService;
+    }
+
+
     @GetMapping //do we add value = "/products"??
     @ResponseStatus(HttpStatus.OK)
     public List<Product> getAllProducts(){return service.getAllProducts();}
