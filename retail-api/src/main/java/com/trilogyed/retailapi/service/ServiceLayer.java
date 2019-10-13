@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * RETAIL SERVICE LAYER
+ * @RETAIL-SERVICE-LAYER
  * PURPOSE: Perform all necessary business logic for all retail purposes.
- * Private methods: buildInvoiceViewModel()
+ * PRIVATE METHODS: buildInvoiceViewModel()
+ * PUBLIC
  */
 
 

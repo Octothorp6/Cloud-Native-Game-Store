@@ -46,6 +46,11 @@ public class RetailController {
         return null;
     }
 
+    @GetMapping(value = "/products")
+    public List<Product> getAllProducts() {
+        return null;
+    }
+
     @GetMapping(value = "/products/inventory")
     public List<Product> getProductsInInventory() {
         return null;
@@ -64,20 +69,6 @@ public class RetailController {
     @GetMapping(value = "/levelup/customer/{id}")
     public int getLevelUpPointsByCustomerId(int id) {
         return 0;
-    }
-
-    // Admin Endpoints
-
-    @PostMapping(value = "/products")
-    public Product createProduct(@RequestBody Product product) {
-        return null;
-    }
-
-    // getProductById is above in the Retail endpoints
-
-    @GetMapping(value = "/products")
-    public List<Product> getAllProducts() {
-        return null;
     }
 
 
