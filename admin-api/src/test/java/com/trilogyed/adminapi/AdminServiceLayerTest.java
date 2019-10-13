@@ -1,6 +1,7 @@
 package com.trilogyed.adminapi;
 
 import com.trilogyed.adminapi.model.Customer;
+import com.trilogyed.adminapi.model.Inventory;
 import com.trilogyed.adminapi.service.AdminService;
 import com.trilogyed.adminapi.util.feign.*;
 import org.junit.Before;
@@ -141,9 +142,26 @@ public class AdminServiceLayerTest {
      */
 
     private void inventoryMockSetUp(){
+        inventoryClient = mock(InventoryClient.class);
 
+        Inventory inventory = new Inventory();
+        inventory.setInventoryId(1);
+        inventory.setProductId(5);
+        inventory.setQuantity(10);
 
+        Inventory inventory1 = new Inventory();
+        inventory1.setProductId(5);
+        inventory1.setQuantity(10);
+
+        List<Inventory> inventoryList = inventoryClient.getAllInventory();
+        inventoryList.add(inventory);
+
+        doReturn(inventory).when(inventoryClient).createInventory(inventory1);
+        doReturn(inventory).when(inventoryClient).getInventory(1);
+        doReturn(inventory).when(inventoryClient).getInventoryByProduct(5);
+        doReturn(inventoryList).when(inventoryClient).getAllInventory();
     }
+    
 
     private void invoiceMockSetUp(){
 
