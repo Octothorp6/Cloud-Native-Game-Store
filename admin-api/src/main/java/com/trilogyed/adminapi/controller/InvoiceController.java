@@ -8,6 +8,7 @@ import com.trilogyed.adminapi.service.AdminService;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,20 +16,21 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-//@RefreshScope
-@RequestMapping(name = "/admin/invoices")
+//@RequestMapping(name = "/admin/invoices")
 public class InvoiceController {
 
     @Autowired
     AdminService adminService;
 
-//    public InvoiceController(AdminService adminService){this.adminService = adminService;}
+
     //==========================================    Invoice    ========================================================
 
-    @PostMapping
+    @RequestMapping(value = "/admin/invoices",method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public InvoiceViewModel createInvoice(@RequestBody @Valid Invoice invoice){return adminService.createInvoice(invoice);}
 
-    @GetMapping(value = "/{id}")
+    @RequestMapping(value = "/admin/invoices/{id}",method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public InvoiceViewModel getInvoice(@PathVariable int id){
         InvoiceViewModel invoiceFromService = adminService.getInvoice(id);
         if(invoiceFromService == null)
@@ -36,15 +38,18 @@ public class InvoiceController {
         return invoiceFromService;
     }
 
-    @GetMapping
+    @RequestMapping(value = "/admin/invoices/all", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<InvoiceViewModel> getAllInvoices(){return adminService.getAllInvoices();}
 
-    @GetMapping("/customer/{customerId}")
+    @RequestMapping(value = "/admin/invoices/customer/{id}",method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int id){
         return adminService.getAllInvoicesByCustomer(id);
     }
 
-    @PutMapping
+    @RequestMapping(value = "/admin/invoices", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvoice(@RequestBody @Valid Invoice invoice){adminService.updateInvoice(invoice);}
 
 //    @DeleteMapping(value = "/{id}")
@@ -52,12 +57,15 @@ public class InvoiceController {
 
     //==========================================    InvoiceItem    ====================================================
 
-    @PostMapping(value = "/invoice-items")
+    @RequestMapping(value = "/admin/invoice-items",method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public InvoiceItem createInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem){
        return adminService.createInvoiceItem(invoiceItem);
     }
 
-    @GetMapping(value = "/invoice-items/{id}")
+
+    @RequestMapping(value = "/admin/invoice-items/{id}",method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public InvoiceItem getInvoiceItem(@PathVariable int id){
         InvoiceItem invItemFromService = adminService.getInvoiceItem(id);
         if(invItemFromService == null )
@@ -65,10 +73,14 @@ public class InvoiceController {
         return invItemFromService;
     }
 
-    @GetMapping(value = "/invoice-items")
+
+    @RequestMapping(value = "/admin/invoice-items/all", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<InvoiceItem> getAllInvoiceItems(){return adminService.getAllInvoiceItems();}
 
-    @PutMapping(value = "/invoice-items")
+
+    @RequestMapping(value = "/invoice-items", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem){
         adminService.updateInvoiceItem(invoiceItem);
     }

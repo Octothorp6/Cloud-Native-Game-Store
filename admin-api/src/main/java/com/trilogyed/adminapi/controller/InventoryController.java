@@ -4,6 +4,7 @@ import com.trilogyed.adminapi.exception.NotFoundException;
 import com.trilogyed.adminapi.model.Inventory;
 import com.trilogyed.adminapi.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -11,7 +12,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/admin/inventory")
+//@RequestMapping(name = "/admin/inventory")
 public class InventoryController {
 
     @Autowired
@@ -20,17 +21,16 @@ public class InventoryController {
 //    public InventoryController(AdminService adminService){this.adminService = adminService;}
 
 
-
-
-
     //CRUD w/Authorization for Inventory
 
-    @PostMapping
+    @RequestMapping(value = "/admin/inventory",method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Inventory createInventory(@RequestBody @Valid Inventory inventory){
         return adminService.createInventory(inventory);
     }
 
-    @GetMapping(value = "/{id}")
+    @RequestMapping(value = "/admin/inventory/{id}",method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public Inventory getInventory( @PathVariable int id){
         Inventory inventoryFromService = adminService.getInventory(id);
         if(inventoryFromService==null)
@@ -38,13 +38,17 @@ public class InventoryController {
         return inventoryFromService;
     }
 
-    @GetMapping("/product/{id}")
+
+    @RequestMapping(value = "/admin/inventory/product/{id}",method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public Inventory getInventoryByProduct(@PathVariable int id){return adminService.getInventoryByProduct(id);}
 
-    @GetMapping
+    @RequestMapping(value = "/admin/inventory/all", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
     public List<Inventory> getAllInventory(){return adminService.getAllInventory(); }
 
-    @PutMapping
+    @RequestMapping(value = "/admin/inventory", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInventory( @RequestBody @Valid Inventory inventory){
         adminService.updateInventory(inventory);
     }
