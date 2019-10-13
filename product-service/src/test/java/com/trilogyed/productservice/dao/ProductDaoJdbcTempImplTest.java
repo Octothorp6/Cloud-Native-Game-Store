@@ -64,6 +64,19 @@ public class ProductDaoJdbcTempImplTest {
 
 
     @Test
+    public void getProductByName() {
+        Product sony = new Product();
+        sony.setName("PS5");
+        sony.setDescription("Sony's latest console");
+        sony.setListPrice(new BigDecimal("499.99"));
+        sony.setUnitCost(new BigDecimal("470.99"));
+        sony = dao.createProduct(sony);
+
+        Product product = dao.getProductByName("PS5");
+        assertEquals(product, sony);
+    }
+
+    @Test
     public void updateProduct() {
 
         Product sony = new Product();

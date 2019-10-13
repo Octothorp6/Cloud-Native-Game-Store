@@ -29,6 +29,10 @@ public class ServiceLayer {
         return dao.getProduct(productId);
     }
 
+    public Product getProductByName(String productName) {
+        return dao.getProductByName(productName);
+    }
+
     public List<Product> getAllProducts(){
         return dao.getAllProducts();
     }
