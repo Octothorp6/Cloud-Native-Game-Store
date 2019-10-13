@@ -246,6 +246,8 @@ public class AdminServiceLayerTest {
 
     //WE NEED TO ADD UPDATE tests to the InventoryService aka homie needs to send me the file
 
+    @Test
+    public void updateInventory(){}
 
 
     //================================================================================================================
@@ -368,6 +370,9 @@ public class AdminServiceLayerTest {
         List<InvoiceItem> invoiceItems = adminService.getAllInvoiceItems();
         assertEquals(1,invoiceItems.size());
     }
+
+    @Test
+    public void updateInvoiceItem(){}
 
 
     //================================================================================================================
