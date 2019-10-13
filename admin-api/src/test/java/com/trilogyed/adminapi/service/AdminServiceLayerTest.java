@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doReturn;
 
@@ -457,19 +458,66 @@ public class AdminServiceLayerTest {
         doReturn(null).when(productClient).getProduct(productDelete.getProductId());
     }
 
+    @Test
+    public void createGetGetAllProduct(){
+        Product product = new Product();
+        product.setName("Xbox Scorpion");
+        product.setDescription("Microsoft's latest console");
+        product.setListPrice(new BigDecimal("599.99"));
+        product.setUnitCost(new BigDecimal("550.99"));
 
+        product = adminService.createProduct(product);
 
+        Product productFromService = adminService.getProduct(product.getProductId());
+        assertEquals(product,productFromService);
 
+        Product product2 = new Product();
+        product2.setName("Call of Duty: Modern Warfare");
+        product2.setDescription("Activision's newest addition, coming oct 22");
+        product2.setListPrice(new BigDecimal("59.99"));
+        product2.setUnitCost(new BigDecimal("50.99"));
 
+        product2 = adminService.createProduct(product2);
 
+        List<Product> productList = adminService.getAllProducts();
+        assertEquals(2,productList.size());
+    }
 
+    @Test
+    public void updateProduct(){
+        Product productToUpdate = new Product();
+        productToUpdate.setName("Razer Blade Laptop 14' ");
+        productToUpdate.setDescription("Razer's 14 inch gaming laptop");
+        productToUpdate.setListPrice(new BigDecimal("2499.99"));
+        productToUpdate.setUnitCost(new BigDecimal("2399.99"));
 
+        productToUpdate = adminService.createProduct(productToUpdate);
 
+        productToUpdate.setListPrice(new BigDecimal("2299.99")); //Sale of $200
+        productToUpdate.setUnitCost(new BigDecimal("2099.99"));
 
+        adminService.updateProduct(productToUpdate);
 
+        Product productUpdated = adminService.getProduct(productToUpdate.getProductId());
 
+        assertEquals(productUpdated,productToUpdate);
 
+    }
 
-
-
+//    @Test
+//    public void deleteProduct(){
+//        Product productDelete = new Product();
+//        productDelete.setProductId(99);
+//        productDelete.setName("Macbook Pro 15' ");
+//        productDelete.setDescription("15 inch macbook pro");
+//        productDelete.setListPrice(new BigDecimal("2100.99"));
+//        productDelete.setUnitCost(new BigDecimal("1999.99"));
+//
+//        service.deleteProduct(productDelete.getProductId());
+//
+//        Product productGone = service.getProduct(productDelete.getProductId());
+//
+//        assertNull(productGone);
+//    }
+    
 }
