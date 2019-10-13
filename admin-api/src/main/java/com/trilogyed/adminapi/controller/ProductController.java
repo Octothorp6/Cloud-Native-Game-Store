@@ -5,6 +5,7 @@ import com.trilogyed.adminapi.model.Customer;
 import com.trilogyed.adminapi.model.Product;
 import com.trilogyed.adminapi.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RefreshScope
 //@RequestMapping(name = "/admin/products")
 public class ProductController {
 
     @Autowired
     AdminService adminService;
 
-//    public ProductController(AdminService adminService){this.adminService = adminService;}
+    public ProductController(AdminService adminService){this.adminService = adminService;}
 
     @RequestMapping(value = "/admin/products",method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)

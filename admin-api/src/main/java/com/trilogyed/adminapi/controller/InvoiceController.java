@@ -16,12 +16,14 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RefreshScope
 //@RequestMapping(name = "/admin/invoices")
 public class InvoiceController {
 
     @Autowired
     AdminService adminService;
 
+    public InvoiceController(AdminService adminService){this.adminService = adminService;}
 
     //==========================================    Invoice    ========================================================
 

@@ -5,6 +5,7 @@ import com.trilogyed.adminapi.model.Customer;
 import com.trilogyed.adminapi.service.AdminService;
 import javafx.scene.chart.ValueAxis;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,14 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RefreshScope
 //@RequestMapping(name = "/admin/customers")
 public class CustomerController {
 
     @Autowired
     AdminService adminService;
 
-//    public CustomerController(AdminService adminService){this.adminService = adminService;}
+    public CustomerController(AdminService adminService){this.adminService = adminService;}
 
 
     //CRUD w/ Authorization for Customer

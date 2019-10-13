@@ -4,6 +4,7 @@ import com.trilogyed.adminapi.exception.NotFoundException;
 import com.trilogyed.adminapi.model.LevelUp;
 import com.trilogyed.adminapi.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,12 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/admin/level-up")
+@RefreshScope
 public class LevelUpController {
     @Autowired
     AdminService adminService;
 
-//    public LevelUpController(AdminService adminService) { this.adminService = adminService;  }
+    public LevelUpController(AdminService adminService) { this.adminService = adminService;  }
 
 
     @RequestMapping(value = "/admin/level-ups",method = RequestMethod.POST)
