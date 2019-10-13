@@ -314,6 +314,62 @@ public class AdminServiceLayerTest {
         doNothing().when(invoiceClient).updateInvoiceItem(invoiceItem);
 
     }
+
+    @Test
+    public void saveFindInvoice() {
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(5);
+        invoice.setPurchaseDate(LocalDate.of(2019,11,12));
+
+        InvoiceViewModel invoiceViewModel = adminService.createInvoice(invoice);
+        InvoiceViewModel invoiceViewModel1 = adminService.getInvoice(invoiceViewModel.getId());
+
+        assertEquals(invoiceViewModel1, invoiceViewModel);
+    }
+
+    @Test
+    public void findInvoicesByCustomer() {
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(5);
+        invoice.setPurchaseDate(LocalDate.of(2019,11,12));
+
+        InvoiceViewModel invoiceViewModel = adminService.createInvoice(invoice);
+
+        List<InvoiceViewModel> invoicesByCustomer = adminService.getAllInvoicesByCustomer(invoice.getCustomerId());
+        assertEquals(1, invoicesByCustomer.size());
+    }
+
+    @Test
+    public void findAllInvoices() {
+        List<InvoiceViewModel> invoices = adminService.getAllInvoices();
+        assertEquals(1, invoices.size());
+    }
+
+    @Test
+    public void updateInvoice() {
+
+    }
+
+    @Test
+    public void saveFindInvoiceItem() {
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setInventoryId(1);
+        invoiceItem.setQuantity(10);
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
+        invoiceItem = adminService.createInvoiceItem(invoiceItem);
+
+        InvoiceItem invoiceItem1 = adminService.getInvoiceItem(invoiceItem.getInvoiceItemId());
+        assertEquals(invoiceItem1, invoiceItem);
+    }
+
+    @Test
+    public void findAllInvoiceItems() {
+        List<InvoiceItem> invoiceItems = adminService.getAllInvoiceItems();
+        assertEquals(1,invoiceItems.size());
+    }
+
+
     //================================================================================================================
 
 
@@ -370,6 +426,9 @@ public class AdminServiceLayerTest {
         LevelUp levelUp1 = adminService.getLevelUpByCustomer(levelUp.getCustomerId());
         assertEquals(levelUp1, levelUp);
     }
+
+    @Test
+    public void updateLevelUp(){}
 
     //================================================================================================================
     private void productMockSetUp(){
