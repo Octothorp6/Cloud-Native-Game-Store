@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @FeignClient(name = "inventory-service")
-//@RequestMapping(value = "/inventory")
+@RequestMapping(value = "/inventory")
 public interface InventoryClient {
 
     @PostMapping(value = "/admin/inventory")

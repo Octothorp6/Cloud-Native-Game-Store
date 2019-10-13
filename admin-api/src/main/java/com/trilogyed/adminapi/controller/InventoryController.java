@@ -4,6 +4,7 @@ import com.trilogyed.adminapi.exception.NotFoundException;
 import com.trilogyed.adminapi.model.Inventory;
 import com.trilogyed.adminapi.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,14 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@RefreshScope
 //@RequestMapping(name = "/admin/inventory")
 public class InventoryController {
 
     @Autowired
     AdminService adminService;
 
-//    public InventoryController(AdminService adminService){this.adminService = adminService;}
+    public InventoryController(AdminService adminService){this.adminService = adminService;}
 
 
     //CRUD w/Authorization for Inventory

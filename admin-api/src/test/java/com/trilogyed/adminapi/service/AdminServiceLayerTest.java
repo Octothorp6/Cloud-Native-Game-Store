@@ -1,5 +1,6 @@
 package com.trilogyed.adminapi.service;
 
+import com.trilogyed.adminapi.invoiceViewmodel.InvoiceViewModel;
 import com.trilogyed.adminapi.model.*;
 import com.trilogyed.adminapi.service.AdminService;
 import com.trilogyed.adminapi.util.feign.*;
@@ -166,23 +167,30 @@ public class AdminServiceLayerTest {
         assertEquals(2, customerList.size());
     }
 
+    @Test
+    public void updateCustomer(){
+        Customer customerToUpdate = new Customer();
+        customerToUpdate.setFirstName("Morpheus");
+        customerToUpdate.setLastName("The Prophet");
+        customerToUpdate.setStreet("231 wabash");
+        customerToUpdate.setCity("The Matrix");
+        customerToUpdate.setZip("11112");
+        customerToUpdate.setEmail("morpheus@matrix.com");
+        customerToUpdate.setPhone("091144564");
 
+        customerToUpdate = adminService.createCustomer(customerToUpdate);
 
+        customerToUpdate.setStreet("240 wabash");
+        customerToUpdate.setEmail("morpheus@zion.org");
+        customerToUpdate.setPhone("091144569");
 
+        adminService.updateCustomer(customerToUpdate);
 
+        Customer customerUpdated = adminService.getCustomer(customerToUpdate.getCustomerId());
 
-
-
-
-
-
-
-
-
-
-
-
-
+        assertEquals(customerUpdated,customerToUpdate);
+    }
+    //================================================================================================================
 
 
 
@@ -205,15 +213,16 @@ public class AdminServiceLayerTest {
         doReturn(inventory).when(inventoryClient).getInventory(1);
         doReturn(inventory).when(inventoryClient).getInventoryByProduct(5);
         doReturn(inventoryList).when(inventoryClient).getAllInventory();
-
     }
+
+
 
 
     private void invoiceMockSetUp(){
         invoiceClient = mock(InvoiceClient.class);
 
-        Invoice invoice = new Invoice();
-        invoice.setInvoiceId(1);
+        InvoiceViewModel invoice = new InvoiceViewModel();
+        invoice.setId(1);
         invoice.setCustomerId(5);
         invoice.setPurchaseDate(LocalDate.of(2019,11,12));
 
@@ -222,12 +231,12 @@ public class AdminServiceLayerTest {
         invoice1.setPurchaseDate(LocalDate.of(2019,11,12));
 
         // USED FOR UPDATE
-        Invoice invoice2 = new Invoice();
-        invoice2.setInvoiceId(4);
+        InvoiceViewModel invoice2 = new InvoiceViewModel();
+        invoice2.setId(4);
         invoice2.setCustomerId(8);
         invoice2.setPurchaseDate(LocalDate.of(2019,11,12));
 
-        List<Invoice> invoices = new ArrayList<>();
+        List<InvoiceViewModel> invoices = new ArrayList<>();
         invoices.add(invoice);
 
         doReturn(invoice).when(invoiceClient).createInvoice(invoice1);
@@ -235,7 +244,9 @@ public class AdminServiceLayerTest {
         doReturn(invoices).when(invoiceClient).getAllInvoicesByCustomer(5);
         doReturn(invoice2).when(invoiceClient).getInvoice(4);
         doReturn(invoices).when(invoiceClient).getAllInvoices();
-        doNothing().when(invoiceClient).updateInvoice(invoice);
+//        doNothing().when(invoiceClient).updateInvoice(invoice);
+
+        //need to convert an ivm to invoice for update invoice via feign 
 
         //====================================  InvoiceItem =========================================================
 
