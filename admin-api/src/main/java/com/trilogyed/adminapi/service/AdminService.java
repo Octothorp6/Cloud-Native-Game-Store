@@ -223,6 +223,14 @@ public class AdminService {
         return fromService;
     }
 
+    public LevelUp getLevelUpByCustomer(int customerId){
+        LevelUp fromService = levelUpClient.getLevelUpByCustomer(customerId);
+        if(fromService == null)
+            throw new NullObjectReturnException("THere is no levelUp with given customer id: "+customerId+" in our DB");
+        return fromService;
+    }
+
+
     public List<LevelUp> getLevelUps(){
         List<LevelUp> fromService = levelUpClient.getLevelUps();
         if(fromService.size() == 0)

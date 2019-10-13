@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doReturn;
 
@@ -215,9 +216,41 @@ public class AdminServiceLayerTest {
         doReturn(inventoryList).when(inventoryClient).getAllInventory();
     }
 
+    @Test
+    public void saveFindInventory() {
+        Inventory inventory = new Inventory();
+        inventory.setProductId(5);
+        inventory.setQuantity(10);
+
+        inventory = adminService.createInventory(inventory);
+        Inventory inventory1 = adminService.getInventory(inventory.getInventoryId());
+        assertEquals(inventory1, inventory);
+    }
+
+    @Test
+    public void findAllInventory() {
+        List<Inventory> inventories = adminService.getAllInventory();
+        assertEquals(1, inventories.size());
+    }
+
+    @Test
+    public void findInventoryByProduct() {
+        Inventory inventory = new Inventory();
+        inventory.setInventoryId(1);
+        inventory.setProductId(5);
+        inventory.setQuantity(10);
+
+        Inventory inventory1 = adminService.getInventoryByProduct(inventory.getProductId());
+        assertEquals(inventory1, inventory);
+    }
+
+    //WE NEED TO ADD UPDATE tests to the InventoryService aka homie needs to send me the file
+
+    @Test
+    public void updateInventory(){}
 
 
-
+    //================================================================================================================
     private void invoiceMockSetUp(){
         invoiceClient = mock(InvoiceClient.class);
 
@@ -284,6 +317,67 @@ public class AdminServiceLayerTest {
 
     }
 
+    @Test
+    public void saveFindInvoice() {
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(5);
+        invoice.setPurchaseDate(LocalDate.of(2019,11,12));
+
+        InvoiceViewModel invoiceViewModel = adminService.createInvoice(invoice);
+        InvoiceViewModel invoiceViewModel1 = adminService.getInvoice(invoiceViewModel.getId());
+
+        assertEquals(invoiceViewModel1, invoiceViewModel);
+    }
+
+    @Test
+    public void findInvoicesByCustomer() {
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(5);
+        invoice.setPurchaseDate(LocalDate.of(2019,11,12));
+
+        InvoiceViewModel invoiceViewModel = adminService.createInvoice(invoice);
+
+        List<InvoiceViewModel> invoicesByCustomer = adminService.getAllInvoicesByCustomer(invoice.getCustomerId());
+        assertEquals(1, invoicesByCustomer.size());
+    }
+
+    @Test
+    public void findAllInvoices() {
+        List<InvoiceViewModel> invoices = adminService.getAllInvoices();
+        assertEquals(1, invoices.size());
+    }
+
+    @Test
+    public void updateInvoice() {
+
+    }
+
+    @Test
+    public void saveFindInvoiceItem() {
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setInventoryId(1);
+        invoiceItem.setQuantity(10);
+        invoiceItem.setUnitPrice(new BigDecimal("20.00"));
+        invoiceItem = adminService.createInvoiceItem(invoiceItem);
+
+        InvoiceItem invoiceItem1 = adminService.getInvoiceItem(invoiceItem.getInvoiceItemId());
+        assertEquals(invoiceItem1, invoiceItem);
+    }
+
+    @Test
+    public void findAllInvoiceItems() {
+        List<InvoiceItem> invoiceItems = adminService.getAllInvoiceItems();
+        assertEquals(1,invoiceItems.size());
+    }
+
+    @Test
+    public void updateInvoiceItem(){}
+
+
+    //================================================================================================================
+
+
     private void levelUpMockSetUp(){
         levelUpClient = mock(LevelUpClient.class);
 
@@ -305,9 +399,43 @@ public class AdminServiceLayerTest {
         doReturn(levelUp).when(levelUpClient).getLevelUp(1);
         doReturn(levelUp).when(levelUpClient).getLevelUpByCustomer(5);
         doReturn(levelUps).when(levelUpClient).getLevelUps();
-
     }
 
+    @Test
+    public void saveFindLevelUp() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(5);
+        levelUp.setPoints(100);
+        levelUp.setMemberDate(LocalDate.of(2019,11,10));
+        levelUp = adminService.createLevelUp(levelUp);
+
+        LevelUp levelUp1 = adminService.getLevelUp(levelUp.getLevelUpId());
+        assertEquals(levelUp1, levelUp);
+    }
+
+    @Test
+    public void findAllLevelUps() {
+        List<LevelUp> levelUps = adminService.getLevelUps();
+        assertEquals(1, levelUps.size());
+    }
+
+
+    @Test
+    public void findLevelUpByCustomer() {
+        LevelUp levelUp = new LevelUp();
+        levelUp.setCustomerId(5);
+        levelUp.setPoints(100);
+        levelUp.setMemberDate(LocalDate.of(2019,11,10));
+        levelUp = adminService.createLevelUp(levelUp);
+
+        LevelUp levelUp1 = adminService.getLevelUpByCustomer(levelUp.getCustomerId());
+        assertEquals(levelUp1, levelUp);
+    }
+
+    @Test
+    public void updateLevelUp(){}
+
+    //================================================================================================================
     private void productMockSetUp(){
         productClient = mock(ProductClient.class);
 
@@ -394,19 +522,66 @@ public class AdminServiceLayerTest {
         doReturn(null).when(productClient).getProduct(productDelete.getProductId());
     }
 
+    @Test
+    public void createGetGetAllProduct(){
+        Product product = new Product();
+        product.setName("Xbox Scorpion");
+        product.setDescription("Microsoft's latest console");
+        product.setListPrice(new BigDecimal("599.99"));
+        product.setUnitCost(new BigDecimal("550.99"));
 
+        product = adminService.createProduct(product);
 
+        Product productFromService = adminService.getProduct(product.getProductId());
+        assertEquals(product,productFromService);
 
+        Product product2 = new Product();
+        product2.setName("Call of Duty: Modern Warfare");
+        product2.setDescription("Activision's newest addition, coming oct 22");
+        product2.setListPrice(new BigDecimal("59.99"));
+        product2.setUnitCost(new BigDecimal("50.99"));
 
+        product2 = adminService.createProduct(product2);
 
+        List<Product> productList = adminService.getAllProducts();
+        assertEquals(2,productList.size());
+    }
 
+    @Test
+    public void updateProduct(){
+        Product productToUpdate = new Product();
+        productToUpdate.setName("Razer Blade Laptop 14' ");
+        productToUpdate.setDescription("Razer's 14 inch gaming laptop");
+        productToUpdate.setListPrice(new BigDecimal("2499.99"));
+        productToUpdate.setUnitCost(new BigDecimal("2399.99"));
 
+        productToUpdate = adminService.createProduct(productToUpdate);
 
+        productToUpdate.setListPrice(new BigDecimal("2299.99")); //Sale of $200
+        productToUpdate.setUnitCost(new BigDecimal("2099.99"));
 
+        adminService.updateProduct(productToUpdate);
 
+        Product productUpdated = adminService.getProduct(productToUpdate.getProductId());
 
+        assertEquals(productUpdated,productToUpdate);
 
+    }
 
-
-
+//    @Test
+//    public void deleteProduct(){
+//        Product productDelete = new Product();
+//        productDelete.setProductId(99);
+//        productDelete.setName("Macbook Pro 15' ");
+//        productDelete.setDescription("15 inch macbook pro");
+//        productDelete.setListPrice(new BigDecimal("2100.99"));
+//        productDelete.setUnitCost(new BigDecimal("1999.99"));
+//
+//        service.deleteProduct(productDelete.getProductId());
+//
+//        Product productGone = service.getProduct(productDelete.getProductId());
+//
+//        assertNull(productGone);
+//    }
+    
 }

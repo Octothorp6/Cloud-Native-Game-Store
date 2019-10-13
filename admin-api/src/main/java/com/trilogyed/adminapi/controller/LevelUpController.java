@@ -33,7 +33,15 @@ public class LevelUpController {
     public LevelUp getLevelUp(@PathVariable int id){
         LevelUp levelUpFromService = adminService.getLevelUp(id);
         if(levelUpFromService==null)
-            throw new NotFoundException("No customer exists in the DB with given id: "+id);
+            throw new NotFoundException("No levelup exists in the DB with given id: "+id);
+        return levelUpFromService;
+    }
+    @RequestMapping(value = "/admin/level-ups/customer/{id}",method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    public LevelUp getLevelUpByCustomer(@PathVariable int id){
+        LevelUp levelUpFromService = adminService.getLevelUpByCustomer(id);
+        if(levelUpFromService==null)
+            throw new NotFoundException("No levelup exists in the DB with given id: "+id);
         return levelUpFromService;
     }
 
