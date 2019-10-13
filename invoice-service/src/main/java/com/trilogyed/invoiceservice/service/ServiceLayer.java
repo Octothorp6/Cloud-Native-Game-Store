@@ -12,6 +12,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @SERVICE-LAYER
+ * PURPOSE: TO PERFORM ALL NECESSARY BUSINESS LOGIC THAT PERTAINS TO INVOICES AND INVOICE ITEMS
+ * PRIVATE METHODS: buildInvoiceViewModel(), calculateTotal()
+ * PUBLIC METHODS:
+ * @Invoices - saveInvoice(Invoice invoice), findInvoice(int id), findInvoicesByCustomer(int customerId),
+ * findAllInvoices(), updateInvoice(Invoice invoice), removeInvoice(int id)
+ * @InvoiceItems - saveInvoiceItem(InvoiceItem invoiceItem), findInvoiceItem(int id), findInvoiceItemsByInvoice(int invoiceId),
+ * findAllInvoiceItems(), updateInvoiceItem(InvoiceItem invoiceItem), removeInvoiceItem(InvoiceItem invoiceItem)
+ */
+
+
 @Component
 public class ServiceLayer {
 
@@ -44,15 +56,14 @@ public class ServiceLayer {
         List<Invoice> invoices = invoiceDao.getInvoicesByCustomer(customerId);
         if (invoices == null) {
             return null;
-        } else {
-            List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
-
-            for (Invoice i : invoices) {
-                InvoiceViewModel invoiceViewModel = buildInvoiceViewModel(i);
-                invoiceViewModels.add(invoiceViewModel);
-            }
-            return invoiceViewModels;
         }
+
+        List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
+        for (Invoice i : invoices) {
+            InvoiceViewModel invoiceViewModel = buildInvoiceViewModel(i);
+            invoiceViewModels.add(invoiceViewModel);
+        }
+        return invoiceViewModels;
     }
 
     public List<InvoiceViewModel> findAllInvoices() {
@@ -108,7 +119,7 @@ public class ServiceLayer {
     }
 
     //=======================================================================================================
-    // CALCULATE TOTAL
+    // CALCULATE TOTAL BASED ON INVOICE ITEMS * QUANTITY THEN RETURN TOTAL
 
     private BigDecimal calculateTotal(List<InvoiceItem> invoiceItems) {
         BigDecimal total = BigDecimal.ZERO;
@@ -122,7 +133,8 @@ public class ServiceLayer {
     }
 
 
-    // HELPER METHOD FOR INVOICEVIEWMODEL
+    // HELPER METHOD FOR BUILDING INVOICE-VIEW-MODEL
+
     private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
         InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
         invoiceViewModel.setId(invoice.getInvoiceId());

@@ -16,9 +16,6 @@ public interface LevelUpClient {
     @GetMapping
     List<LevelUp> getAllLevelUps();
 
-    @DeleteMapping("/{id}")
-    void deleteLevelUp(@PathVariable int id);
-
     @GetMapping("/{id}")
     LevelUp getLevelUp(@PathVariable(name = "id") int id);
 
