@@ -2,7 +2,9 @@ package com.trilogyed.retailapi.service;
 
 import com.trilogyed.retailapi.model.*;
 import com.trilogyed.retailapi.util.feign.*;
+import com.trilogyed.retailapi.util.helper.Helper;
 import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
+import com.trilogyed.retailapi.viewmodel.OrderViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,8 @@ import java.util.List;
 /**
  * @RETAIL-SERVICE-LAYER
  * PURPOSE: Perform all necessary business logic for all retail purposes.
- * PRIVATE METHODS: buildInvoiceViewModel()
- * PUBLIC
+ * PRIVATE METHODS: buildOrderViewModel()
+ * PUBLIC METHODS:
  */
 
 
@@ -34,7 +36,6 @@ public class ServiceLayer {
         this.levelUpClient = levelUpClient;
         this.productClient = productClient;
     }
-
 
     //==============================================================================================================
     // CUSTOMER METHODS
@@ -120,4 +121,9 @@ public class ServiceLayer {
         return levelUp;
     }
 
+
+    private OrderViewModel buildOrderViewModel() {
+        OrderViewModel orderViewModel = new OrderViewModel();
+        return orderViewModel;
+    }
 }
