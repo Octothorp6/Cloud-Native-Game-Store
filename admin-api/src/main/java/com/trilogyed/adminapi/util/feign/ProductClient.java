@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/products")
 public interface ProductClient {
 
-    @PostMapping
+    @PostMapping("/products")
     public Product createProduct(@RequestBody @Valid Product product);
 
     @GetMapping(value = "/{id}")
