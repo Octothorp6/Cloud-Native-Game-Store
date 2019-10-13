@@ -4,6 +4,7 @@ import com.trilogyed.adminapi.model.*;
 import com.trilogyed.adminapi.service.AdminService;
 import com.trilogyed.adminapi.util.feign.*;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doReturn;
 
@@ -132,15 +134,57 @@ public class AdminServiceLayerTest {
         doReturn(customerUpdatedId).when(customerClient).getCustomer(customerUpdatedId.getCustomerId());
 
         //============================================================
+    }
+    @Test
+    public void createGetGetAllCustomers(){
+        Customer customer = new Customer();
+        customer.setFirstName("Neo");
+        customer.setLastName("The One");
+        customer.setStreet("230 wabash");
+        customer.setCity("The Matrix");
+        customer.setZip("11111");
+        customer.setEmail("neo@matrix.com");
+        customer.setPhone("091144564");
 
+        customer = adminService.createCustomer(customer);
+
+        Customer customerFromAdmin = adminService.getCustomer(customer.getCustomerId());
+        assertEquals(customerFromAdmin, customer);
+
+        Customer customer2 = new Customer();
+        customer2.setFirstName("Trinity");
+        customer2.setLastName("T");
+        customer2.setStreet("230 wabash");
+        customer2.setCity("The Matrix");
+        customer2.setZip("11111");
+        customer2.setEmail("trinity@matrix.com");
+        customer2.setPhone("091144564");
+
+        customer2 = adminService.createCustomer(customer2);
+
+        List<Customer> customerList = adminService.getAllCustomers();
+        assertEquals(2, customerList.size());
     }
 
-        /*
-    public Customer createCustomer(Customer customer)
-    public Customer getCustomer(int customerId)
-     public List<Customer> getAllCustomers()
-     public void updateCustomer(Customer customer)
-     */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void inventoryMockSetUp(){
         inventoryClient = mock(InventoryClient.class);

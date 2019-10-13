@@ -8,25 +8,25 @@ import javax.validation.Valid;
 import java.util.List;
 
 @FeignClient(name = "inventory-service")
-@RequestMapping(value = "/inventory")
+//@RequestMapping(value = "/inventory")
 public interface InventoryClient {
 
-    @PostMapping
+    @PostMapping(value = "/admin/inventory")
     public Inventory createInventory(@RequestBody @Valid Inventory inventory);
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/admin/inventory/{id}")
     public Inventory getInventory(@PathVariable int id);
 
-    @GetMapping(value = "/product/{id}")
+    @GetMapping(value = "/admin/inventory/product/{id}")
     public Inventory getInventoryByProduct(@PathVariable int id);
 
-    @GetMapping
+    @GetMapping(value = "/admin/inventory")
     public List<Inventory> getAllInventory();
 
-    @PutMapping
+    @PutMapping(value = "/admin/inventory")
     public void updateInventory(@RequestBody @Valid Inventory inventory);
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/admin/inventory/{id}")
     public void deleteInventory(@PathVariable int id);
 
 }

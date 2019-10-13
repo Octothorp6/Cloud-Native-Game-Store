@@ -17,7 +17,7 @@ public class LevelUpController {
     @Autowired
     AdminService adminService;
 
-    public LevelUpController(AdminService adminService) { this.adminService = adminService;  }
+//    public LevelUpController(AdminService adminService) { this.adminService = adminService;  }
 
 
     //CRUD w/ Authorization for LevelUp

@@ -7,6 +7,7 @@ import com.trilogyed.adminapi.model.InvoiceItem;
 import com.trilogyed.adminapi.service.AdminService;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,13 +15,14 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+//@RefreshScope
 @RequestMapping(name = "/admin/invoices")
 public class InvoiceController {
 
     @Autowired
     AdminService adminService;
 
-    public InvoiceController(AdminService adminService){this.adminService = adminService;}
+//    public InvoiceController(AdminService adminService){this.adminService = adminService;}
     //==========================================    Invoice    ========================================================
 
     @PostMapping
