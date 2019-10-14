@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-//@RequestMapping(name = "/admin/products")
 public class ProductController {
 
     @Autowired
@@ -41,7 +40,7 @@ public class ProductController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<Product> getAllProducts(){return adminService.getAllProducts();}
 
-    @RequestMapping(value = "/admin/product", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/products", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody @Valid Product product){
         adminService.updateProduct(product);

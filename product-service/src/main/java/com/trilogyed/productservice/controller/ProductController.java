@@ -54,7 +54,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.OK)
     public List<Product> getAllProducts(){return service.getAllProducts();}
 
-    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateProduct(@RequestBody @Valid Product product){
         service.updateProduct(product);

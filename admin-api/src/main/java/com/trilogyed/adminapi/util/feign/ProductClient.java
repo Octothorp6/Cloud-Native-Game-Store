@@ -11,18 +11,18 @@ import java.util.List;
 @RequestMapping("/products")
 public interface ProductClient {
 
-    @PostMapping("/products")
-    public Product createProduct(@RequestBody @Valid Product product);
+    @PostMapping
+    Product createProduct(@RequestBody @Valid Product product);
 
     @GetMapping(value = "/{id}")
-    public Product getProduct(@PathVariable int id);
+    Product getProduct(@PathVariable int id);
 
     @GetMapping
-    public List<Product> getAllProducts();
+    List<Product> getAllProducts();
 
     @PutMapping
-    public void updateProduct(@RequestBody @Valid Product product);
+    void updateProduct(@RequestBody @Valid Product product);
 
     @DeleteMapping(value = "/{id}")
-    public void deleteProduct(@PathVariable int id);
+    void deleteProduct(@PathVariable int id);
 }
