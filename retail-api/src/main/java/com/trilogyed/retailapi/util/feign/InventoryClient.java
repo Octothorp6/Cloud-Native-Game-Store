@@ -12,9 +12,6 @@ public interface InventoryClient {
     @GetMapping
     List<Inventory> getAllInventory();
 
-    @PostMapping
-    Inventory createInventory(Inventory inventory);
-
     @PutMapping
     void updateInventory(@RequestBody Inventory inventory);
 

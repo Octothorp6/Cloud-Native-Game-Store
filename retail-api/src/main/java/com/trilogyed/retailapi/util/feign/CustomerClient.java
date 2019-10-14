@@ -13,9 +13,10 @@ public interface CustomerClient {
     @PostMapping
     Customer createCustomer(@RequestBody @Valid Customer customer);
 
-    @GetMapping(value = "/{id}")
-    Customer getCustomer(@PathVariable int id);
-
-    @GetMapping //do we add value = "/customers" ??
+    @GetMapping
     List<Customer> getAllCustomers();
+
+    @GetMapping(value = "/{customerId}")
+    Customer getCustomer(@PathVariable int customerId);
+
 }

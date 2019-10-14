@@ -44,6 +44,7 @@ public class ServiceLayer {
 
     //==============================================================================================================
     // CUSTOMER METHODS
+
     public Customer findCustomerById(int customerId) {
         return null;
     }
@@ -58,6 +59,7 @@ public class ServiceLayer {
 
     //==============================================================================================================
     // INVENTORY METHODS
+
     public Inventory findInventory(int inventoryId) {
         return null;
     }
@@ -70,11 +72,9 @@ public class ServiceLayer {
         return null;
     }
 
-    public Inventory saveInventory(Inventory inventory) {
-        return null;
-    }
     //==============================================================================================================
     // INVOICE METHODS
+
     public InvoiceViewModel findInvoiceById(int invoiceId) {
         return null;
     }
@@ -93,6 +93,7 @@ public class ServiceLayer {
 
     //==============================================================================================================
     // LEVEL-UP METHODS
+
     @HystrixCommand(fallbackMethod = "reliable")
     public LevelUp findLevelUp(int levelUpId) {
         return null;
@@ -127,11 +128,6 @@ public class ServiceLayer {
         LevelUp levelUp = new LevelUp();
         return levelUp;
     }
-
-
-
-
-
 
 
 }
