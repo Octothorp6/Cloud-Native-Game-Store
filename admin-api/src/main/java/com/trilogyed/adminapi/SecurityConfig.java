@@ -37,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public void configure(HttpSecurity httpSecurity) throws Exception{
-//        httpSecurity
-//                .httpBasic();
+        httpSecurity
+                .httpBasic();
 
         /*
 
@@ -49,32 +49,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
          */
 
-//        httpSecurity.authorizeRequests()
-//                .mvcMatchers("/login").authenticated()
+        httpSecurity.authorizeRequests()
+                .mvcMatchers("/login").authenticated()
 
-//                .mvcMatchers(HttpMethod.PUT, "/tshirt/*","/game/*","/console/*").hasAnyAuthority("STAFF","MANAGER","ADMIN")
-//                .mvcMatchers(HttpMethod.DELETE,"/tshirt/*","/game/*","/console/*").hasAuthority("ADMIN")
-//                .mvcMatchers(HttpMethod.POST,"/tshirt","/game","/console").hasAnyAuthority("MANAGER","ADMIN")
-//
-//                .anyRequest().permitAll();
-//
-//
-//        httpSecurity
-//                .logout()
-//                .clearAuthentication(true)
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/login")
-//                .deleteCookies("JSESSIONID")
-//                .deleteCookies("XSRF-TOKEN")
-//                .invalidateHttpSession(true);
-//
-//        httpSecurity
-//                .csrf()
-////                .csrf().disable();
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .mvcMatchers(HttpMethod.PUT,"/admin/inventory").hasAnyAuthority("EMPLOYEE","MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.POST,"/admin/customers").hasAnyAuthority("TEAM_LEAD","MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.POST,"/admin/inventory","/admin/invoices",
+                        "/admin/level-ups","/admin/products").hasAnyAuthority("MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.PUT,"/admin/customer","/admin/inventory",
+                        "/admin/invoice","/admin/level-up","/admin/product").hasAnyAuthority("MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.DELETE,"/admin/customer/*","/admin/inventory/*",
+                        "/admin/invoice/*","/admin/level-up/*","/admin/product/*").hasAuthority("ADMIN")
+
+                .anyRequest().permitAll();
+
+
+        httpSecurity
+                .logout()
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .deleteCookies("JSESSIONID")
+                .deleteCookies("XSRF-TOKEN")
+                .invalidateHttpSession(true);
+
+        httpSecurity
+                .csrf()
+//                .csrf().disable();
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     }
-
 
 }
 
