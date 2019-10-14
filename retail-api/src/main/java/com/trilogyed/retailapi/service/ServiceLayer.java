@@ -3,7 +3,6 @@ package com.trilogyed.retailapi.service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.trilogyed.retailapi.model.*;
 import com.trilogyed.retailapi.util.feign.*;
-import com.trilogyed.retailapi.util.helper.Helper;
 import com.trilogyed.retailapi.util.messages.LevelUpEntry;
 import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import com.trilogyed.retailapi.viewmodel.OrderViewModel;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +30,7 @@ public class ServiceLayer {
     LevelUpClient levelUpClient;
     ProductClient productClient;
     RabbitTemplate rabbitTemplate;
+
 
     public static final String EXCHANGE = "level-up-exchange";
     public static final String ROUTING_KEY = "level.up.create.level";
@@ -57,9 +58,6 @@ public class ServiceLayer {
         return customerClient.createCustomer(customer);
     }
 
-    public List<Customer> findAllCustomers() {
-        return customerClient.getAllCustomers();
-    }
 
     //==============================================================================================================
     // INVENTORY METHODS
@@ -91,6 +89,48 @@ public class ServiceLayer {
         return invoiceClient.createInvoice(invoice);
     }
 
+    public OrderViewModel submitInvoice(Order order) {
+        // CUSTOMER
+        Customer customer = mapOrderToCustomer(order);
+        customer = saveCustomer(customer);
+
+        // DEFINE PRODUCT-INVENTORY-INVOICE ITEMS
+        Product product = findProductByProductName(order.getProductName());
+        Inventory inventory = findInventoryByProductId(product.getProductId());
+
+        if (validateInventory(inventory, order.getQuantity())) {
+            // INVOICE
+            Invoice invoice = new Invoice();
+            invoice.setCustomerId(customer.getCustomerId());
+            invoice.setPurchaseDate(LocalDate.now());
+            InvoiceViewModel invoiceViewModel = saveInvoice(invoice);
+
+            // SET INVOICE ITEMS
+            InvoiceItem invoiceItem = new InvoiceItem();
+            invoiceItem.setInventoryId(inventory.getInventoryId());
+            invoiceItem.setInvoiceId(invoiceViewModel.getId());
+            invoiceItem.setQuantity(order.getQuantity());
+            invoiceItem.setUnitPrice(product.getUnitCost());
+            invoiceClient.createInvoiceItem(invoiceItem);
+
+            // SET POINTS AND STORE ENTRY
+            int totalToInt = invoiceViewModel.getTotal().intValue();
+            int points = calculatePointTotal(totalToInt);
+
+            LevelUpEntry levelUp = new LevelUpEntry();
+            levelUp.setCustomerId(customer.getCustomerId());
+            levelUp.setMemberDate(invoice.getPurchaseDate());
+            levelUp.setPoints(points);
+            saveLevelUp(levelUp);
+
+            order.setInvoiceId(invoiceViewModel.getId());
+
+        } else {
+            throw new IllegalArgumentException("Sorry, we do not have enough items in stock to fulfill your order.");
+        }
+
+        return buildOrderViewModel(order);
+    }
     //==============================================================================================================
     // LEVEL-UP METHODS
 
@@ -103,12 +143,20 @@ public class ServiceLayer {
         return levelUpClient.getLevelUpByCustomer(customerId);
     }
 
-    public void createLevelUp(@Valid LevelUpEntry levelUpEntry) {
+    public void saveLevelUp(@Valid LevelUpEntry levelUpEntry) {
+        System.out.println("sending message..." + levelUpEntry.toString());
         rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, levelUpEntry);
+        System.out.println("message sent.");
+    }
+
+    // FALL-BACK METHOD
+    public LevelUp reliable() {
+        return new LevelUp();
     }
 
     //==============================================================================================================
     // PRODUCT METHODS
+
     public Product findProduct(int productId) {
         return productClient.getProduct(productId);
     }
@@ -135,21 +183,86 @@ public class ServiceLayer {
         return inStock;
     }
 
-    // FALL-BACK METHOD
-    public LevelUp reliable() {
-        LevelUp levelUp = new LevelUp();
-        return levelUp;
+    public List<Product> findProductsByInvoiceId(int id) {
+        List<Product> products = new ArrayList<>();
+        InvoiceViewModel invoiceViewModel = findInvoiceById(id);
+
+        if (invoiceViewModel == null) {
+            return null;
+        }
+
+        for(InvoiceItem i : invoiceViewModel.getInvoiceItems()) {
+            Inventory inventory = findInventory(i.getInventoryId());
+            Product product = findProduct(inventory.getProductId());
+            products.add(product);
+        }
+        return products;
+    }
+
+    //==============================================================================================================
+    // HELPER METHODS
+
+    private OrderViewModel buildOrderViewModel(Order order) {
+        OrderViewModel orderViewModel = new OrderViewModel();
+        // RETRIEVE ALL VALUES
+        Customer customer = findCustomerById(order.getCustomerId());
+        LevelUp levelUp = findLevelUpByCustomer(order.getCustomerId());
+        InvoiceViewModel invoice = findInvoiceById(order.getInvoiceId());
+
+        // STORE VALUES
+        orderViewModel.setCustomer(customer);
+        orderViewModel.setLevelUpPoints(levelUp.getPoints());
+        orderViewModel.setInvoice(invoice);
+        orderViewModel.setPurchaseDate(levelUp.getMemberDate());
+
+        return orderViewModel;
+    }
+
+    private boolean validateInventory(Inventory inventory, int orderQuantity) {
+        boolean inStock = false;
+
+        if (inventory.getQuantity() >= orderQuantity) {
+            inStock = true;
+            updateInventory(inventory, orderQuantity);
+        }
+        return inStock;
+    }
+
+    private void updateInventory(Inventory inventory, int num) {
+        int updatedVal;
+
+        updatedVal = inventory.getQuantity() - num;
+        inventory.setQuantity(updatedVal);
+
+        inventoryClient.updateInventory(inventory);
+    }
+
+    private int calculatePointTotal(int total) {
+        int minimum = 50;
+        int result;
+        int pointTotal;
+        // if less than 50, return 0 points
+        if (total < minimum) {
+            return 0;
+        }
+        // otherwise, return the point total value
+        result = total / minimum;
+        pointTotal = result * 10;
+
+        return pointTotal;
     }
 
 
-    // BUILD-VIEW-MODEL
-    private OrderViewModel buildOrderViewModel(Order order) {
-        OrderViewModel orderViewModel = new OrderViewModel();
+    private Customer mapOrderToCustomer(Order order) {
         Customer customer = new Customer();
-        LevelUp levelUp = new LevelUp();
+        customer.setFirstName(order.getFirstName());
+        customer.setLastName(order.getLastName());
+        customer.setStreet(order.getStreet());
+        customer.setCity(order.getCity());
+        customer.setZip(order.getZip());
+        customer.setEmail(order.getEmail());
+        customer.setPhone(order.getPhone());
 
-
-
-        return orderViewModel;
+        return customer;
     }
 }

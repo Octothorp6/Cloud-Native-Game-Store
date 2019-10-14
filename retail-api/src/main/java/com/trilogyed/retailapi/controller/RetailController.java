@@ -1,13 +1,11 @@
 package com.trilogyed.retailapi.controller;
 
 import com.trilogyed.retailapi.exception.NotFoundException;
-import com.trilogyed.retailapi.model.Invoice;
-import com.trilogyed.retailapi.model.Order;
-import com.trilogyed.retailapi.model.Product;
+import com.trilogyed.retailapi.model.*;
 import com.trilogyed.retailapi.service.ServiceLayer;
 import com.trilogyed.retailapi.util.messages.LevelUpEntry;
 import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import com.trilogyed.retailapi.viewmodel.OrderViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/gamestore")
+@RequestMapping(value = "/retail")
 public class RetailController {
     private ServiceLayer serviceLayer;
 
@@ -26,8 +24,8 @@ public class RetailController {
 
     // RETAIL ENDPOINTS
     @PostMapping(value = "/invoices")
-    public Invoice submitInvoice(@RequestBody @Valid Order order) {
-        return null;
+    public OrderViewModel submitInvoice(@RequestBody @Valid Order order) {
+        return serviceLayer.submitInvoice(order);
     }
 
     @GetMapping(value = "/invoices/{id}")
@@ -63,18 +61,24 @@ public class RetailController {
         return serviceLayer.findProductsInInventory();
     }
 
-
     @GetMapping(value = "/products/invoice/{id}")
     public List<Product> getProductsByInvoiceId(@PathVariable int id) {
-        return null;
+        List<Product> products = serviceLayer.findProductsByInvoiceId(id);
+
+        if (products == null) {
+            throw new NotFoundException("Sorry, we do not have any invoices by that id: " + id);
+        }
+        return products;
     }
 
-    @GetMapping(value = "/levelup/customer/{id}")
+    @GetMapping(value = "/level-up/customer/{id}")
     public int getLevelUpPointsByCustomerId(int id) {
-
-        return 0;
+        LevelUp levelUp = serviceLayer.findLevelUpByCustomer(id);
+        return levelUp.getPoints();
     }
 
-
-
+    @PostMapping(value = "/level-up")
+    public void saveLevelUp(@Valid LevelUpEntry level) {
+        serviceLayer.saveLevelUp(level);
+    }
 }

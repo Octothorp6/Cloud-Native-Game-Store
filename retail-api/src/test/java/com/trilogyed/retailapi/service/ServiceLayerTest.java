@@ -49,9 +49,6 @@ public class ServiceLayerTest {
     public void saveCustomer() {
     }
 
-    @Test
-    public void findAllCustomers() {
-    }
 
     // ========================================================================================
     // INVENTORY METHODS
@@ -136,12 +133,8 @@ public class ServiceLayerTest {
         customerA.setEmail("neo@matrix.com");
         customerA.setPhone("091144564");
 
-        List<Customer> customers = new ArrayList<>();
-        customers.add(customer);
-
         doReturn(customer).when(customerClient).createCustomer(customerA);
         doReturn(customer).when(customerClient).getCustomer(customer.getCustomerId());
-        doReturn(customers).when(customerClient).getAllCustomers();
     }
 
     private void setUpInventoryMock() {

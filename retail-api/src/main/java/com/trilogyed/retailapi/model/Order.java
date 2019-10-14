@@ -6,6 +6,7 @@ import java.util.Objects;
 
 public class Order {
     private int customerId;
+    private int invoiceId;
     @NotNull(message = "Must enter a value for first name.")
     private String firstName;
     @NotNull(message = "Must enter a value for last name.")
@@ -28,12 +29,22 @@ public class Order {
     @Min(value = 0, message = "The value must be a positive number.")
     private int quantity;
 
+
+
     public int getCustomerId() {
         return customerId;
     }
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public int getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
     public String getFirstName() {
@@ -114,6 +125,7 @@ public class Order {
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
         return customerId == order.customerId &&
+                invoiceId == order.invoiceId &&
                 quantity == order.quantity &&
                 Objects.equals(firstName, order.firstName) &&
                 Objects.equals(lastName, order.lastName) &&
@@ -127,6 +139,7 @@ public class Order {
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, firstName, lastName, street, city, zip, email, phone, productName, quantity);
+        return Objects.hash(customerId, invoiceId, firstName, lastName, street, city, zip,
+                email, phone, productName, quantity);
     }
 }
