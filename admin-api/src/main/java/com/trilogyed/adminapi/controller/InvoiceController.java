@@ -50,7 +50,7 @@ public class InvoiceController {
         return adminService.getAllInvoicesByCustomer(id);
     }
 
-    @RequestMapping(value = "/admin/invoices", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/invoice", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInvoice(@RequestBody @Valid Invoice invoice){adminService.updateInvoice(invoice);}
 
