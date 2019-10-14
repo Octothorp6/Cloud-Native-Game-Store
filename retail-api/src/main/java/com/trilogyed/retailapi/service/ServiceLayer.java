@@ -11,7 +11,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,67 +29,66 @@ public class ServiceLayer {
     InvoiceClient invoiceClient;
     LevelUpClient levelUpClient;
     ProductClient productClient;
+    RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    public static final String EXCHANGE = "level-up-exchange";
+    public static final String ROUTING_KEY = "level.up.create.level";
+
 
     @Autowired
     public ServiceLayer(CustomerClient customerClient, InventoryClient inventoryClient, InvoiceClient invoiceClient,
-                        LevelUpClient levelUpClient, ProductClient productClient) {
+                        LevelUpClient levelUpClient, ProductClient productClient, RabbitTemplate rabbitTemplate ) {
         this.customerClient = customerClient;
         this.inventoryClient = inventoryClient;
         this.invoiceClient = invoiceClient;
         this.levelUpClient = levelUpClient;
         this.productClient = productClient;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     //==============================================================================================================
     // CUSTOMER METHODS
 
     public Customer findCustomerById(int customerId) {
-        return null;
+        return customerClient.getCustomer(customerId);
     }
 
-    public Customer saveCustomer() {
-        return null;
+    public Customer saveCustomer(Customer customer) {
+        return customerClient.createCustomer(customer);
     }
 
     public List<Customer> findAllCustomers() {
-        return null;
+        return customerClient.getAllCustomers();
     }
 
     //==============================================================================================================
     // INVENTORY METHODS
 
     public Inventory findInventory(int inventoryId) {
-        return null;
+        return inventoryClient.getInventory(inventoryId);
     }
 
     public Inventory findInventoryByProductId(int productId) {
-        return null;
+        return inventoryClient.getInventoryByProduct(productId);
     }
 
     public List<Inventory> findAllInventory() {
-        return null;
+        return inventoryClient.getAllInventory();
     }
 
     //==============================================================================================================
     // INVOICE METHODS
 
     public InvoiceViewModel findInvoiceById(int invoiceId) {
-        return null;
+        return invoiceClient.getInvoiceById(invoiceId);
     }
 
     public List<InvoiceViewModel> findInvoicesByCustomerId(int customerId) {
-        return null;
-    }
-
-    public List<InvoiceViewModel> findAllInvoices() {
-        return null;
+        return invoiceClient.getAllInvoicesByCustomer(customerId);
     }
 
     public InvoiceViewModel saveInvoice(Invoice invoice) {
-        return null;
+        return invoiceClient.createInvoice(invoice);
     }
 
     //==============================================================================================================
@@ -96,32 +96,44 @@ public class ServiceLayer {
 
     @HystrixCommand(fallbackMethod = "reliable")
     public LevelUp findLevelUp(int levelUpId) {
-        return null;
+        return levelUpClient.getLevelUp(levelUpId);
     }
 
     public LevelUp findLevelUpByCustomer(int customerId) {
-        return null;
+        return levelUpClient.getLevelUpByCustomer(customerId);
     }
 
-    public List<LevelUp> findAllLevelUps() {
-        return null;
+    public void createLevelUp(@Valid LevelUpEntry levelUpEntry) {
+        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, levelUpEntry);
     }
-
 
     //==============================================================================================================
     // PRODUCT METHODS
     public Product findProduct(int productId) {
-        return null;
+        return productClient.getProduct(productId);
     }
 
     public Product findProductByProductName(String productName) {
-        return null;
+        return productClient.getProductByName(productName);
     }
 
     public List<Product> findAllProducts() {
-        return null;
+        return productClient.getAllProducts();
     }
 
+    public List<Product> findProductsInInventory() {
+        List<Inventory> inventoryList = findAllInventory();
+        List<Product> inStock = new ArrayList<>();
+
+        for (Inventory i : inventoryList) {
+            if (i.getQuantity() > 0) {
+                Product product = findProduct(i.getProductId());
+                inStock.add(product);
+            }
+        }
+
+        return inStock;
+    }
 
     // FALL-BACK METHOD
     public LevelUp reliable() {
@@ -130,4 +142,14 @@ public class ServiceLayer {
     }
 
 
+    // BUILD-VIEW-MODEL
+    private OrderViewModel buildOrderViewModel(Order order) {
+        OrderViewModel orderViewModel = new OrderViewModel();
+        Customer customer = new Customer();
+        LevelUp levelUp = new LevelUp();
+
+
+
+        return orderViewModel;
+    }
 }

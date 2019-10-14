@@ -7,6 +7,7 @@ import com.trilogyed.retailapi.model.Product;
 import com.trilogyed.retailapi.util.feign.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ public class ServiceLayerTest {
     InvoiceClient invoiceClient;
     ProductClient productClient;
     ServiceLayer serviceLayer;
+    RabbitTemplate rabbitTemplate;
 
     @Before
     public void setUp() throws Exception {
@@ -33,7 +35,8 @@ public class ServiceLayerTest {
         setUpInvoiceMock();
         setUpLevelUpMock();
         setUpProductMock();
-        serviceLayer = new ServiceLayer(customerClient, inventoryClient, invoiceClient,levelUpClient,productClient);
+        serviceLayer = new ServiceLayer(customerClient, inventoryClient, invoiceClient,
+                levelUpClient, productClient, rabbitTemplate);
     }
 
     // ========================================================================================
@@ -90,10 +93,6 @@ public class ServiceLayerTest {
 
     @Test
     public void findLevelUpByCustomer() {
-    }
-
-    @Test
-    public void findAllLevelUps() {
     }
 
     // ========================================================================================

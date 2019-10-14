@@ -1,9 +1,12 @@
 package com.trilogyed.retailapi.controller;
 
+import com.trilogyed.retailapi.exception.NotFoundException;
 import com.trilogyed.retailapi.model.Invoice;
+import com.trilogyed.retailapi.model.Order;
 import com.trilogyed.retailapi.model.Product;
 import com.trilogyed.retailapi.service.ServiceLayer;
 import com.trilogyed.retailapi.util.messages.LevelUpEntry;
+import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,52 +18,51 @@ import java.util.List;
 @RequestMapping(value = "/gamestore")
 public class RetailController {
     private ServiceLayer serviceLayer;
-    private RabbitTemplate rabbitTemplate;
-
-    public static final String EXCHANGE = "level-up-exchange";
-    public static final String ROUTING_KEY = "level.up.create.level";
 
     @Autowired
-    public RetailController(ServiceLayer serviceLayer, RabbitTemplate rabbitTemplate) {
+    public RetailController(ServiceLayer serviceLayer) {
         this.serviceLayer = serviceLayer;
-        this.rabbitTemplate = rabbitTemplate;
     }
 
     // RETAIL ENDPOINTS
-    @GetMapping(value = "/invoices")
-    public List<Invoice> getAllInvoices() {
-        return null;
-    }
-
     @PostMapping(value = "/invoices")
-    public Invoice submitInvoice(@RequestBody @Valid Invoice invoice) {
+    public Invoice submitInvoice(@RequestBody @Valid Order order) {
         return null;
     }
 
     @GetMapping(value = "/invoices/{id}")
-    public Invoice getInvoiceById(@PathVariable int id) {
-        return null;
+    public InvoiceViewModel getInvoiceById(@PathVariable int id) {
+        InvoiceViewModel invoiceViewModel = serviceLayer.findInvoiceById(id);
+        if (invoiceViewModel == null) {
+            throw new NotFoundException("Sorry, we do not have any invoices with that id: " + id);
+        }
+        return invoiceViewModel;
     }
 
     @GetMapping(value = "/invoices/customer/{id}")
-    public List<Invoice> getInvoicesByCustomerId(@PathVariable int id) {
+    public List<InvoiceViewModel> getInvoicesByCustomerId(@PathVariable int id) {
+        List<InvoiceViewModel> invoices = serviceLayer.findInvoicesByCustomerId(id);
+        if (invoices.size() == 0) {
+            throw new NotFoundException("Sorry, we do not have any invoices with that customer id: " + id);
+        }
         return null;
     }
 
     @GetMapping(value = "/products")
     public List<Product> getAllProducts() {
-        return null;
-    }
-
-    @GetMapping(value = "/products/inventory")
-    public List<Product> getProductsInInventory() {
-        return null;
+        return serviceLayer.findAllProducts();
     }
 
     @GetMapping(value = "/products/{id}")
     public Product getProductById(@PathVariable int id) {
-        return null;
+        return serviceLayer.findProduct(id);
     }
+
+    @GetMapping(value = "/products/inventory")
+    public List<Product> getProductsInInventory() {
+        return serviceLayer.findProductsInInventory();
+    }
+
 
     @GetMapping(value = "/products/invoice/{id}")
     public List<Product> getProductsByInvoiceId(@PathVariable int id) {
@@ -69,12 +71,10 @@ public class RetailController {
 
     @GetMapping(value = "/levelup/customer/{id}")
     public int getLevelUpPointsByCustomerId(int id) {
+
         return 0;
     }
 
-    @PostMapping(value="/level-up/")
-    public void createLevelUp (LevelUpEntry levelUpEntry) {
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, levelUpEntry);
-    }
+
 
 }

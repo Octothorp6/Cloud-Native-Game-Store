@@ -14,6 +14,9 @@ public interface InvoiceClient {
     @PostMapping
     InvoiceViewModel createInvoice(Invoice invoice);
 
+    @GetMapping(value = "/{id}")
+    InvoiceViewModel getInvoiceById(@PathVariable int id);
+
     @GetMapping("/customer/{customerId}")
     List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int customerId);
 }

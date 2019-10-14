@@ -9,7 +9,6 @@ import java.util.Objects;
 public class Product {
     @NotNull
     private int productId;
-
     @NotNull
     @Size(max = 50, message = "Name field cannot exceed 50 characters")
     private String name;
