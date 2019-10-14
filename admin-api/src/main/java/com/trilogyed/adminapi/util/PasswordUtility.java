@@ -24,7 +24,7 @@ public class PasswordUtility {
 
         String employeePass = "employee";
         String employeeEnc = enc.encode(employeePass);
-        System.out.println("manager password:  = "+employeeEnc);
+        System.out.println("employee password:  = "+employeeEnc);
 
     }
 }
