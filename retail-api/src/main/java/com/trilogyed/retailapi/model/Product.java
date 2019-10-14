@@ -1,15 +1,25 @@
 package com.trilogyed.retailapi.model;
 
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product {
+    @NotNull
     private int productId;
-    private String productName;
-    private String productDescription;
+    @NotNull
+    @Size(max = 50, message = "Name field cannot exceed 50 characters")
+    private String name;
+    @NotNull
+    @Size(max = 255, message = "Description fiel cannot exceed 255 characters")
+    private String description;
+    @NotNull
     private BigDecimal listPrice;
+    @NotNull
     private BigDecimal unitCost;
+
 
     public int getProductId() {
         return productId;
@@ -19,20 +29,20 @@ public class Product {
         this.productId = productId;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getProductDescription() {
-        return productDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getListPrice() {
@@ -57,14 +67,14 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return productId == product.productId &&
-                productName.equals(product.productName) &&
-                productDescription.equals(product.productDescription) &&
-                listPrice.equals(product.listPrice) &&
-                unitCost.equals(product.unitCost);
+                Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(listPrice, product.listPrice) &&
+                Objects.equals(unitCost, product.unitCost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, productName, productDescription, listPrice, unitCost);
+        return Objects.hash(productId, name, description, listPrice, unitCost);
     }
 }

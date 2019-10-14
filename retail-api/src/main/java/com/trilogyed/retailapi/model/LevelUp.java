@@ -10,6 +10,15 @@ public class LevelUp {
     private int points;
     private LocalDate memberDate;
 
+    public LevelUp() {
+    }
+
+    public LevelUp(int customerId, int points, LocalDate memberDate) {
+        this.customerId = customerId;
+        this.points = points;
+        this.memberDate = memberDate;
+    }
+
     public int getLevelUpId() {
         return levelUpId;
     }
