@@ -20,7 +20,7 @@ public class MessageListener {
                 LevelUp levelUp = new LevelUp();
                 levelUp.setCustomerId(levelUpEntry.getCustomerId());
                 levelUp.setPoints(levelUpEntry.getPoints());
-                levelUp.setMemberDate(levelUp.getMemberDate());
+                levelUp.setMemberDate(levelUpEntry.getMemberDate());
                 levelUpClient.createLevelUp(levelUp);
                 System.out.println("Saved level up entry: " + levelUp.toString());
             } else {
