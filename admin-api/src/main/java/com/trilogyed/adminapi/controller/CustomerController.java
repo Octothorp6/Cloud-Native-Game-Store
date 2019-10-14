@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-//@RequestMapping(name = "/admin/customers")
 public class CustomerController {
 
     @Autowired
@@ -48,7 +47,7 @@ public class CustomerController {
     public List<Customer> getAllCustomers(){return adminService.getAllCustomers(); }
 
 //    @PutMapping
-    @RequestMapping(value = "/admin/customer", method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/customers", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomer( @RequestBody @Valid Customer customer){
         adminService.updateCustomer(customer);
