@@ -103,7 +103,7 @@ public class ServiceLayer {
         return levelUpClient.getLevelUpByCustomer(customerId);
     }
 
-    public void createLevelUp(@Valid LevelUpEntry levelUpEntry) {
+    public void saveLevelUp(@Valid LevelUpEntry levelUpEntry) {
         rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, levelUpEntry);
     }
 
@@ -146,9 +146,11 @@ public class ServiceLayer {
     private OrderViewModel buildOrderViewModel(Order order) {
         OrderViewModel orderViewModel = new OrderViewModel();
         Customer customer = new Customer();
-        LevelUp levelUp = new LevelUp();
+        LevelUpEntry levelUp = new LevelUpEntry();
 
-
+        // STORE INTO DB
+        customer = saveCustomer(customer);
+        saveLevelUp(levelUp);
 
         return orderViewModel;
     }
