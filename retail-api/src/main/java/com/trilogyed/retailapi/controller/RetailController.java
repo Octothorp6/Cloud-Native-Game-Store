@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/gamestore")
+@RequestMapping(value = "/retail")
 public class RetailController {
     private ServiceLayer serviceLayer;
 

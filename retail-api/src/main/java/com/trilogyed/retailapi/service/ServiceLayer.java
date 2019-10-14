@@ -6,7 +6,6 @@ import com.trilogyed.retailapi.util.feign.*;
 import com.trilogyed.retailapi.util.messages.LevelUpEntry;
 import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import com.trilogyed.retailapi.viewmodel.OrderViewModel;
-import org.apache.tomcat.jni.Error;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -99,33 +98,36 @@ public class ServiceLayer {
         Product product = findProductByProductName(order.getProductName());
         Inventory inventory = findInventoryByProductId(product.getProductId());
 
+        if (validateInventory(inventory, order.getQuantity())) {
+            // INVOICE
+            Invoice invoice = new Invoice();
+            invoice.setCustomerId(customer.getCustomerId());
+            invoice.setPurchaseDate(LocalDate.now());
+            InvoiceViewModel invoiceViewModel = saveInvoice(invoice);
 
-        // INVOICE
-        Invoice invoice = new Invoice();
-        invoice.setCustomerId(customer.getCustomerId());
-        invoice.setPurchaseDate(LocalDate.now());
-        InvoiceViewModel invoiceViewModel = saveInvoice(invoice);
+            // SET INVOICE ITEMS
+            InvoiceItem invoiceItem = new InvoiceItem();
+            invoiceItem.setInventoryId(inventory.getInventoryId());
+            invoiceItem.setInvoiceId(invoiceViewModel.getId());
+            invoiceItem.setQuantity(order.getQuantity());
+            invoiceItem.setUnitPrice(product.getUnitCost());
+            invoiceClient.createInvoiceItem(invoiceItem);
 
+            // SET POINTS AND STORE ENTRY
+            int totalToInt = invoiceViewModel.getTotal().intValue();
+            int points = calculatePointTotal(totalToInt);
 
+            LevelUpEntry levelUp = new LevelUpEntry();
+            levelUp.setCustomerId(customer.getCustomerId());
+            levelUp.setMemberDate(invoice.getPurchaseDate());
+            levelUp.setPoints(points);
+            saveLevelUp(levelUp);
 
-        InvoiceItem invoiceItem = new InvoiceItem();
-        invoiceItem.setInventoryId(inventory.getInventoryId());
-        invoiceItem.setInvoiceId(invoiceViewModel.getId());
-        invoiceItem.setQuantity(order.getQuantity());
-        invoiceItem.setUnitPrice(product.getUnitCost());
-        invoiceClient.createInvoiceItem(invoiceItem);
+            order.setInvoiceId(invoiceViewModel.getId());
 
-        // SET POINTS AND STORE ENTRY
-        int totalToInt = invoiceViewModel.getTotal().intValue();
-        int points = calculatePointTotal(totalToInt);
-
-        LevelUpEntry levelUp = new LevelUpEntry();
-        levelUp.setCustomerId(customer.getCustomerId());
-        levelUp.setMemberDate(invoice.getPurchaseDate());
-        levelUp.setPoints(points);
-        saveLevelUp(levelUp);
-
-        order.setInvoiceId(invoiceViewModel.getId());
+        } else {
+            throw new IllegalArgumentException("Sorry, we do not have enough items in stock to fulfill your order.");
+        }
 
         return buildOrderViewModel(order);
     }
@@ -181,7 +183,6 @@ public class ServiceLayer {
         return inStock;
     }
 
-
     public List<Product> findProductsByInvoiceId(int id) {
         List<Product> products = new ArrayList<>();
         InvoiceViewModel invoiceViewModel = findInvoiceById(id);
@@ -220,13 +221,20 @@ public class ServiceLayer {
     private boolean validateInventory(Inventory inventory, int orderQuantity) {
         boolean inStock = false;
 
-        if (inventory.getQuantity() > orderQuantity) {
+        if (inventory.getQuantity() >= orderQuantity) {
             inStock = true;
-        } else {
-            throw new IllegalArgumentException("Sorry we do not have enough in stock for that item.");
+            updateInventory(inventory, orderQuantity);
         }
-
         return inStock;
+    }
+
+    private void updateInventory(Inventory inventory, int num) {
+        int updatedVal;
+
+        updatedVal = inventory.getQuantity() - num;
+        inventory.setQuantity(updatedVal);
+
+        inventoryClient.updateInventory(inventory);
     }
 
     private int calculatePointTotal(int total) {
@@ -245,7 +253,7 @@ public class ServiceLayer {
     }
 
 
-    private static Customer mapOrderToCustomer(Order order) {
+    private Customer mapOrderToCustomer(Order order) {
         Customer customer = new Customer();
         customer.setFirstName(order.getFirstName());
         customer.setLastName(order.getLastName());
