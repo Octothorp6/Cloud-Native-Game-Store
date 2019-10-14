@@ -68,11 +68,11 @@ public class AdminService {
     }
 
     public void updateCustomer(Customer customer){
-        Customer custObjInDb = getCustomer(customer.getCustomerId());
-        //Instead of calling the feign client call what we already have defined abocve vs custObj = customerClient.getCustomer...
-        int id = customer.getCustomerId();
-        if(custObjInDb == null)
-            throw new CantUpdateObjectException("We can't update this customer object as customer with id: " +id+ "/n is not in our DB");
+//        Customer custObjInDb = getCustomer(customer.getCustomerId());
+//        //Instead of calling the feign client call what we already have defined abocve vs custObj = customerClient.getCustomer...
+//        int id = customer.getCustomerId();
+//        if(custObjInDb == null)
+//            throw new CantUpdateObjectException("We can't update this customer object as customer with id: " +id+ "/n is not in our DB");
 
         customerClient.updateCustomer(customer);
     }
@@ -131,10 +131,10 @@ public class AdminService {
 
     public void updateInventory(Inventory inventory){
 //        Inventory invCheck = inventoryClient.getInventory(inventory.getInventoryId());
-        Inventory invCheck = getInventory(inventory.getInventoryId());
-        int id = inventory.getInventoryId();
-        if(invCheck == null)
-            throw new CantUpdateObjectException("There is no inventory with given id: "+id+" in the database");
+//        Inventory invCheck = getInventory(inventory.getInventoryId());
+//        int id = inventory.getInventoryId();
+//        if(invCheck == null)
+//            throw new CantUpdateObjectException("There is no inventory with given id: "+id+" in the database");
         inventoryClient.updateInventory(inventory);}
 
 //    public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
@@ -168,9 +168,9 @@ public class AdminService {
     }
 
     public void updateInvoice(Invoice invoice){
-        InvoiceViewModel checkObj = getInvoice(invoice.getInvoiceId());
-        if(checkObj == null )
-            throw new NullObjectReturnException("There is no invoice in the invoice db to update");
+//        InvoiceViewModel checkObj = getInvoice(invoice.getInvoiceId());
+//        if(checkObj == null )
+//            throw new NullObjectReturnException("There is no invoice in the invoice db to update");
 
         invoiceClient.updateInvoice(invoice);
     }
@@ -201,9 +201,9 @@ public class AdminService {
     }
 
     public void updateInvoiceItem(InvoiceItem invoiceItem){
-        InvoiceItem fromService = getInvoiceItem(invoiceItem.getInvoiceItemId());
-        if(fromService == null)
-            throw new NullObjectReturnException("There is no invoice in the database w/ associated id to populate");
+//        InvoiceItem fromService = getInvoiceItem(invoiceItem.getInvoiceItemId());
+//        if(fromService == null)
+//            throw new NullObjectReturnException("There is no invoice in the database w/ associated id to populate");
 
         invoiceClient.updateInvoiceItem(invoiceItem);
     }
@@ -241,8 +241,8 @@ public class AdminService {
 
     public void updateLevelUp(LevelUp levelUp){
         //Got Lazy hence the shortform code below sorry
-        if( getLevelUp(levelUp.getLevelUpId())== null)
-            throw new NullObjectReturnException("There is no levelUp in the database with the associated ID to update");
+//        if( getLevelUp(levelUp.getLevelUpId())== null)
+//            throw new NullObjectReturnException("There is no levelUp in the database with the associated ID to update");
 
         levelUpClient.updateLevelUp(levelUp);
     }
@@ -267,8 +267,8 @@ public class AdminService {
         return productClient.getAllProducts();}
 
     public void updateProduct(Product product){
-        if(getProduct(product.getProductId())== null)
-            throw new NullObjectReturnException("There is no product with given id: /n"+product.getProductId()+ "to uppdate in the DB");
+//        if(getProduct(product.getProductId())== null)
+//            throw new NullObjectReturnException("There is no product with given id: /n"+product.getProductId()+ "to uppdate in the DB");
 
         productClient.updateProduct(product);}
 

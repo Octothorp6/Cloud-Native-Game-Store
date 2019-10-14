@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 @CacheConfig(cacheNames = {"customers"})
 public class CustomerController {
 
@@ -44,7 +44,7 @@ public class CustomerController {
 
 
     @CacheEvict(key = "#result.getCustomerId()")
-    @RequestMapping(value = "/customer", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomer(@RequestBody @Valid Customer customer){
         service.updateCustomer(customer);

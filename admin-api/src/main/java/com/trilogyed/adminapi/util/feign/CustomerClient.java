@@ -17,19 +17,19 @@ public interface CustomerClient {
     //Admin API responsible for full CRUD
 
     @PostMapping
-    public Customer createCustomer(@RequestBody @Valid Customer customer);
+    Customer createCustomer(@RequestBody @Valid Customer customer);
 
     @GetMapping(value = "/{id}")
-    public Customer getCustomer(@PathVariable int id);
+    Customer getCustomer(@PathVariable int id);
 
     @GetMapping
-    public List<Customer> getAllCustomers();
+    List<Customer> getAllCustomers();
 
     @PutMapping
-    public void updateCustomer(@RequestBody @Valid Customer customer);
+    void updateCustomer(@RequestBody @Valid Customer customer);
 
     @DeleteMapping(value = "/{id}")
-    public void deleteCustomer(@PathVariable int id);
+    void deleteCustomer(@PathVariable int id);
 
 }
 
