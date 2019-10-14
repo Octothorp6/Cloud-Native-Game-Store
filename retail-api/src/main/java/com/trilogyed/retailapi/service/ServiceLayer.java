@@ -108,7 +108,7 @@ public class ServiceLayer {
             invoiceItem.setInvoiceId(invoiceViewModel.getId());
             invoiceItem.setQuantity(order.getQuantity());
             invoiceItem.setUnitPrice(product.getUnitCost());
-            invoiceClient.createInvoiceItem(invoiceItem);
+            invoiceItem = invoiceClient.createInvoiceItem(invoiceItem);
 
             // SET POINTS AND STORE ENTRY
             int totalToInt = invoiceViewModel.getTotal().intValue();
@@ -207,6 +207,7 @@ public class ServiceLayer {
         InvoiceViewModel invoice = findInvoiceById(order.getInvoiceId());
 
         // STORE VALUES
+        orderViewModel.setId(order.getInvoiceId());
         orderViewModel.setCustomer(customer);
         orderViewModel.setLevelUpPoints(levelUp.getPoints());
         orderViewModel.setInvoice(invoice);
