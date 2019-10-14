@@ -57,22 +57,22 @@ public class CustomerController {
 
 
 //    @DeleteMapping(value = "/{id}")
-//    public void deleteCustomer( @PathVariable int id){adminService.deleteCustomer(id);}
+//    public void deleteCustomer( Principal principal,@PathVariable int id){adminService.deleteCustomer(id);}
 
     //=============================================================================
 //Below is the controller with SECURITYU
 
-
-//    public CustomerController(AdminService adminService){this.adminService = adminService;}
-//
-//
-//    //CRUD w/ Authorization for Customer
+    //CRUD w/ Authorization for Customer
 //    @PostMapping
+//    @RequestMapping(value = "/admin/customers",method = RequestMethod.POST)
+//    @ResponseStatus(value = HttpStatus.CREATED)
 //    public Customer createCustomer(Principal principal, @RequestBody @Valid Customer customer){
 //        return adminService.createCustomer(customer);
 //    }
 //
-//    @GetMapping(value = "/{id}")
+//    //    @GetMapping(value = "/{id}")
+//    @RequestMapping(value = "/admin/customers/{id}",method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
 //    public Customer getCustomer( @PathVariable int id){
 //        Customer customerFromService = adminService.getCustomer(id);
 //        if(customerFromService==null)
@@ -80,17 +80,20 @@ public class CustomerController {
 //        return customerFromService;
 //    }
 //
-//    @GetMapping
+//    //    @GetMapping
+//    @RequestMapping(value = "/admin/customers/all", method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
 //    public List<Customer> getAllCustomers(){return adminService.getAllCustomers(); }
 //
-//    @PutMapping
+//    //    @PutMapping
+//    @RequestMapping(value = "/admin/customer", method = RequestMethod.PUT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    public void updateCustomer(Principal principal, @RequestBody @Valid Customer customer){
 //        adminService.updateCustomer(customer);
 //    }
 //
 //    @DeleteMapping(value = "/{id}")
-//    public void deleteCustomer(Principal principal, @PathVariable int id){adminService.deleteCustomer(id);}
-//
-//
+//    public void deleteCustomer( Principal principal,@PathVariable int id){adminService.deleteCustomer(id);}
+
 
 }
