@@ -31,10 +31,8 @@ public class ServiceLayer {
     ProductClient productClient;
     RabbitTemplate rabbitTemplate;
 
-
     public static final String EXCHANGE = "level-up-exchange";
-    public static final String ROUTING_KEY = "level.up.create.level";
-
+    public static final String ROUTING_KEY = "level.up.create.level.up.service";
 
     @Autowired
     public ServiceLayer(CustomerClient customerClient, InventoryClient inventoryClient, InvoiceClient invoiceClient,
@@ -57,7 +55,6 @@ public class ServiceLayer {
     public Customer saveCustomer(Customer customer) {
         return customerClient.createCustomer(customer);
     }
-
 
     //==============================================================================================================
     // INVENTORY METHODS
@@ -251,7 +248,6 @@ public class ServiceLayer {
 
         return pointTotal;
     }
-
 
     private Customer mapOrderToCustomer(Order order) {
         Customer customer = new Customer();
