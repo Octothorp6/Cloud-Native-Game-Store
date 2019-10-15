@@ -27,7 +27,7 @@ public class CustomerController {
 //    @PostMapping
     @RequestMapping(value = "/admin/customers",method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Customer createCustomer( @RequestBody @Valid Customer customer){
+    public Customer createCustomer(Principal principal, @RequestBody @Valid Customer customer){
         return adminService.createCustomer(customer);
     }
 
@@ -49,7 +49,7 @@ public class CustomerController {
 //    @PutMapping
     @RequestMapping(value = "/admin/customers", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCustomer( @RequestBody @Valid Customer customer){
+    public void updateCustomer(Principal principal, @RequestBody @Valid Customer customer){
         adminService.updateCustomer(customer);
     }
 
@@ -58,41 +58,7 @@ public class CustomerController {
 //    @DeleteMapping(value = "/{id}")
 //    public void deleteCustomer( Principal principal,@PathVariable int id){adminService.deleteCustomer(id);}
 
-    //=============================================================================
-//Below is the controller with SECURITYU
 
-    //CRUD w/ Authorization for Customer
-//    @PostMapping
-//    @RequestMapping(value = "/admin/customers",method = RequestMethod.POST)
-//    @ResponseStatus(value = HttpStatus.CREATED)
-//    public Customer createCustomer(Principal principal, @RequestBody @Valid Customer customer){
-//        return adminService.createCustomer(customer);
-//    }
-//
-//    //    @GetMapping(value = "/{id}")
-//    @RequestMapping(value = "/admin/customers/{id}",method = RequestMethod.GET)
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public Customer getCustomer( @PathVariable int id){
-//        Customer customerFromService = adminService.getCustomer(id);
-//        if(customerFromService==null)
-//            throw new NotFoundException("No customer exists in the DB with given id: "+id);
-//        return customerFromService;
-//    }
-//
-//    //    @GetMapping
-//    @RequestMapping(value = "/admin/customers/all", method = RequestMethod.GET)
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<Customer> getAllCustomers(){return adminService.getAllCustomers(); }
-//
-//    //    @PutMapping
-//    @RequestMapping(value = "/admin/customer", method = RequestMethod.PUT)
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updateCustomer(Principal principal, @RequestBody @Valid Customer customer){
-//        adminService.updateCustomer(customer);
-//    }
-//
-//    @DeleteMapping(value = "/{id}")
-//    public void deleteCustomer( Principal principal,@PathVariable int id){adminService.deleteCustomer(id);}
 
 
 }
