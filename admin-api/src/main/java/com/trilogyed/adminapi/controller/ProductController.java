@@ -24,7 +24,7 @@ public class ProductController {
 
     @RequestMapping(value = "/admin/products",method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Product createProduct(Principal principal,@RequestBody @Valid Product product){
+    public Product createProduct(@RequestBody @Valid Product product){
         return adminService.createProduct(product);
     }
 
@@ -42,7 +42,38 @@ public class ProductController {
 
     @RequestMapping(value = "/admin/products", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateProduct(Principal principal,@RequestBody @Valid Product product){
+    public void updateProduct(@RequestBody @Valid Product product){
         adminService.updateProduct(product);
     }
+
+
+
+//    @DeleteMapping(value = "/{id}")
+//    public void deleteProduct(Principal principal,@PathVariable int id){adminService.deleteProduct(id);}
+    //Controller with Security implemented BELOW
+//
+//    @RequestMapping(value = "/admin/products",method = RequestMethod.POST)
+//    @ResponseStatus(value = HttpStatus.CREATED)
+//    public Product createProduct(Principal principal,@RequestBody @Valid Product product){
+//        return adminService.createProduct(product);
+//    }
+//
+//    @RequestMapping(value = "/admin/products/{id}",method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public Product getProduct(@PathVariable int id){
+//        if(adminService.getProduct(id)== null)
+//            throw new NullObjectReturnException("There exists no Product with the given id in the Db; ID: "+ id);
+//        return adminService.getProduct(id);
+//    }
+//
+//    @RequestMapping(value = "/admin/products/all", method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<Product> getAllProducts(){return adminService.getAllProducts();}
+//
+//    @RequestMapping(value = "/admin/product", method = RequestMethod.PUT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void updateProduct(Principal principal,@RequestBody @Valid Product product){
+//        adminService.updateProduct(product);
+//    }
+
 }
