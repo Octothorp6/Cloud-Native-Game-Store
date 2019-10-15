@@ -11,22 +11,22 @@ import java.util.List;
 @RequestMapping(value = "/inventory")
 public interface InventoryClient {
 
-    @PostMapping(value = "/admin/inventory")
+    @PostMapping
     public Inventory createInventory(@RequestBody @Valid Inventory inventory);
 
-    @GetMapping(value = "/admin/inventory/{id}")
+    @GetMapping(value = "/{id}")
     public Inventory getInventory(@PathVariable int id);
 
-    @GetMapping(value = "/admin/inventory/product/{id}")
+    @GetMapping(value = "/product/{id}")
     public Inventory getInventoryByProduct(@PathVariable int id);
 
-    @GetMapping(value = "/admin/inventory")
+    @GetMapping
     public List<Inventory> getAllInventory();
 
-    @PutMapping(value = "/admin/inventory")
+    @PutMapping
     public void updateInventory(@RequestBody @Valid Inventory inventory);
 
-    @DeleteMapping(value = "/admin/inventory/{id}")
+    @DeleteMapping(value = "/{id}")
     public void deleteInventory(@PathVariable int id);
 
 }
