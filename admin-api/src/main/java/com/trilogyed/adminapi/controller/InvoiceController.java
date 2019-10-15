@@ -5,7 +5,6 @@ import com.trilogyed.adminapi.invoiceViewmodel.InvoiceViewModel;
 import com.trilogyed.adminapi.model.Invoice;
 import com.trilogyed.adminapi.model.InvoiceItem;
 import com.trilogyed.adminapi.service.AdminService;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RefreshScope
-//@RequestMapping(name = "/admin/invoices")
 public class InvoiceController {
 
     @Autowired
@@ -83,7 +81,7 @@ public class InvoiceController {
 
     @RequestMapping(value = "/invoice-items", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem){
+    public void updateInvoiceItem(Principal principal,@RequestBody @Valid InvoiceItem invoiceItem){
         adminService.updateInvoiceItem(invoiceItem);
     }
 

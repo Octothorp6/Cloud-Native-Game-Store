@@ -58,8 +58,6 @@ public class InventoryController {
 //    @DeleteMapping(value = "/{id}")
 //    public void deleteInventory( @PathVariable int id){adminService.deleteInventory(id);}
 
-
-
     //===============================================================================
     //Below is the controller w/ security
 
@@ -92,7 +90,5 @@ public class InventoryController {
 //    public void updateInventory(Principal principal, @RequestBody @Valid Inventory inventory){
 //        adminService.updateInventory(inventory);
 //    }
-
-
 
 }

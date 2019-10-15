@@ -36,35 +36,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(encoder);
     }
 
-    public void configure(HttpSecurity httpSecurity) throws Exception{
+    public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .httpBasic();
 
-        /*
-
-
-        httpSecurity
-                .csrf().disable;
-                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
-         */
-
         httpSecurity.authorizeRequests()
-//                .mvcMatchers("/login").authenticated()
-//
-//                .mvcMatchers(HttpMethod.PUT,"/admin/inventory").hasAnyAuthority("EMPLOYEE","MANAGER","ADMIN")
-//
-//                .mvcMatchers(HttpMethod.POST,"/admin/customers").hasAnyAuthority("TEAM_LEAD","MANAGER","ADMIN")
-//
-//                .mvcMatchers(HttpMethod.POST,"/admin/inventory","/admin/invoices",
-//                        "/admin/level-ups","/admin/products").hasAnyAuthority("MANAGER","ADMIN")
-//
-//                .mvcMatchers(HttpMethod.PUT,"/admin/customer","/admin/inventory",
-//                        "/admin/invoice","/admin/level-up","/admin/product").hasAnyAuthority("MANAGER","ADMIN")
-//
-//                .mvcMatchers(HttpMethod.DELETE,"/admin/customer/*","/admin/inventory/*",
-//                        "/admin/invoice/*","/admin/level-up/*","/admin/product/*").hasAuthority("ADMIN")
+                .mvcMatchers("/login").authenticated()
 
+                .mvcMatchers(HttpMethod.PUT,"/admin/inventory").hasAnyAuthority("EMPLOYEE","MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.POST,"/admin/customers").hasAnyAuthority("TEAM_LEAD","MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.POST,"/admin/inventory","/admin/invoices",
+                        "/admin/level-ups","/admin/products").hasAnyAuthority("MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.PUT,"/admin/customer","/admin/inventory",
+                        "/admin/invoice","/admin/level-up","/admin/product").hasAnyAuthority("MANAGER","ADMIN")
+
+                .mvcMatchers(HttpMethod.DELETE,"/admin/customer/*","/admin/inventory/*",
+                        "/admin/invoice/*","/admin/level-up/*","/admin/product/*").hasAuthority("ADMIN")
                 .anyRequest().permitAll();
 
 
@@ -78,11 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         httpSecurity
+                  .csrf().disable();
 //                .csrf()
-                .csrf().disable();
 //                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
-    }
 
 }
 

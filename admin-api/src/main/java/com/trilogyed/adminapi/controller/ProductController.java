@@ -76,10 +76,4 @@ public class ProductController {
 //        adminService.updateProduct(product);
 //    }
 
-
-
-
-
-
-
 }

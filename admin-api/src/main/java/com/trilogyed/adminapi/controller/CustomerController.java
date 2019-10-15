@@ -58,7 +58,6 @@ public class CustomerController {
 //    @DeleteMapping(value = "/{id}")
 //    public void deleteCustomer( Principal principal,@PathVariable int id){adminService.deleteCustomer(id);}
 
-    //=============================================================================
 //Below is the controller with SECURITYU
 
     //CRUD w/ Authorization for Customer
@@ -93,6 +92,7 @@ public class CustomerController {
 //
 //    @DeleteMapping(value = "/{id}")
 //    public void deleteCustomer( Principal principal,@PathVariable int id){adminService.deleteCustomer(id);}
+
 
 
 }

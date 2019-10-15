@@ -15,26 +15,13 @@ import java.util.List;
 
 @Component
 public class AdminService {
-
-    //DependencyInjection   -------------------------------------------------------------------------------------------
-
-    @Autowired
     private CustomerClient customerClient;
-
-    @Autowired
     private InventoryClient inventoryClient;
-
-    @Autowired
     private InvoiceClient invoiceClient;
-
-    @Autowired
     private LevelUpClient levelUpClient;
-
-    @Autowired
     private ProductClient productClient;
-//---------------------------------------------------------------------------------------------------------------------
-    public AdminService(){}
-
+	
+	@Autowired
     public AdminService(CustomerClient customerClient, InventoryClient inventoryClient,
                         InvoiceClient invoiceClient, LevelUpClient levelUpClient, ProductClient productClient){
 
@@ -99,6 +86,26 @@ public class AdminService {
 //            throw new ImpossibleDeleteException("We cannot delete this customer as there is an existing InvoiceViewModel associated with this customer");
 //        }
 //    }
+
+    public void deleteCustomer(int customerId){
+        LevelUp levelUpCheck = levelUpClient.getLevelUpByCustomer(customerId);
+        List<InvoiceViewModel> invoiceCheckList = invoiceClient.getAllInvoicesByCustomer(customerId);
+
+        if(invoiceCheckList.size()==0) {
+            customerClient.deleteCustomer(customerId);
+            //  Invoice invoiceCheck = invoiceClient.g
+            if (levelUpCheck == null) {
+//            levelUpClient.deleteLevelUp(levelUpCheck.getLevelUpId());
+                customerClient.deleteCustomer(customerId);
+            }
+            else{
+                throw new ImpossibleDeleteException("We cannot perform this delete as the customer has levelUp pounts, which we are keeping track of");
+            }
+        }
+        else{
+            throw new ImpossibleDeleteException("We cannot delete this customer as there is an existing InvoiceViewModel associated with this customer");
+        }
+    }
     //----------------------------------------------------------------------------------------------------------------
 
 
@@ -137,7 +144,8 @@ public class AdminService {
 //            throw new CantUpdateObjectException("There is no inventory with given id: "+id+" in the database");
         inventoryClient.updateInventory(inventory);}
 
-//    public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
+    public void deleteInventory(int inventoryId){inventoryClient.deleteInventory(inventoryId);}
+
 
 
     //CRUD for Invoice
@@ -176,7 +184,7 @@ public class AdminService {
     }
 
     //We handle the deletion of Invoice and dependent InvoiceItems in the DAO so yeeeeee we good
-//    public void deleteInvoice (int invoiceId){invoiceClient.deleteInvoice(invoiceId);}
+    public void deleteInvoice (int invoiceId){invoiceClient.deleteInvoice(invoiceId);
 
     //----------------------------------------------------------\
     //Crud for InvoiceItem from same feign invoiceClient
@@ -208,7 +216,7 @@ public class AdminService {
         invoiceClient.updateInvoiceItem(invoiceItem);
     }
 
-//    public void deleteInvoiceItem(int invoiceItemId){invoiceClient.deleteInvoiceItem(invoiceItemId);}
+    public void deleteInvoiceItem(int invoiceItemId){invoiceClient.deleteInvoiceItem(invoiceItemId);}
 
 
     //CRUD LevelUp------------------------------------------------------------------------------------------------------
@@ -247,7 +255,7 @@ public class AdminService {
         levelUpClient.updateLevelUp(levelUp);
     }
 
-//    public void deleteLevelUp(int levelUpId){levelUpClient.deleteLevelUp(levelUpId);}
+    public void deleteLevelUp(int levelUpId){levelUpClient.deleteLevelUp(levelUpId);}
 
 
     //CRUD Product
@@ -294,6 +302,27 @@ public class AdminService {
 //            }
 //
 //    }
+	
+    public void deleteProduct(int productId){
+            if(inventoryClient.getInventoryByProduct(productId)== null){
+
+                productClient.deleteProduct(productId);
+            }
+            else{
+                Inventory check = inventoryClient.getInventoryByProduct(productId);
+
+                List<InvoiceItem> invoiceItems = getAllInvoiceItems();
+                if(invoiceItems.contains(check.getInventoryId()))
+                    throw new ImpossibleDeleteException("We cannot delete the given product as it exists in inventory!");
+                else{
+                    if(check.getQuantity()== 0) {
+                        productClient.deleteProduct(productId);
+                    }
+                }
+            }
+
+    }
+
     //When we are deleting a product, first check inventory with feign call, ensure that it is null then delete
     //if it is not null, check quantity , and make sure each inventory quantity is 0 for that productId
     //if the inventory quantity is 0, then check none of them have invoice-items with invoice-item
