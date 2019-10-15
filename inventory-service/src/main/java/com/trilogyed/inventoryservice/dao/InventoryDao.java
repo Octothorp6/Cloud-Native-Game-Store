@@ -12,7 +12,6 @@ public interface InventoryDao {
     List<Inventory> getAllInventory();
 
     void updateInventoryItem(Inventory inventory);
-    void updateInventoryItem(int num, int productId);
     void deleteInventoryItem(int id);
 }
 

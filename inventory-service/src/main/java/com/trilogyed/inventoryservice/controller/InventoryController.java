@@ -20,7 +20,7 @@ public class InventoryController {
     }
 
     @PostMapping
-    public Inventory createInventory(Inventory inventory) {
+    public Inventory createInventory(@RequestBody Inventory inventory) {
         return serviceLayer.saveInventory(inventory);
     }
 
