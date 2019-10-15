@@ -1,5 +1,6 @@
 package com.trilogyed.retailapi.util.messages;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -7,8 +8,11 @@ import java.util.Objects;
 
 public class LevelUpEntry {
     private int levelUpId;
+    @NotNull
     private int customerId;
+    @NotNull
     private int points;
+    @NotNull
     private LocalDate memberDate;
 
     public int getLevelUpId() {
