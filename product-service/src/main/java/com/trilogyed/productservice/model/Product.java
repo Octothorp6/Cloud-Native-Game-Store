@@ -21,21 +21,16 @@ public class Product {
 
     @NotNull
     private int productId;
-
     @NotNull
     @Size(max = 50, message = "Name field cannot exceed 50 characters")
     private String name;
-
     @NotNull
     @Size(max = 255, message = "Description fiel cannot exceed 255 characters")
     private String description;
-
     @NotNull
     private BigDecimal listPrice;
-
     @NotNull
     private BigDecimal unitCost;
-
 
     public int getProductId() {
         return productId;
