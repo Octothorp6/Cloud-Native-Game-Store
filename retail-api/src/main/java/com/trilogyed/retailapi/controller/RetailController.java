@@ -81,7 +81,7 @@ public class RetailController {
 
     @PostMapping(value = "/level-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveLevelUp(@RequestBody LevelUpEntry level) {
+    public void saveLevelUp(@RequestBody @Valid LevelUpEntry level) {
         serviceLayer.saveLevelUp(level);
     }
 }

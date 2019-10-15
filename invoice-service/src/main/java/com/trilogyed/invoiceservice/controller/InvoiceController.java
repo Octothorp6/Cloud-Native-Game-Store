@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -21,7 +22,7 @@ public class InvoiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public InvoiceViewModel createInvoice(@RequestBody Invoice invoice) {
+    public InvoiceViewModel createInvoice(@RequestBody @Valid Invoice invoice) {
         return serviceLayer.saveInvoice(invoice);
     }
 
@@ -33,7 +34,7 @@ public class InvoiceController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateInvoice(@RequestBody Invoice invoice) {
+    public void updateInvoice(@RequestBody @Valid Invoice invoice) {
         serviceLayer.updateInvoice(invoice);
     }
 
@@ -61,7 +62,7 @@ public class InvoiceController {
 
     @PostMapping(value = "/invoice-items")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public InvoiceItem createInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
+    public InvoiceItem createInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem) {
         return serviceLayer.saveInvoiceItem(invoiceItem);
     }
 
@@ -72,13 +73,14 @@ public class InvoiceController {
     }
 
     @GetMapping(value = "/invoice-items/{invoiceId}")
+    @ResponseStatus(HttpStatus.OK)
     public List<InvoiceItem> getInvoiceItemsById(@PathVariable int invoiceId) {
         return serviceLayer.findInvoiceItemsByInvoice(invoiceId);
     }
 
     @PutMapping(value = "/invoice-items")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
+    public void updateInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem) {
         serviceLayer.updateInvoiceItem(invoiceItem);
     }
 

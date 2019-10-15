@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,13 +23,13 @@ public class LevelUpController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public LevelUp createLevelUp(@RequestBody LevelUp levelUp) {
+    public LevelUp createLevelUp(@RequestBody @Valid LevelUp levelUp) {
         return serviceLayer.saveLevelUp(levelUp);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateLevelUp(@RequestBody LevelUp levelUp) {
+    public void updateLevelUp(@RequestBody @Valid LevelUp levelUp) {
         serviceLayer.updateLevelUp(levelUp);
     }
 
