@@ -5,6 +5,7 @@ import com.trilogyed.inventoryservice.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -20,12 +21,12 @@ public class InventoryController {
     }
 
     @PostMapping
-    public Inventory createInventory(@RequestBody Inventory inventory) {
+    public Inventory createInventory(@RequestBody @Valid Inventory inventory) {
         return serviceLayer.saveInventory(inventory);
     }
 
     @PutMapping
-    public void updateInventory(@RequestBody Inventory inventory) {
+    public void updateInventory(@RequestBody @Valid Inventory inventory) {
         serviceLayer.updateInventory(inventory);
     }
 
