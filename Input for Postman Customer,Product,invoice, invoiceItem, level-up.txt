@@ -1,7 +1,4 @@
-POST:
-
-
-
+Customer
 Post:
 
  {
@@ -27,3 +24,47 @@ PUT
  	"phone": "000000002"
     
     }
+
+Product:
+Post:
+{
+    "name": "xbox1",
+    "description": "for peasants",
+    "listPrice": 300.00,
+    "unitCost": 299.99
+}
+
+Put:
+
+{
+    "productId": 4,
+    "name": "xbox1",
+    "description": "for peasants",
+    "listPrice": 300.00,
+    "unitCost": 299.99
+}
+
+LevelUp
+Post: 
+
+{
+    "customerId": 2,
+    "points": 200,
+    "memberDate": "2019-11-12"
+}
+
+Put:
+{
+    "customerId": 1,
+    "points": 30,
+    "memberDate": "2019-11-12"
+}
+
+Inventory
+Post:
+
+{
+
+    "productId": "1",
+    "quantity": "200"
+}
