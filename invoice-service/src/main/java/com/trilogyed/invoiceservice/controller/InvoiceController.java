@@ -19,7 +19,7 @@ public class InvoiceController {
     // INVOICE ROUTES
 
     @PostMapping
-    public InvoiceViewModel createInvoice(Invoice invoice) {
+    public InvoiceViewModel createInvoice(@RequestBody Invoice invoice) {
         return serviceLayer.saveInvoice(invoice);
     }
 
@@ -29,7 +29,7 @@ public class InvoiceController {
     }
 
     @PutMapping
-    public void updateInvoice(Invoice invoice) {
+    public void updateInvoice(@RequestBody Invoice invoice) {
         serviceLayer.updateInvoice(invoice);
     }
 
@@ -53,7 +53,7 @@ public class InvoiceController {
     // INVOICE ITEM ROUTES
 
     @PostMapping(value = "/invoice-items")
-    public InvoiceItem createInvoiceItem(InvoiceItem invoiceItem) {
+    public InvoiceItem createInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
         return serviceLayer.saveInvoiceItem(invoiceItem);
     }
 
