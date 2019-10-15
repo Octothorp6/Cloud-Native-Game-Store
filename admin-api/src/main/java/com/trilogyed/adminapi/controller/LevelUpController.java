@@ -24,7 +24,7 @@ public class LevelUpController {
 
     @RequestMapping(value = "/admin/level-ups",method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public LevelUp createLevelUp(Principal principal,@RequestBody @Valid LevelUp levelUp){
+    public LevelUp createLevelUp(@RequestBody @Valid LevelUp levelUp){
         return adminService.createLevelUp(levelUp);
     }
 
@@ -53,7 +53,7 @@ public class LevelUpController {
 
     @RequestMapping(value = "/admin/level-up", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateLevelUp(Principal principal, @RequestBody @Valid LevelUp levelUp){
+    public void updateLevelUp( @RequestBody @Valid LevelUp levelUp){
         adminService.updateLevelUp(levelUp);
     }
 

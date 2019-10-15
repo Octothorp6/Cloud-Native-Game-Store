@@ -1,4 +1,5 @@
-Customer
+POST:
+
 Post:
 
  {
@@ -23,7 +24,8 @@ PUT
  	"email": "neo@thematrix.gov",
  	"phone": "000000002"
     
-    }
+}
+
 
 Product:
 Post:

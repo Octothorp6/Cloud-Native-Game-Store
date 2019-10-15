@@ -27,7 +27,7 @@ public class InventoryController {
 
     @RequestMapping(value = "/admin/inventory",method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Inventory createInventory(Principal principal,@RequestBody @Valid Inventory inventory){
+    public Inventory createInventory(@RequestBody @Valid Inventory inventory){
         return adminService.createInventory(inventory);
     }
 
@@ -51,14 +51,44 @@ public class InventoryController {
 
     @RequestMapping(value = "/admin/inventory", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateInventory(Principal principal, @RequestBody @Valid Inventory inventory){
+    public void updateInventory( @RequestBody @Valid Inventory inventory){
         adminService.updateInventory(inventory);
     }
 
 //    @DeleteMapping(value = "/{id}")
 //    public void deleteInventory( @PathVariable int id){adminService.deleteInventory(id);}
 
+    //===============================================================================
+    //Below is the controller w/ security
 
-
+//    @RequestMapping(value = "/admin/inventory",method = RequestMethod.POST)
+//    @ResponseStatus(value = HttpStatus.CREATED)
+//    public Inventory createInventory(Principal principal,@RequestBody @Valid Inventory inventory){
+//        return adminService.createInventory(inventory);
+//    }
+//
+//    @RequestMapping(value = "/admin/inventory/{id}",method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public Inventory getInventory( @PathVariable int id){
+//        Inventory inventoryFromService = adminService.getInventory(id);
+//        if(inventoryFromService==null)
+//            throw new NotFoundException("No Inventory exists in the DB with given id: "+id);
+//        return inventoryFromService;
+//    }
+//
+//
+//    @RequestMapping(value = "/admin/inventory/product/{id}",method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public Inventory getInventoryByProduct(@PathVariable int id){return adminService.getInventoryByProduct(id);}
+//
+//    @RequestMapping(value = "/admin/inventory/all", method = RequestMethod.GET)
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<Inventory> getAllInventory(){return adminService.getAllInventory(); }
+//
+//    @RequestMapping(value = "/admin/inventory", method = RequestMethod.PUT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void updateInventory(Principal principal, @RequestBody @Valid Inventory inventory){
+//        adminService.updateInventory(inventory);
+//    }
 
 }

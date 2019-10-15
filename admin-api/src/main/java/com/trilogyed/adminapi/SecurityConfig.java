@@ -36,18 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(encoder);
     }
 
-    public void configure(HttpSecurity httpSecurity) throws Exception{
+    public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .httpBasic();
-
-        /*
-
-
-        httpSecurity
-                .csrf().disable;
-                //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
-         */
 
         httpSecurity.authorizeRequests()
                 .mvcMatchers("/login").authenticated()
@@ -64,7 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .mvcMatchers(HttpMethod.DELETE,"/admin/customer/*","/admin/inventory/*",
                         "/admin/invoice/*","/admin/level-up/*","/admin/product/*").hasAuthority("ADMIN")
-
                 .anyRequest().permitAll();
 
 
@@ -78,11 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         httpSecurity
-                .csrf()
-//                .csrf().disable();
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                  .csrf().disable();
+//                .csrf()
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
-    }
 
 }
 
