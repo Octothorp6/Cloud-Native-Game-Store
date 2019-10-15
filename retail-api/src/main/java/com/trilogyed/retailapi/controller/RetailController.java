@@ -71,12 +71,6 @@ public class RetailController {
         return products;
     }
 
-    @GetMapping(value = "/level-up/customer/{id}")
-    public int getLevelUpPointsByCustomerId(int id) {
-        LevelUp levelUp = serviceLayer.findLevelUpByCustomer(id);
-        return levelUp.getPoints();
-    }
-
     @PostMapping(value = "/level-up")
     public void saveLevelUp(@RequestBody LevelUpEntry level) {
         serviceLayer.saveLevelUp(level);

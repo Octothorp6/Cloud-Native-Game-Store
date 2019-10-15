@@ -6,6 +6,7 @@ import com.trilogyed.retailapi.viewmodel.InvoiceViewModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @FeignClient(name = "invoice-service")
@@ -21,6 +22,6 @@ public interface InvoiceClient {
     List<InvoiceViewModel> getAllInvoicesByCustomer(@PathVariable int customerId);
 
     @PostMapping(value = "/invoice-items")
-    InvoiceItem createInvoiceItem(@RequestBody InvoiceItem invoiceItem);
+    InvoiceItem createInvoiceItem(@RequestBody @Valid InvoiceItem invoiceItem);
 
 }
